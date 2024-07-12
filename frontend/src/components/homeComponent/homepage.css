@@ -1,4 +1,5 @@
 .header-icons {
+    z-index: 200;
     padding-left: 10px;
     height: 100px;
     display: flex;
@@ -60,7 +61,7 @@
 
 
 .navbar {
-    z-index: 101;
+    z-index: 3;
     position: fixed;
     top: 101px;
     left: 0;
@@ -78,7 +79,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 75px;
+    height: 85px;
     margin-bottom: 1px;
     transition: 0.15s;
     position: relative;
@@ -88,7 +89,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 75px;
+    height: 85px;
     width: 90px;
     transition: 0.15s;
     position: relative;
@@ -101,12 +102,15 @@
     background-color: rgb(255, 222, 222);
 }
 
+
+.bottom-bar img,
 .bottom-icon img,
 .navbar-icons img {
     height: 45px;
     width: 45px;
 }
 
+.service-icons .tool-tip,
 .bottom-icon .tool-tip,
 .navbar-icons .tool-tip {
     font-family: Montserrat;
@@ -123,14 +127,50 @@
     border-radius: 5px;
 }
 
+.service-icons:hover .tool-tip,
 .bottom-icon:hover .tool-tip,
 .navbar-icons:hover .tool-tip {
     opacity: 1;
+    z-index: 2;
 }
 
-.navbar2
-{
-    z-index: 102;
+.navbar2 {
+    z-index: 4;
     position: fixed;
-    bottom:0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: top;
+
+}
+
+
+.bottom-bar {
+    z-index: 200;
+    background-color: white;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 120px;
+    padding-left: 90px;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-top-style: solid;
+    border-top-width: 0.5px;
+    border-top-color: rgb(0, 0, 0);
+    margin-top: 50px;
+}
+
+.contact-icons {
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in-out;
+}
+
+.contact-icons :hover {
+    transform: scale(1.3);
 }
