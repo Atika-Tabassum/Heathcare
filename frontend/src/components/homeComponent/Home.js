@@ -106,32 +106,22 @@ const Home = () => {
           About Us
         </div>
       </div>
-      <div class="bottom-bar">
-        <div class="contact-icons">
-          <img src={c1} alt="contact us" />
-        </div>
-        <div class="contact-icons">
-          <img src={c2} alt="contact us" />
-          {/* <div class="tool-tip">
-          Contact Us
-        </div> */}
-        </div>
-        <div class="contact-icons">
-          <img src={c3} alt="contact us" />
-          {/* <div class="tool-tip">
-          Contact Us
-        </div> */}
-        </div>
-        <div class="contact-icons">
-          <img src={c4} alt="contact us" />
-          {/* <div class="tool-tip">
-          Contact Us
-        </div> */}
-        </div>
-      </div>
     </navbar>
 
-
+    <div class="bottom-bar">
+      <div class="contact-icons">
+        <img src={c1} alt="contact us" />
+      </div>
+      <div class="contact-icons">
+        <img src={c2} alt="contact us" />
+      </div>
+      <div class="contact-icons">
+        <img src={c3} alt="contact us" />
+      </div>
+      <div class="contact-icons">
+        <img src={c4} alt="contact us" />
+      </div>
+    </div>
 
   </Fragment>
 }
