@@ -1,39 +1,4 @@
-.header-icons {
-    z-index: 200;
-    padding-left: 10px;
-    height: 120px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    background-color: white;
-    border-bottom-width: 0.5px;
-    border-bottom-style: solid;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-}
 
-.logo-section {
-    position: relative;
-}
-
-.logo-icon {
-    height: 100px;
-    width: 100px;
-    background-color: white;
-}
-
-.description {
-    /* background-color: white; */
-    white-space: nowrap;
-    font-size: 10px;
-    position: absolute;
-    bottom: 6px;
-    right: -100px;
-}
 
 .user-dashboard {
     background-color: rgb(255, 213, 219);
@@ -46,17 +11,40 @@
     align-items: center;
     transition: 0.15s;
     margin-right: 25px;
+    position: relative;
 }
 
 .user-icon {
     height: 35px;
     width: 35px;
-    padding: 0 14px;
+    padding: 0 20px;
+}
+
+.user-profile
+{
+    font-family: Montserrat;
+    font-size: 12px;
+    position: absolute;
+    right: -30px;
+    bottom: 0;
+    opacity: 0;
+    transition: opacity 0.15s;
+    pointer-events: none;
+    white-space: nowrap;
+    background-color: rgb(254, 150, 150);
+    padding: 4px;
+    border-radius: 5px;
+}
+
+.user-dashboard:hover .user-profile {
+    opacity: 1;
+    z-index: 201;
 }
 
 .user-dashboard:hover {
-    background-color: rgb(252, 130, 148);
+    /* background-color: rgb(252, 130, 148); */
     cursor: pointer;
+
 }
 
 
@@ -147,7 +135,7 @@
 
 .bottom-bar {
     position: absolute;
-    bottom: -1200px; 
+    bottom: -400px; 
     left: 0;
     right: 0;
     margin: 0 120px;

@@ -1,10 +1,12 @@
 import { React, Fragment } from 'react';
 import './homepage.css';
-import '../../general.css';
+import '../general/general.css';
 import './page.css';
-import img1 from './huhu.svg';
-import img2 from './user.svg';
-import image1 from './find_doctor.svg';
+import '../general/header.css';
+
+import img1 from '../general/logo.svg';
+import img2 from '../general/user.svg';
+import image1 from '../general/find_doctor.svg';
 import image2 from './ambulance.svg';
 import image3 from './clinic-building.svg';
 import image4 from './location.svg';
@@ -16,10 +18,15 @@ import c2 from './instagram.svg';
 import c3 from './twitter.svg';
 import c4 from './whatsapp.svg';
 
-
 const Home = () => {
+
+
   const myProfile = () => {
-    window.location.href = "http://localhost:3001/users/1/myprofile";
+    window.location.href = "http://localhost:3000/1/myprofile";
+  };
+
+  const findDoctor = () => {
+    window.location.href = "http://localhost:3000/finddoctor";
   };
 
   return <Fragment>
@@ -31,9 +38,12 @@ const Home = () => {
             Personal Healthcare Assistant
           </div>
         </div>
-        <button class="user-dashboard" onClick={myProfile}>
+        <button class="user-dashboard" onClick={myProfile} >
           <div class="user-section">
             <img src={img2} alt="user" className="user-icon" />
+            <div class="user-profile">
+              my profile
+            </div>
           </div>
         </button>
       </div>
@@ -47,7 +57,7 @@ const Home = () => {
           *motto likhbo*
         </div>
         <div class="page-description">
-          *decription*
+          *description*
         </div>
       </div>
       <div>
@@ -55,7 +65,7 @@ const Home = () => {
       </div>
       <div class="services">
 
-        <button class="service-icons">
+        <button class="service-icons" onClick={findDoctor}>
           <img src={image1} alt="find doctor" className="find-doctor-icon" />
           <div class="tool-tip">
             Find Doctor
@@ -122,7 +132,6 @@ const Home = () => {
         <img src={c4} alt="contact us" />
       </div>
     </div>
-
   </Fragment>
 }
 

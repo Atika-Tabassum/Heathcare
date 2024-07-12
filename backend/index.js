@@ -12,7 +12,7 @@ const myprofileRouter = require("./src/routers/myprofileRouter");
 app.use("/users", myprofileRouter);
 
 app.use('/home', (req, res) => {
-    res.send('Welcome to Home Page');
+    // res.send('Welcome to Home Page');
 });
 
 app.listen(port, () => {

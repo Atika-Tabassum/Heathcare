@@ -8,16 +8,23 @@ const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 
-const myprofileRouter = require("./src/routers/myprofileRouter"); 
+const myprofileRouter = require("./src/routers/myprofileRouter");
 app.use("/users", myprofileRouter);
 
 app.use('/', (req, res) => {
-    res.send('Welcome to Home Page');
+    // res.send('Welcome to Home Page');
 });
+
+// log-in
+
+app.get('/hc/login', (req, res) => {
+    res.send('login page');
+}
+);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-    });
+});
 
 
 

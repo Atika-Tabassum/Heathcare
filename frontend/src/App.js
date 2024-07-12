@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import './App.css';
 import Profile from './components/profile';
 import Home from './components/homeComponent/Home';
+import Login from './components/loginComponent/Login';
+import FindDoctor from './components/patientComponent/FindDoctor';
 
 function App() {
   return (
@@ -10,7 +11,9 @@ function App() {
       <Fragment>
         <Routes>
           <Route path="/:userId/myprofile" element={<Profile />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/finddoctor" element={<FindDoctor />} />
         </Routes>
       </Fragment>
     </Router>
