@@ -2,14 +2,14 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-const ViewCamp = () => {
-  const userId  = useParams().userId;
+const CampDetails = () => {
+  const campId  = useParams().campId;
   const [isLoading, setIsLoading] = useState(true);
   const [camps, setCamps] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`http://localhost:3001/view/${userId}/org_camps`)
+    fetch(`http://localhost:3001/view/${campId}/camp_details`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data.data)) {
@@ -31,7 +31,7 @@ const ViewCamp = () => {
 
   return (
     <section>
-      <h1>Camps</h1>
+      <h1>Camp Details</h1>
       <ul>
         {Array.isArray(camps) ? (
           camps.map((item) => (
@@ -51,4 +51,4 @@ const ViewCamp = () => {
   );
 };
 
-export default ViewCamp;
+export default CampDetails;

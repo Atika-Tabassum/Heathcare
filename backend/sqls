@@ -46,10 +46,18 @@ CREATE TABLE appointments (
 CREATE TABLE notifications (
     notification_id SERIAL PRIMARY KEY,
     user_id INTEGER,
+    camp_id INTEGER, ---pore add korsi
     message TEXT,
     is_read BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    type VARCHAR(50), ---pore add korsi
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (camp_id) REFERENCES medical_camps(camp_id)  ---pore add korsi
 );
+
+
+
+-- sql
+-- alter table notifications add column type varchar(50);
 
 
 CREATE TABLE ambulance_bookings (

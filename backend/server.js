@@ -29,8 +29,8 @@ app.use("/contents", contentsRouter);
 const orgmedicalcampRouter = require("./src/routers/orgmedicalcampRouter");
 app.use("/org", orgmedicalcampRouter);
 
-const viewCampRouter = require("./src/routers/viewCampsRouter");
-app.use("/view", viewCampRouter);
+const viewRouter = require("./src/routers/viewRouter");
+app.use("/view", viewRouter);
 
 const doctorsRouter = require("./src/routers/doctorsRouter");
 app.use("/doctors", doctorsRouter);

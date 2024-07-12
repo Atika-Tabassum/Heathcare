@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "./OrgMedicalCamp.css"; 
+import "./OrgMedicalCamp.css";
 
 const OrgMedicalCamp = () => {
   const [location, setLocation] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
   const [doctors, setDoctors] = useState([]);
-  const [selectedDoctor, setSelectedDoctor] = useState(null); 
+  const [selectedDoctors, setSelectedDoctors] = useState([]); // Use an array for multiple selections
   const [showDoctorsList, setShowDoctorsList] = useState(false);
   const navigate = useNavigate();
   const { userId } = useParams();
@@ -18,10 +18,17 @@ const OrgMedicalCamp = () => {
 
   const fetchDoctors = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/doctors/${userId}/viewdoctors`);
+      const response = await fetch(
+        `http://localhost:3001/doctors/${userId}/viewdoctors`
+      );
       const data = await response.json();
       if (Array.isArray(data.data)) {
-        setDoctors(data.data);
+        // Add a selected property to each doctor object
+        const doctorsWithSelection = data.data.map((doctor) => ({
+          ...doctor,
+          selected: false,
+        }));
+        setDoctors(doctorsWithSelection);
       } else {
         console.error("Expected an array but received:", data);
       }
@@ -30,19 +37,34 @@ const OrgMedicalCamp = () => {
     }
   };
 
-  const handleDoctorClick = (user_id) => {
-    if (selectedDoctor === user_id) {
-      setSelectedDoctor(null);
-    } else {
-      setSelectedDoctor(user_id);
-      console.log("selectedDoctor:", user_id);
-    }
+  const handleDoctorClick = (doctorId) => {
+    const updatedDoctors = doctors.map((doctor) =>
+      doctor.user_id === doctorId
+        ? { ...doctor, selected: !doctor.selected }
+        : doctor
+    );
+    setDoctors(updatedDoctors);
+  
+    const updatedSelectedDoctors = updatedDoctors.filter(
+      (doctor) => doctor.selected
+    );
+    setSelectedDoctors(updatedSelectedDoctors);
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const body = { location, date, description, selectedDoctor };
+      const selectedDoctorIds = selectedDoctors
+        ? selectedDoctors.map((doctor) => doctor.user_id)
+        : [];
+
+      const body = {
+        location,
+        date,
+        description,
+        selectedDoctors: selectedDoctorIds,
+      };
 
       const response = await fetch(
         `http://localhost:3001/org/${userId}/orgmedicalcamp`,
@@ -54,6 +76,7 @@ const OrgMedicalCamp = () => {
       );
       const data = await response.json();
       console.log(data);
+
       navigate(`/${userId}/doctorHome`, { replace: true });
     } catch (error) {
       console.error(error.message);
@@ -108,6 +131,7 @@ const OrgMedicalCamp = () => {
                 <tr>
                   <th>Name</th>
                   <th>Specialization</th>
+                  <th>Select</th>
                 </tr>
               </thead>
               <tbody>
@@ -115,10 +139,17 @@ const OrgMedicalCamp = () => {
                   <tr
                     key={doctor.user_id}
                     onClick={() => handleDoctorClick(doctor.user_id)}
-                    className={selectedDoctor === doctor.user_id ? "selected" : ""}
+                    className={doctor.selected ? "selected" : ""}
                   >
                     <td>{doctor.name}</td>
                     <td>{doctor.specialisation}</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        checked={doctor.selected}
+                        onChange={() => handleDoctorClick(doctor.user_id)}
+                      />
+                    </td>
                   </tr>
                 ))}
               </tbody>

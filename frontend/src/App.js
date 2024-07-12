@@ -12,7 +12,8 @@ import Login from "./components/loginComponent/Login";
 import FindDoctor from "./components/patientComponent/FindDoctor";
 import FindHospital from "./components/patientComponent/FindHospital";
 import EmergencyService from "./components/patientComponent/EmergencyService";
-
+import Notification from "./components/notificationComponent/Notification";
+import CampDetails from "./components/doctorComponent/medicalcamp/campdetails";
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
           <Route path="/finddoctor" element={<FindDoctor />} />
           <Route path="/findhospital" element={<FindHospital />} />
           <Route path="/emergency" element={<EmergencyService />} />
+          <Route path="/:userId/notifications" element={<Notification />} />
+          <Route path="/:campId/camp_details" element={<CampDetails />} />
         </Routes>
       </Fragment>
     </Router>
