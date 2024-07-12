@@ -1,6 +1,7 @@
 .header-icons {
+    z-index: 200;
     padding-left: 10px;
-    height: 100px;
+    height: 120px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,8 +21,8 @@
 }
 
 .logo-icon {
-    height: 75px;
-    width: 75px;
+    height: 100px;
+    width: 100px;
     background-color: white;
 }
 
@@ -30,13 +31,13 @@
     white-space: nowrap;
     font-size: 10px;
     position: absolute;
-    bottom: 5px;
-    right: -125px;
+    bottom: 6px;
+    right: -100px;
 }
 
 .user-dashboard {
     background-color: rgb(255, 213, 219);
-    height: 30px;
+    height: 30;
     padding: 20px 7px;
     border-radius: 300px;
     border-width: 0.9px;
@@ -48,9 +49,9 @@
 }
 
 .user-icon {
-    height: 25px;
-    width: 25px;
-    padding: 0 1px;
+    height: 35px;
+    width: 35px;
+    padding: 0 14px;
 }
 
 .user-dashboard:hover {
@@ -60,9 +61,9 @@
 
 
 .navbar {
-    z-index: 101;
+    z-index: 3;
     position: fixed;
-    top: 101px;
+    top: 121px;
     left: 0;
     bottom: 0;
     width: 90px;
@@ -78,7 +79,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 75px;
+    height: 85px;
     margin-bottom: 1px;
     transition: 0.15s;
     position: relative;
@@ -88,7 +89,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 75px;
+    height: 85px;
     width: 90px;
     transition: 0.15s;
     position: relative;
@@ -101,12 +102,15 @@
     background-color: rgb(255, 222, 222);
 }
 
+
+.contact-icons img,
 .bottom-icon img,
 .navbar-icons img {
     height: 45px;
     width: 45px;
 }
 
+.service-icons .tool-tip,
 .bottom-icon .tool-tip,
 .navbar-icons .tool-tip {
     font-family: Montserrat;
@@ -123,14 +127,53 @@
     border-radius: 5px;
 }
 
+.service-icons:hover .tool-tip,
 .bottom-icon:hover .tool-tip,
 .navbar-icons:hover .tool-tip {
     opacity: 1;
+    z-index: 201;
 }
 
-.navbar2
-{
-    z-index: 102;
+.navbar2 {
+    z-index: 4;
     position: fixed;
-    bottom:0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: top;
+
+}
+
+.bottom-bar {
+    position: absolute;
+    bottom: -1200px; 
+    left: 0;
+    right: 0;
+    margin: 0 120px;
+    padding-left: 90px;
+    background-color: white;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    border-top-style: solid;
+    border-top-width: 0.5px;
+    border-top-color: rgb(0, 0, 0);
+    margin-top: 50px;
+    cursor: pointer;
+}
+
+.contact-icons {
+    display: flex; /* Ensuring flexbox layout */
+    flex-direction: row; /* Aligning items horizontally */
+    justify-content: space-evenly; /* Distributing space evenly */
+    align-items: center; /* Centering items vertically */
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in-out;
+}
+
+.contact-icons:hover {
+    transform: scale(1.15);
 }
