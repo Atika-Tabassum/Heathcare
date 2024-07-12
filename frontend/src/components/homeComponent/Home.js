@@ -1,10 +1,9 @@
 import { React, Fragment } from 'react';
 import './homepage.css';
-import '../../general.css';
 import './page.css';
-import img1 from './huhu.svg';
-import img2 from './user.svg';
-import image1 from './find_doctor.svg';
+import img2 from '../general/user.svg';
+import Header from '../general/Header';
+import image1 from '../general/find_doctor.svg';
 import image2 from './ambulance.svg';
 import image3 from './clinic-building.svg';
 import image4 from './location.svg';
@@ -16,24 +15,39 @@ import c2 from './instagram.svg';
 import c3 from './twitter.svg';
 import c4 from './whatsapp.svg';
 
-
 const Home = () => {
+
+
   const myProfile = () => {
-    window.location.href = "http://localhost:3001/users/1/myprofile";
+    // TODO - userID
+    window.location.href = "http://localhost:3000/1/myprofile";
+  };
+
+  const findDoctor = () => {
+    window.location.href = "http://localhost:3000/finddoctor";
+  };
+
+  const emergencyService = () => {
+    window.location.href = "http://localhost:3000/emergency";
+  };
+
+  const findHospital = () => {
+    window.location.href = "http://localhost:3000/findhospital";
+  };
+
+  const goTo = () => {
   };
 
   return <Fragment>
     <header>
       <div class="header-icons">
-        <div class="logo-section">
-          <img src={img1} alt="logo" className="logo-icon" />
-          <div class="description">
-            Personal Healthcare Assistant
-          </div>
-        </div>
-        <button class="user-dashboard" onClick={myProfile}>
+        <Header />
+        <button class="user-dashboard" onClick={myProfile} >
           <div class="user-section">
             <img src={img2} alt="user" className="user-icon" />
+            <div class="user-profile">
+              my profile
+            </div>
           </div>
         </button>
       </div>
@@ -47,7 +61,7 @@ const Home = () => {
           *motto likhbo*
         </div>
         <div class="page-description">
-          *decription*
+          *description*
         </div>
       </div>
       <div>
@@ -55,25 +69,25 @@ const Home = () => {
       </div>
       <div class="services">
 
-        <button class="service-icons">
+        <button class="service-icons" onClick={findDoctor}>
           <img src={image1} alt="find doctor" className="find-doctor-icon" />
           <div class="tool-tip">
             Find Doctor
           </div>
         </button>
-        <button class="service-icons">
+        <button class="service-icons" onClick={emergencyService}>
           <img src={image2} alt="ambulance" className="ambulance-icon" />
           <div class="tool-tip">
-            Emergency services
+            Find Emergency Services
           </div>
         </button>
-        <button class="service-icons">
+        <button class="service-icons" onClick={findHospital}>
           <img src={image3} alt="clinic" className="clinic-icon" />
           <div class="tool-tip">
-            get an appointment
+            Find Hospital
           </div>
         </button>
-        <button class="service-icons">
+        <button class="service-icons" onClick={goTo}>
           <img src={image7} alt="awareness" className="awareness-icon" />
           <div class="tool-tip">
             *ki naam dibo*
@@ -122,7 +136,6 @@ const Home = () => {
         <img src={c4} alt="contact us" />
       </div>
     </div>
-
   </Fragment>
 }
 

@@ -336,3 +336,4 @@ INSERT INTO users (name, address, user_type) VALUES
 INSERT INTO users (name, address, user_type) VALUES
 ('Charkhai Multicare Hospital', 'Beanibazar', 'hospital');
 
+('Charkhai Multicare Hospital', 'Beanibazar', 'hospital');

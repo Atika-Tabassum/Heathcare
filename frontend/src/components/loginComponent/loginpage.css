@@ -1,0 +1,51 @@
+.login-container {
+    font-family: Montserrat, 'Arial';
+    /* background-color: brown; */
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    margin: 15px 300px 100px 300px;
+}
+
+
+.login-input {
+    height: 50px;
+}
+
+.login-input input {
+    font-family: Montserrat, 'Arial';
+    height: 30px;
+    width: 300px;
+    transition-timing-function: ease-in-out;
+}
+
+.login-input:hover input{
+    box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    transform: scale(1.03);
+}
+
+.login-button {
+    margin-top: 20px;
+    margin-bottom: 60px;
+}
+
+.login-btn
+{
+    font-family: Montserrat, 'Arial';
+    transition: 0.15s;
+    height: 35px;
+}
+
+
+.link
+{
+    font-size: 13px;
+    color: black;
+}
+
+.link:hover
+{
+    color: rgb(255, 106, 128);
+}

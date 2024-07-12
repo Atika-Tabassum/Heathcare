@@ -12,6 +12,15 @@ import Login from "./components/loginComponent/Login";
 import FindDoctor from "./components/patientComponent/FindDoctor";
 import FindHospital from "./components/patientComponent/FindHospital";
 import EmergencyService from "./components/patientComponent/EmergencyService";
+import React, { Fragment } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Profile from './components/profile';
+import Home from './components/homeComponent/Home';
+import Login from './components/loginComponent/Login';
+import FindDoctor from './components/patientComponent/FindDoctor';
+import FindHospital from './components/patientComponent/FindHospital';
+import EmergencyService from './components/patientComponent/EmergencyService';
+
 
 function App() {
   return (
@@ -25,6 +34,7 @@ function App() {
           <Route path="/:userId/doctorHome" element={<DoctorHome />} />
           <Route path="/:userId/orgmedicalcamp" element={<OrgMedicalCamp />} />
           <Route path="/:userId/org_camps" element={<ViewCamp />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/finddoctor" element={<FindDoctor />} />
           <Route path="/findhospital" element={<FindHospital />} />

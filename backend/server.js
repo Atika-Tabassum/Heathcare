@@ -11,6 +11,7 @@ app.use(express.json());
 const myprofileRouter = require("./src/routers/myprofileRouter"); 
 const patientRouter = require("./src/routers/patientRouter");
 app.use("/patient",patientRouter);
+const myprofileRouter = require("./src/routers/myprofileRouter");
 app.use("/users", myprofileRouter);
 
 app.get('/healthcare/hospitals', async (req, res) => {
@@ -41,7 +42,7 @@ app.use("/doctors", doctorsRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-    });
+});
 
 
 
