@@ -13,6 +13,16 @@ const patientRouter = require("./src/routers/patientRouter");
 app.use("/patient",patientRouter);
 app.use("/users", myprofileRouter);
 
+app.get('/healthcare/hospitals', async (req, res) => {
+    try {
+        const allHospitals = await pool.query("SELECT * FROM users WHERE user_type = 'hospital'");
+        res.json(allHospitals.rows);
+        console.log(allHospitals.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
 const contentsRouter = require("./src/routers/contentsRouter");
 app.use("/contents", contentsRouter);
 

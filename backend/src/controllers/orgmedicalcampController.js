@@ -5,14 +5,14 @@ const getMedicalCamp = async (req, res, next) => {
         const id = req.params.userId;
         console.log("at post");
         console.log(id);
-        const { location,date,description,doctors } = req.body;
+        const { location,date,description,selectedDoctor } = req.body;
         console.log(date);
 
         const newcamp = await pool.query("INSERT INTO medical_camps ( doctor_user_id,location,camp_date,description) VALUES($1, $2, $3, $4) RETURNING *",
             [id,location,date,description]
         );
 
-        const notificationPromises = doctors.map((user_id) => {
+        const notificationPromises = selectedDoctor.map((user_id) => {
             const message = newcamp.rows[0].camp_id;
             console.log(user_id);
             return pool.query(

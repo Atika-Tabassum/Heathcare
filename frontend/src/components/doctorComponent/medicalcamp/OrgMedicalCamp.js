@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "./OrgMedicalCamp.css"; // Import the CSS file
+import "./OrgMedicalCamp.css"; 
 
 const OrgMedicalCamp = () => {
   const [location, setLocation] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
   const [doctors, setDoctors] = useState([]);
-  const [selectedDoctor, setSelectedDoctor] = useState(null); // State to track selected doctor
+  const [selectedDoctor, setSelectedDoctor] = useState(null); 
   const [showDoctorsList, setShowDoctorsList] = useState(false);
   const navigate = useNavigate();
   const { userId } = useParams();
@@ -32,11 +32,10 @@ const OrgMedicalCamp = () => {
 
   const handleDoctorClick = (user_id) => {
     if (selectedDoctor === user_id) {
-      // Deselect on double-click
       setSelectedDoctor(null);
     } else {
-      // Select the clicked row
       setSelectedDoctor(user_id);
+      console.log("selectedDoctor:", user_id);
     }
   };
 
