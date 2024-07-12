@@ -1,12 +1,14 @@
 import { React, Fragment } from 'react'
-import '../general/general.css';
-import '../general/header.css';
-import img1 from '../general/logo.svg';
-import img2 from '../general/user.svg';
+import Header from '../general/Header'
+// import '../general/general.css';
+// import '../general/header.css';
+// import img1 from '../general/logo.svg';
+// import img2 from '../general/user.svg';
 
 const FindDoctor = () => {
     return <Fragment>
-        <header>
+        <Header />
+        {/* <header>
             <div class="header-icons">
                 <div class="logo-section">
                     <img src={img1} alt="logo" className="logo-icon" />
@@ -20,8 +22,9 @@ const FindDoctor = () => {
                     </div>
                 </button>
             </div>
-        </header>
+        </header> */}
         <div>FindDoctor</div>
+
     </Fragment>
 }
 

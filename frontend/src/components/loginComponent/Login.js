@@ -1,28 +1,15 @@
 import React from 'react';
 import { Fragment } from 'react';
-import img1 from '../general/logo.svg';
-import '../general/general.css';
-import '../general/header.css';
+import Header from '../general/Header';
 import './loginpage.css';
 import { Link } from 'react-router-dom';
 
 const Login = () => {
     const goHome = () => {
-        
-      }
+
+    }
     return <Fragment>
-        <header>
-            <div class="header-icons">
-                <div class="logo-section">
-                    <img src={img1} alt="logo" className="logo-icon" />
-                    <div class="description">
-                        Personal Healthcare Assistant
-                    </div>
-                </div>
-            </div>
-        </header>
-
-
+        <Header />
 
         <body style={{ height: '500px' }}>
             <div class="login-title" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontSize: '30px' }}>
