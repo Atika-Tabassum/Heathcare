@@ -11,9 +11,21 @@ app.use(express.json());
 const myprofileRouter = require("./src/routers/myprofileRouter"); 
 app.use("/users", myprofileRouter);
 
-app.use('/', (req, res) => {
-    res.send('Welcome to Home Page');
-});
+const contentsRouter = require("./src/routers/contentsRouter");
+app.use("/contents", contentsRouter);
+
+const orgmedicalcampRouter = require("./src/routers/orgmedicalcampRouter");
+app.use("/org", orgmedicalcampRouter);
+
+const viewCampRouter = require("./src/routers/viewCampsRouter");
+app.use("/view", viewCampRouter);
+
+const doctorsRouter = require("./src/routers/doctorsRouter");
+app.use("/doctors", doctorsRouter);
+
+// app.use('/', (req, res) => {
+//     res.send('Welcome to Home Page');
+// });
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
