@@ -26,6 +26,17 @@ const Home = () => {
     window.location.href = "http://localhost:3000/finddoctor";
   };
 
+  const emergencyService = () => {
+    window.location.href = "http://localhost:3000/emergency";
+  };
+
+  const findHospital = () => {
+    window.location.href = "http://localhost:3000/findhospital";
+  };
+
+  const goTo = () => {
+  };
+
   return <Fragment>
     <header>
       <div class="header-icons">
@@ -63,19 +74,19 @@ const Home = () => {
             Find Doctor
           </div>
         </button>
-        <button class="service-icons">
+        <button class="service-icons" onClick={emergencyService}>
           <img src={image2} alt="ambulance" className="ambulance-icon" />
           <div class="tool-tip">
-            Emergency services
+            Find Emergency Services
           </div>
         </button>
-        <button class="service-icons">
+        <button class="service-icons" onClick={findHospital}>
           <img src={image3} alt="clinic" className="clinic-icon" />
           <div class="tool-tip">
-            get an appointment
+            Find Hospital
           </div>
         </button>
-        <button class="service-icons">
+        <button class="service-icons" onClick={goTo}>
           <img src={image7} alt="awareness" className="awareness-icon" />
           <div class="tool-tip">
             *ki naam dibo*

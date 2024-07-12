@@ -4,6 +4,9 @@ import Profile from './components/profile';
 import Home from './components/homeComponent/Home';
 import Login from './components/loginComponent/Login';
 import FindDoctor from './components/patientComponent/FindDoctor';
+import FindHospital from './components/patientComponent/FindHospital';
+import EmergencyService from './components/patientComponent/EmergencyService';
+
 
 function App() {
   return (
@@ -14,6 +17,8 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/finddoctor" element={<FindDoctor />} />
+          <Route path="/findhospital" element={<FindHospital />} />
+          <Route path="/emergency" element={<EmergencyService />} />
         </Routes>
       </Fragment>
     </Router>
