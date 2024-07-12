@@ -97,3 +97,7 @@ CREATE TABLE content(
 
 INSERT INTO users (NAME, EMAIL,CONTACT_NO,ADDRESS, PASSWORD, USER_TYPE)
 VALUES ('John Doe', 'john.doe@example.com','01345678989','buet', 'password123', 'patient');
+
+
+ insert into users(name, email, contact_no, address, password, user_type) values('Square Hospitals Ltd.', 'https://www.squarehospital.com/', '+8809610010616', 'Nafi Tower, Level-3 (2nd floor),53 Gulshan Avenue, Gulshan-1, Dhaka-
+ 1212','1234', 'hospital');

@@ -19,6 +19,7 @@ const Home = () => {
 
 
   const myProfile = () => {
+    // TODO - userID
     window.location.href = "http://localhost:3000/1/myprofile";
   };
 
