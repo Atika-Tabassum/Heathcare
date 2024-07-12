@@ -11,7 +11,7 @@ app.use(express.json());
 const myprofileRouter = require("./src/routers/myprofileRouter"); 
 app.use("/users", myprofileRouter);
 
-app.use('/home', (req, res) => {
+app.use('/', (req, res) => {
     res.send('Welcome to Home Page');
 });
 
