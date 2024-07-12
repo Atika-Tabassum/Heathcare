@@ -8,7 +8,6 @@ const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 
-const myprofileRouter = require("./src/routers/myprofileRouter"); 
 const patientRouter = require("./src/routers/patientRouter");
 app.use("/patient",patientRouter);
 const myprofileRouter = require("./src/routers/myprofileRouter");
