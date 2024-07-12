@@ -1,6 +1,7 @@
 
 
 .user-dashboard {
+    z-index: 200;
     background-color: rgb(255, 213, 219);
     height: 30;
     padding: 20px 7px;
