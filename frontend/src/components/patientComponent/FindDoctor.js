@@ -3,7 +3,7 @@ import Header from '../general/Header'
 
 const FindDoctor = () => {
     return <Fragment>
-        <Header />
+        <Header/>
         <body>
             <div>FindDoctor</div>
         </body>
