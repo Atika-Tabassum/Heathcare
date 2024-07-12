@@ -1,9 +1,99 @@
 CREATE DATABASE Healthcare;
 
-CREATE TABLE "User" (
-    ID SERIAL PRIMARY KEY,
-    NAME VARCHAR(255) NOT NULL,
-    EMAIL VARCHAR(255) UNIQUE NOT NULL,
-    PASSWORD VARCHAR(255) NOT NULL,
-    USER_TYPE VARCHAR NOT NULL
+CREATE TABLE users (
+    user_id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
+    contact_no VARCHAR(20),
+    address VARCHAR(255),
+    user_type VARCHAR(50), -- 'doctor', 'patient', 'hospital'
+    password VARCHAR(255)
 );
+
+
+CREATE TABLE doctors (
+    doctor_user_id INTEGER PRIMARY KEY,
+    specialisation VARCHAR(100),
+    hospital_user_id INTEGER,
+    description TEXT,
+    FOREIGN KEY (doctor_user_id) REFERENCES users(user_id),
+    FOREIGN KEY (hospital_user_id) REFERENCES users(user_id)
+);
+
+
+CREATE TABLE patients (
+    patient_user_id INTEGER PRIMARY KEY,
+    medical_history TEXT,
+    FOREIGN KEY (patient_user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE hospitals (
+    hospital_user_id INTEGER PRIMARY KEY,
+    description VARCHAR(255),
+    image VARCHAR(255),
+    FOREIGN KEY (hospital_user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE appointments (
+    appointment_id SERIAL PRIMARY KEY,
+    patient_user_id INTEGER,
+    doctor_user_id INTEGER,
+    appointment_date TIMESTAMP,
+    FOREIGN KEY (patient_user_id) REFERENCES users(user_id),
+    FOREIGN KEY (doctor_user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE notifications (
+    notification_id SERIAL PRIMARY KEY,
+    user_id INTEGER,
+    message TEXT,
+    is_read BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+
+CREATE TABLE ambulance_bookings (
+    booking_id SERIAL PRIMARY KEY,
+    patient_user_id INTEGER,
+    hospital_user_id INTEGER,
+    booking_date TIMESTAMP,
+    is_booked BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (patient_user_id) REFERENCES users(user_id),
+    FOREIGN KEY (hospital_user_id) REFERENCES users(user_id)
+);
+
+
+CREATE TABLE medical_camps (
+    camp_id SERIAL PRIMARY KEY,
+    doctor_user_id INTEGER,
+    location VARCHAR(255),
+    camp_date TIMESTAMP,
+    description TEXT,
+    FOREIGN KEY (doctor_user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE medical_camp_doctors (
+    camp_id INTEGER,
+    doctor_user_id INTEGER,
+    FOREIGN KEY (doctor_user_id) REFERENCES users(user_id),
+    FOREIGN KEY (camp_id) REFERENCES medical_camps(camp_id)
+);
+
+CREATE TABLE medical_camp_patients (
+    camp_id INTEGER,
+    patient_user_id INTEGER,
+    FOREIGN KEY (patient_user_id) REFERENCES users(user_id),
+    FOREIGN KEY (camp_id) REFERENCES medical_camps(camp_id)
+);
+
+CREATE TABLE content(
+    content_id SERIAL PRIMARY KEY,
+    topic VARCHAR(255),
+    description TEXT,
+    image VARCHAR(255),
+    video VARCHAR(255)
+);
+
+
+INSERT INTO users (NAME, EMAIL,CONTACT_NO,ADDRESS, PASSWORD, USER_TYPE)
+VALUES ('John Doe', 'john.doe@example.com','01345678989','buet', 'password123', 'patient');

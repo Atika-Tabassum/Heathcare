@@ -6,8 +6,8 @@ const getUser = async (req, res, next) => {
     console.log(id);
     const user = await pool.query(
       `select u.name, u.email, u.user_type 
-      from  "User" u
-      where id = $1`,
+      from  users u
+      where user_id = $1`,
       [id]
     );
     console.log(user.rows[0].user_type);
