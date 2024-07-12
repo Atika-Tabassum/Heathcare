@@ -17,6 +17,11 @@
     margin-bottom: 20px;
 }
 
+.link-style {
+    height: 100px;
+    width: 100px;
+}
+
 .logo-section {
     position: relative;
 }
@@ -28,7 +33,6 @@
 }
 
 .description {
-    /* background-color: white; */
     white-space: nowrap;
     font-size: 10px;
     position: absolute;
