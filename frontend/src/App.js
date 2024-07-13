@@ -1,7 +1,8 @@
 import React, { Fragment } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import "./App.css";
-import Profile from "./components/profile";
+import Profile from "./components/profilesComponent/profile";
+import HospitalProfile from "./components/profilesComponent/hospital/HospitalProfile";
 import Home from "./components/homeComponent/Home";
 import Content from "./components/contentComponent/Content";
 import UserReg from "./components/userRegComponent/userReg";
@@ -10,10 +11,12 @@ import OrgMedicalCamp from "./components/doctorComponent/medicalcamp/OrgMedicalC
 import ViewCamp from "./components/doctorComponent/medicalcamp/ViewCamp";
 import Login from "./components/loginComponent/Login";
 import FindDoctor from "./components/patientComponent/FindDoctor";
-import FindHospital from "./components/patientComponent/FindHospital";
 import EmergencyService from "./components/patientComponent/EmergencyService";
+import FindHospital from "./components/patientComponent/FindHospital";
 import Notification from "./components/notificationComponent/Notification";
 import CampDetails from "./components/doctorComponent/medicalcamp/campdetails";
+import DoctorProfile from "./components/profilesComponent/doctor/DoctorProfile";
+import Map from "./components/patientComponent/Map";
 
 function App() {
   return (
@@ -21,6 +24,8 @@ function App() {
       <Fragment>
         <Routes>
           <Route path="/:userId/myprofile" element={<Profile />} />
+          <Route path="/:userId/hospitalprofile" element={<HospitalProfile />} />
+          <Route path="/:userId/doctorprofile" element={<DoctorProfile />} />
           <Route path="/" element={<Home />} />
           <Route path="/contents" element={<Content />} />
           <Route path="/patient/register" element={<UserReg />} />
@@ -31,7 +36,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/finddoctor" element={<FindDoctor />} />
           <Route path="/findhospital" element={<FindHospital />} />
-          <Route path="/emergency" element={<EmergencyService />} />
+          <Route path="/emergencyservice" element={<EmergencyService />} />
           <Route path="/:userId/notifications" element={<Notification />} />
           <Route path="/:campId/camp_details" element={<CampDetails />} />
         </Routes>

@@ -1,0 +1,46 @@
+.hospitalname {
+    font-size: 35px;
+    font-weight: 600;
+    font-style: italic;
+    display: flex;
+    justify-content: center;
+    text-decoration: underline;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+
+.hospital-info {
+    margin: 0 250px;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    padding: 0 70px;
+}
+
+.hospital-info img{
+    display:fkex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: thistle; */
+    height: 12px;
+    width: 12px;
+}
+
+
+.doctors-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 0 40px;
+    box-shadow: inset 0 -5px 5px rgba(55, 55, 55, 0.03);
+}
+
+
+.doctor-name,
+.doctor-specialisation,
+.doctor-contact {
+    padding: 30px 15px;
+    position: relative;
+}
+
