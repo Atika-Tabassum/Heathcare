@@ -1,11 +1,32 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import "../../homeComponent/homepage.css";
+import "../../homeComponent/page.css";
+import "../../general/general.css";
+import img1 from "../../general/logo.svg";
+import img2 from "../../general/user.svg";
+import image3 from "../../general/notification.svg";
+import image5 from "../../homeComponent/contact-us.svg";
+import image6 from "../../homeComponent/about-us.svg";
+import c1 from "../../homeComponent/facebook.svg";
+import c2 from "../../homeComponent/instagram.svg";
+import c3 from "../../homeComponent/twitter.svg";
+import c4 from "../../homeComponent/whatsapp.svg";
 
 const CampDetails = () => {
-  const campId  = useParams().campId;
+  const campId = useParams().campId;
   const [isLoading, setIsLoading] = useState(true);
   const [camps, setCamps] = useState([]);
+  const userId = localStorage.getItem("userId");
+  const navigate = useNavigate();
+
+  const myProfile = () => {
+    navigate(`/${userId}/myprofile`);
+  };
+
+  const handleNotifications = () => {
+    navigate(`/${userId}/notifications`);
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -30,24 +51,86 @@ const CampDetails = () => {
   }
 
   return (
-    <section>
-      <h1>Camp Details</h1>
-      <ul>
-        {Array.isArray(camps) ? (
-          camps.map((item) => (
-            <li key={item.camp_id}>
-              <h2>{item.description}</h2>
-              <p>{item.location}</p>
-              <p>{item.camp_date}</p>
-            </li>
-          ))
-        ) : (
-          <div>
-            <p>No camp available</p>
+    <Fragment>
+      <header>
+        <div className="header-icons">
+          <div className="logo-section">
+            <img src={img1} alt="logo" className="logo-icon" />
+            <div className="description">Personal Healthcare Assistant</div>
           </div>
-        )}
-      </ul>
-    </section>
+
+          <div className="spacer"></div>
+
+          <button className="user-dashboard" onClick={myProfile}>
+            <div className="user-section">
+              <img src={img2} alt="user" className="user-icon" />
+            </div>
+          </button>
+
+          <button className="user-dashboard">
+            <div className="user-section">
+              <img src={image3} alt="notifications" className="user-icon" />
+            </div>
+          </button>
+        </div>
+      </header>
+
+      <navbar className="navbar">
+        <div className="navbar-icons">
+          <img src={image5} alt="contact us" className="contact-us-icon" />
+          <div className="tool-tip">Contact Us</div>
+        </div>
+      </navbar>
+
+      <navbar className="navbar2">
+        <div className="bottom-icon">
+          <img src={image6} alt="about us" className="about-us-icon" />
+          <div className="tool-tip">About Us</div>
+        </div>
+      </navbar>
+
+      <div className="bottom-bar">
+        <div className="contact-icons">
+          <img src={c1} alt="contact us" />
+        </div>
+        <div className="contact-icons">
+          <img src={c2} alt="contact us" />
+        </div>
+        <div className="contact-icons">
+          <img src={c3} alt="contact us" />
+        </div>
+        <div className="contact-icons">
+          <img src={c4} alt="contact us" />
+        </div>
+      </div>
+
+      <div className="page-container">
+        <div className="page-content"></div>
+        <h1>Camp Details</h1>
+        <ul>
+          {Array.isArray(camps) ? (
+            camps.map((item) => (
+              <li key={item.camp_id}>
+                <h2>{item.description}</h2>
+                {item.img && (
+                  <img
+                    src={`data:image/jpg;base64,${item.img}`}
+                    alt="Camp"
+                    style={{ width: "100%", height: "auto" }}
+                  />
+                )}
+                <p>Location : {item.location}</p>
+                <p>Date : {item.camp_date}</p>
+              </li>
+            ))
+          ) : (
+            <div>
+              <p>No camp available</p>
+            </div>
+          )}
+        </ul>
+      </div>
+    </Fragment>
   );
 };
 

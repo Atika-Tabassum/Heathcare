@@ -68,7 +68,7 @@ const getCampDetails = async (req, res, next) => {
     const campId = req.params.campId;
     console.log("campId:", campId);
     const camp = await pool.query(
-      `SELECT * FROM medical_camps WHERE camp_id = $1`,
+      `SELECT *, encode(image, 'base64') AS img FROM medical_camps WHERE camp_id = $1`,
       [campId]
     );
     console.log("camp:", camp.rows);
@@ -104,7 +104,9 @@ const getResponse = async (req, res, next) => {
 
     const userName = userResult.rows[0].name;
     const message =
-      select === "1" ? `${userName} accepted` : `${userName} denied`;
+      select === "1"
+        ? `${userName} accepted your invitation to join`
+        : `${userName} rejected your invitation to join`;
 
     const receiverResult = await pool.query(
       `SELECT doctor_user_id FROM medical_camps WHERE camp_id = $1`,
@@ -118,7 +120,6 @@ const getResponse = async (req, res, next) => {
     const receiverId = receiverResult.rows[0].doctor_user_id;
 
     const client = await pool.connect();
-
     try {
       await client.query("BEGIN");
 

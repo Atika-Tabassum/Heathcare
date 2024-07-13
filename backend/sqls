@@ -77,8 +77,15 @@ CREATE TABLE medical_camps (
     location VARCHAR(255),
     camp_date TIMESTAMP,
     description TEXT,
+    image bytea, --pore add korsi
     FOREIGN KEY (doctor_user_id) REFERENCES users(user_id)
 );
+
+--  alter table medical_camps add column image bytea;
+
+-- \lo_import "C:/Users/User/Documents/hackathon/camp_default_img.jpg"
+-- return the oid of the image
+-- update medical_camps set image = lo_get(oid) ;
 
 CREATE TABLE medical_camp_doctors (
     camp_id INTEGER,
