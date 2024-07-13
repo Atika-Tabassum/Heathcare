@@ -35,6 +35,8 @@ app.use("/view", viewRouter);
 const doctorsRouter = require("./src/routers/doctorsRouter");
 app.use("/doctors", doctorsRouter);
 
+
+
 app.get('/healthcare/getHospitalInfo/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -89,6 +91,36 @@ app.get('/healthcare/doctors', async (req, res) => {
             status: "success",
             data: allDoctors.rows,
         });
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+
+app.get('/getambulance', async (req, res) => {
+    try {
+        const allAmbulences = await pool.query("SELECT * FROM ambulance_bookings");
+        const query = await pool.query("SELECT * FROM ambulance_bookings a join users u on a.hospital_user_id = u.user_id");
+        let ambulance_hospital_map = {};
+        query.rows.forEach(row => {
+            if (ambulance_hospital_map[row.booking_id] === undefined) {
+                ambulance_hospital_map[row.booking_id] = [];
+            }
+            ambulance_hospital_map[row.booking_id].push(row.name);
+        });
+        // for (const booking_id in ambulance_hospital_map) {
+        //     if (ambulance_hospital_map.hasOwnProperty(booking_id)) {
+        //         ambulance_hospital_map[booking_id].forEach(name => {
+        //             console.log(`Booking ID: ${booking_id}, Hospital Name: ${name}`);
+        //         });
+        //     }
+        // }
+        res.status(200).json({
+            status: "success",
+            data: allAmbulences.rows,
+            ambulance_hospital_map: ambulance_hospital_map
+        });
+        console.log(allAmbulences.rows);
     } catch (err) {
         console.error(err.message);
     }

@@ -55,8 +55,10 @@
 
 
 
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import Map from './Map';
+import Header from '../general/Header'
+import './emergency.css'
 
 const EmergencyService = () => {
   const [selectedLocation, setSelectedLocation] = useState({
@@ -73,14 +75,60 @@ const EmergencyService = () => {
     });
   };
 
+
+  const [ambulances, setambulances] = useState([]);
+
+  const getAmbulances = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/getambulance");
+      const jsonData = await response.json();
+      setambulances(jsonData.data);
+      console.log(jsonData.data);
+      sethospital_ambulance_map(jsonData.ambulance_hospital_map);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  const [hospital_ambulance_map, sethospital_ambulance_map] = useState([]);
+
+
+
+  useEffect(() => {
+    getAmbulances();
+  }, []);
+
   return (
     <Fragment>
-      <button onClick={() => updateLocation(23.8103, 90.4125, 'D')}>recenter</button>
-      <Map 
-        latitude={selectedLocation.latitude} 
-        longitude={selectedLocation.longitude} 
-        markerLabel={selectedLocation.markerLabel} 
-      />
+      <Header />
+      <body>
+        {/* <div className=".map-container">
+          <button onClick={() => updateLocation(23.8103, 90.4125, 'D')}>recenter</button>
+          <Map
+            latitude={selectedLocation.latitude}
+            longitude={selectedLocation.longitude}
+            markerLabel={selectedLocation.markerLabel}
+          />
+        </div> */}
+        <section>
+          <div className='ambulance-grid'>
+            {ambulances.map((ambulance, index) => (
+              <div className='ambulance-booking' key={index}>
+                <div style={{borderStyle:'solid', borderColor:'lightgray', borderWidth:'0.5px', margin:'10px', paddingLeft:'20px'}}> 
+                  <h4>Ambulance: {ambulance.booking_id}</h4>
+                  <h5>Hospital:</h5>
+                  <ul>
+                    {hospital_ambulance_map[ambulance.booking_id]?.map((name, idx) => (
+                      <li key={idx}>{name}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+      </body>
     </Fragment>
   );
 }

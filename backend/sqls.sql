@@ -70,6 +70,8 @@ CREATE TABLE ambulance_bookings (
     FOREIGN KEY (hospital_user_id) REFERENCES users(user_id)
 );
 
+INSERT INTO ambulance_bookings (patient_user_id, hospital_user_id, booking_date, is_booked) VALUES (1, 2, '2021-07-01 10:00:00', TRUE);
+
 
 CREATE TABLE medical_camps (
     camp_id SERIAL PRIMARY KEY,
