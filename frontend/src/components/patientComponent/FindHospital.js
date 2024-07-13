@@ -12,7 +12,7 @@ const FindHospital = () => {
     const handleToggleRound = () => {
         console.log('clicked');
         setIsCheckedRound(!isCheckedRound);
-        console.log(isCheckedRound+'set');
+        console.log(isCheckedRound + 'set');
     };
 
     const switchStyle = {
