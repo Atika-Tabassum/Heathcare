@@ -4,7 +4,7 @@ const port = 3001;
 const pool = require('./db');
 const cors = require('cors');
 const path = require('path');
-
+//const bodyParser = require("body-parser");
 //middleware
 app.use(cors());
 app.use(express.json());
@@ -16,9 +16,6 @@ const hospitalRouter=require("./src/routers/hospitalRouter");
 app.use("/patient",patientRouter);
 app.use("/users", myprofileRouter);
 app.use("/hospital",hospitalRouter);
-app.use('/', (req, res) => {
-    res.send('Welcome to Home Page');
-});
 
 const contentsRouter = require("./src/routers/contentsRouter");
 app.use("/contents", contentsRouter);
@@ -31,6 +28,7 @@ app.use("/view", viewCampRouter);
 
 const doctorsRouter = require("./src/routers/doctorsRouter");
 app.use("/doctors", doctorsRouter);
+
 
 // app.use('/', (req, res) => {
 //     res.send('Welcome to Home Page');

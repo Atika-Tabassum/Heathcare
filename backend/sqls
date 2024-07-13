@@ -20,7 +20,6 @@ CREATE TABLE doctors (
     FOREIGN KEY (hospital_user_id) REFERENCES users(user_id)
 );
 
-
 CREATE TABLE patients (
     patient_user_id INTEGER PRIMARY KEY,
     medical_history TEXT,
@@ -101,3 +100,36 @@ VALUES ('John Doe', 'john.doe@example.com','01345678989','buet', 'password123', 
 
 INSERT INTO content (topic, description, video) 
 VALUES ('Hygiene', '10 Steps to Washing Your Hands.',  'https://youtu.be/Br4sQmiJ1jU?si=3lvqP2u3OjoAyc66');
+--fariha
+CREATE TABLE specializations (
+    specialization_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) UNIQUE
+);
+CREATE TABLE doctor_specializations (
+    doctor_user_id INTEGER,
+    specialization_id INTEGER,
+    FOREIGN KEY (doctor_user_id) REFERENCES doctors(doctor_user_id),
+    FOREIGN KEY (specialization_id) REFERENCES specializations(specialization_id),
+    PRIMARY KEY (doctor_user_id, specialization_id)
+);
+ALTER TABLE doctors ADD COLUMN image VARCHAR(100); 
+ALTER TABLE doctors
+DROP COLUMN specialisation;
+INSERT INTO users (name, email, contact_no, address, user_type, password) VALUES
+  ('Dr. John Smith', 'john.smith@example.com', '1234567890', '123 Main St, City, Country', 'doctor', 'password123'),
+  ('Dr. Emily Brown', 'emily.brown@example.com', '9876543210', '456 Park Ave, Town, Country', 'doctor', 'securepass'),
+  ('City Hospital', 'city.hospital@example.com', '1112223333', '789 Elm St, City, Country', 'hospital', 'hospital123');
+;
+INSERT INTO doctors (doctor_user_id, image, hospital_user_id, description) VALUES
+  (1, 'doctor1.jpg', 3, 'Experienced cardiologist with over 10 years of practice.'),
+  (2, 'doctor2.jpg', 3, 'Specializes in pediatrics and child healthcare.');
+INSERT INTO specializations (name) VALUES
+  ('Cardiology'),
+  ('Dermatology'),
+  ('Neurology'),
+  ('Pediatrics'),
+  ('Psychiatry'),
+  ('Orthopedics'),
+  ('Ophthalmology');
+
+  

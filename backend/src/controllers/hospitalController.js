@@ -2,7 +2,7 @@ const pool = require("../../db");
 
 const registerHospital = async (req, res, next) => {
   try {
-    const { name, email, contact_no, address, password, user_type, medical_history } = req.body;
+    const { name, email, contact_no, address, password, user_type, description } = req.body;
     const image = req.file.filename; // Extract filename of the uploaded image
 
     // Insert into users table
@@ -18,7 +18,7 @@ const registerHospital = async (req, res, next) => {
     await pool.query(
       `INSERT INTO hospitals (hospital_user_id, description, image)
        VALUES ($1, $2, $3)`,
-      [userId, "Hospital description", image]
+      [userId, description, image]
     );
 
     res.status(201).json({ message: "Hospital registered successfully" });
