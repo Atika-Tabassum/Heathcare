@@ -1,0 +1,29 @@
+.hospital-data {
+    margin-top: -30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0 40px;
+    box-shadow: inset 0 -5px 5px rgba(55, 55, 55, 0.03);
+
+}
+
+
+.hospital-name {
+    padding: 40px 15px;
+}
+
+.hospital-address {
+    padding: 40px 15px;
+}
+
+.link-style
+{
+    text-decoration: none;
+    color: black;
+}
+
+.link-style:hover
+{
+    text-decoration:underline;
+    color: rgb(235, 104, 104);
+}

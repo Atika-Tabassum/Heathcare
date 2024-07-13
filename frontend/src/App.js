@@ -1,8 +1,12 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import './App.css';
 import Profile from './components/profile';
 import Home from './components/homeComponent/Home';
+import Login from './components/loginComponent/Login';
+import FindDoctor from './components/patientComponent/FindDoctor';
+import FindHospital from './components/patientComponent/FindHospital';
+import EmergencyService from './components/patientComponent/EmergencyService';
+
 import Content from './components/contentComponent/Content';
 import UserReg from './components/userRegComponent/userReg';
 import HospitalReg from './components/userRegComponent/hospitalReg';
@@ -18,6 +22,11 @@ function App() {
       <Fragment>
         <Routes>
           <Route path="/:userId/myprofile" element={<Profile />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/finddoctor" element={<FindDoctor />} />
+          <Route path="/findhospital" element={<FindHospital />} />
+          <Route path="/emergency" element={<EmergencyService />} />
           <Route path="/" element={<Home />} />
           <Route path="/contents" element={<Content />} />
           <Route path="/patient/register" element={<UserReg />} />
