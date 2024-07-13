@@ -11,11 +11,11 @@ import OrgMedicalCamp from "./components/doctorComponent/medicalcamp/OrgMedicalC
 import ViewCamp from "./components/doctorComponent/medicalcamp/ViewCamp";
 import Login from "./components/loginComponent/Login";
 import FindDoctor from "./components/patientComponent/FindDoctor";
-import FindHospital from "./components/patientComponent/FindHospital";
 import EmergencyService from "./components/patientComponent/EmergencyService";
+import FindHospital from "./components/patientComponent/FindHospital";
 import Notification from "./components/notificationComponent/Notification";
 import CampDetails from "./components/doctorComponent/medicalcamp/campdetails";
-
+// import Map from "./components/patientComponent/Map";
 
 function App() {
   return (
@@ -34,7 +34,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/finddoctor" element={<FindDoctor />} />
           <Route path="/findhospital" element={<FindHospital />} />
-          <Route path="/emergency" element={<EmergencyService />} />
+          <Route path="/emergencyservice" element={<EmergencyService />} />
           <Route path="/:userId/notifications" element={<Notification />} />
           <Route path="/:campId/camp_details" element={<CampDetails />} />
 
