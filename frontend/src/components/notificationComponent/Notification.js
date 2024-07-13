@@ -41,6 +41,10 @@ const Notification = () => {
     navigate(`/${userId}/myprofile`);
   };
 
+  const handleNotifications = () => {
+    navigate(`/${userId}/notifications`);
+  };
+
   useEffect(() => {
     setIsLoading(true);
     fetch(`http://localhost:3001/view/${userId}/notifications`)
@@ -74,15 +78,15 @@ const Notification = () => {
 
           <div className="spacer"></div>
 
-          <button className="user-dashboard" onClick={myProfile}>
+          <button className="user-dashboard" onClick={handleNotifications}>
             <div className="user-section">
-              <img src={img2} alt="user" className="user-icon" />
+              <img src={image3} alt="notifications" className="user-icon" />
             </div>
           </button>
 
-          <button className="user-dashboard">
+          <button className="user-dashboard" onClick={myProfile}>
             <div className="user-section">
-              <img src={image3} alt="notifications" className="user-icon" />
+              <img src={img2} alt="user" className="user-icon" />
             </div>
           </button>
         </div>
@@ -126,7 +130,7 @@ const Notification = () => {
               <li key={item.notification_id}>
                 {item.type === "invitation" ? (
                   <div>
-                     {item.description}
+                    {item.description}
                     <Link to={`/${item.camp_id}/camp_details`}>
                       <p>Learn More About the campaign</p>
                     </Link>
@@ -141,12 +145,11 @@ const Notification = () => {
                 ) : (
                   <div>
                     {item.description}
-                    <Link to={`/${item.camp_id}/camp_details`}> the camp
-                    </Link>
+                    <Link to={`/${item.camp_id}/camp_details`}> the camp</Link>
                   </div>
                 )}
-                <br/>
-                <br/>
+                <br />
+                <br />
               </li>
             ))
           ) : (

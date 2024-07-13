@@ -38,17 +38,18 @@ const DoctorHome = () => {
 
           <div className="spacer"></div>
 
+          <button className="user-dashboard" onClick={handleNotifications}>
+            <div className="user-section">
+              <img src={image3} alt="notifications" className="user-icon" />
+            </div>
+          </button>
+
           <button className="user-dashboard" onClick={myProfile}>
             <div className="user-section">
               <img src={img2} alt="user" className="user-icon" />
             </div>
           </button>
           
-          <button className="user-dashboard" onClick={handleNotifications}>
-            <div className="user-section">
-              <img src={image3} alt="notifications" className="user-icon" />
-            </div>
-          </button>
         </div>
       </header>
 
