@@ -35,6 +35,9 @@ app.use("/view", viewRouter);
 const doctorsRouter = require("./src/routers/doctorsRouter");
 app.use("/doctors", doctorsRouter);
 
+const ambulanceRouter = require("./src/routers/ambulanceRouter");
+app.use("/ambulance", ambulanceRouter);
+
 // app.use('/', (req, res) => {
 //     res.send('Welcome to Home Page');
 // });
