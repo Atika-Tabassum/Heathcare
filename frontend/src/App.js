@@ -4,7 +4,8 @@ import './App.css';
 import Profile from './components/profile';
 import Home from './components/homeComponent/Home';
 import Content from './components/contentComponent/Content';
-import UserReg from './components/userRegComponent/userReg'
+import UserReg from './components/userRegComponent/userReg';
+import HospitalReg from './components/userRegComponent/hospitalReg';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/contents" element={<Content />} />
           <Route path="/patient/register" element={<UserReg />} />
+          <Route path="/hospital/register" element={<HospitalReg />} />
         </Routes>
       </Fragment>
     </Router>
