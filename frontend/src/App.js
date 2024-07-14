@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Profile from './components/profile';
+import Profile from './components/profilesComponent/profile';
 import Home from './components/homeComponent/Home';
 import Login from './components/loginComponent/Login';
 import FindDoctor from './components/patientComponent/FindDoctor';
@@ -16,11 +16,6 @@ import OrgMedicalCamp from './components/doctorComponent/medicalcamp/OrgMedicalC
 import ViewCamp from './components/doctorComponent/medicalcamp/ViewCamp';
 
 import HospitalProfile from "./components/profilesComponent/hospital/HospitalProfile";
-import Content from "./components/contentComponent/Content";
-import Login from "./components/loginComponent/Login";
-import FindDoctor from "./components/patientComponent/FindDoctor";
-import EmergencyService from "./components/patientComponent/EmergencyService";
-import FindHospital from "./components/patientComponent/FindHospital";
 import Notification from "./components/notificationComponent/Notification";
 import CampDetails from "./components/doctorComponent/medicalcamp/campdetails";
 import FindAmbulance from "./components/patientComponent/FindAmbulance";

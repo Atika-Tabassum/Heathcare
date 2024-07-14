@@ -13,11 +13,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 const locationRouter = require("./src/routers/locationRouter");
 app.use("/location",locationRouter);
 
-const myprofileRouter = require("./src/routers/myprofileRouter");
-const patientRouter = require("./src/routers/patientRouter");
 const hospitalRouter=require("./src/routers/hospitalRouter");
-app.use("/patient",patientRouter);
-app.use("/users", myprofileRouter);
 app.use("/hospital",hospitalRouter);
 
 const contentsRouter = require("./src/routers/contentsRouter");
@@ -26,14 +22,13 @@ app.use("/contents", contentsRouter);
 const orgmedicalcampRouter = require("./src/routers/orgmedicalcampRouter");
 app.use("/org", orgmedicalcampRouter);
 
-const viewCampRouter = require("./src/routers/viewCampsRouter");
-app.use("/view", viewCampRouter);
 
 const doctorsRouter = require("./src/routers/doctorsRouter");
 app.use("/doctors", doctorsRouter);
 
 const patientRouter = require("./src/routers/patientRouter");
 app.use("/patient", patientRouter);
+
 const myprofileRouter = require("./src/routers/myprofileRouter");
 app.use("/users", myprofileRouter);
 
@@ -70,23 +65,14 @@ app.post('/login',async (req, res) => {
     }
 });
 
-const contentsRouter = require("./src/routers/contentsRouter");
-app.use("/contents", contentsRouter);
-
-const orgmedicalcampRouter = require("./src/routers/orgmedicalcampRouter");
-app.use("/org", orgmedicalcampRouter);
 
 const viewRouter = require("./src/routers/viewRouter");
 app.use("/view", viewRouter);
 
-const doctorsRouter = require("./src/routers/doctorsRouter");
-app.use("/doctors", doctorsRouter);
 
 const ambulanceRouter = require("./src/routers/ambulanceRouter");
 app.use("/ambulance", ambulanceRouter);
 
-const hospitalRouter = require("./src/routers/hospitalRouter");
-app.use("/hospital", hospitalRouter);
 // app.use('/', (req, res) => {
 //     res.send('Welcome to Home Page');
 // });
