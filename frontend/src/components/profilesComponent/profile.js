@@ -1,11 +1,11 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { useParams } from "react-router-dom";
-import Header from "./general/Header";
-import "./homeComponent/homepage.css";
-import "./homeComponent/page.css";
-import "./general/general.css";
-import image5 from "./homeComponent/contact-us.svg";
-import image6 from "./homeComponent/about-us.svg";
+import Header from "../general/Header";
+import "../homeComponent/homepage.css";
+import "../homeComponent/page.css";
+import "../general/general.css";
+import image5 from "../homeComponent/contact-us.svg";
+import image6 from "../homeComponent/about-us.svg";
 
 const Profile = () => {
   const { userId } = useParams();
