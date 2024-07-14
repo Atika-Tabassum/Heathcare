@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./userReg.css";
-import image from "./regimg.svg"
-
-import Backdrop from '../Backdrop/Backdrop';
-import Warning from '../Warning/Warning';
-import Successful from '../Successful/Successful';
-
-// import photo from "./photo.jpg"; // Import a placeholder photo
+import Header from "../general/Header";
+import image from "./regimg.svg";
+import Backdrop from "../Backdrop/Backdrop";
+import Warning from "../Warning/Warning";
+import Successful from "../Successful/Successful";
 
 function Registration() {
   const [name, setName] = useState("");
@@ -14,12 +12,54 @@ function Registration() {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [address, setAddress] = useState(""); // New address state
+  const [division, setDivision] = useState(""); // New state for division
+  const [district, setDistrict] = useState(""); // New state for district
+  const [upazila, setUpazila] = useState(""); // New state for upazila
+  const [unionName, setUnionName] = useState("");
+  const [wardName, setWardName] = useState("");
+  const [villageName, setVillageName] = useState("");
+  const [streetAddress, setStreetAddress] = useState("");
+  const [postalCode, setPostalCode] = useState("");
   const [medicalHistory, setMedicalHistory] = useState("");
+  const [divisions, setDivisions] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [upazilas, setUpazilas] = useState([]);
   const [show, setShow] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
   const [warning, setWarning] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
+
+  useEffect(() => {
+    fetchDivisions();
+  }, []);
+
+  const fetchDivisions = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/location/divisions");
+      if (!response.ok) {
+        throw new Error('Failed to fetch divisions');
+      }
+      const data = await response.json();
+      setDivisions(data);
+    } catch (error) {
+      console.error("Error fetching divisions:", error.message);
+      // Handle error state or display a message
+    }
+  };
+  
+  const fetchDistricts = async (divisionId) => {
+    // Fetch districts based on selected division
+    const response = await fetch(`http://localhost:3001/location/districts?division_id=${divisionId}`);
+    const data = await response.json();
+    setDistricts(data);
+  };
+
+  const fetchUpazilas = async (districtId) => {
+    // Fetch upazilas based on selected district
+    const response = await fetch(`http://localhost:3001/location/upazilas?district_id=${districtId}`);
+    const data = await response.json();
+    setUpazilas(data);
+  };
 
   const handleShowSuccess = () => {
     window.location.href = "/signin";
@@ -49,8 +89,40 @@ function Registration() {
     setPhoneNumber(event.target.value);
   };
 
-  const handleAddressChange = (event) => {
-    setAddress(event.target.value); // Handle address change
+  const handleDivisionChange = (event) => {
+    const divisionId = event.target.value;
+    setDivision(divisionId);
+    fetchDistricts(divisionId);
+  };
+
+  const handleDistrictChange = (event) => {
+    const districtId = event.target.value;
+    setDistrict(districtId);
+    fetchUpazilas(districtId);
+  };
+
+  const handleUpazilaChange = (event) => {
+    setUpazila(event.target.value);
+  };
+
+  const handleUnionNameChange = (event) => {
+    setUnionName(event.target.value);
+  };
+
+  const handleWardNameChange = (event) => {
+    setWardName(event.target.value);
+  };
+
+  const handleVillageNameChange = (event) => {
+    setVillageName(event.target.value);
+  };
+
+  const handleStreetAddressChange = (event) => {
+    setStreetAddress(event.target.value);
+  };
+
+  const handlePostalCodeChange = (event) => {
+    setPostalCode(event.target.value);
   };
 
   const handleMedicalHistoryChange = (event) => {
@@ -72,7 +144,23 @@ function Registration() {
   };
 
   const isFormValid = () => {
-    if (!name || !email || !password || !confirm || !phoneNumber || !address || !medicalHistory || !userType) {
+    if (
+      !name ||
+      !email ||
+      !password ||
+      !confirm ||
+      !phoneNumber ||
+      !division ||
+      !district ||
+      !upazila ||
+      !unionName ||
+      !wardName ||
+      !villageName ||
+      !streetAddress ||
+      !postalCode ||
+      !medicalHistory ||
+      !userType
+    ) {
       setWarning("Please complete all required fields.");
       setShowWarning(true);
       return false;
@@ -121,7 +209,14 @@ function Registration() {
           name,
           email,
           contact_no: phoneNumber,
-          address, // Include address in the request
+          division_id: division,
+          district_id: district,
+          upazila_id: upazila,
+          union_name: unionName,
+          ward_name: wardName,
+          village_name: villageName,
+          street_address: streetAddress,
+          postal_code: postalCode,
           password,
           user_type: userType,
           medical_history: medicalHistory,
@@ -145,10 +240,11 @@ function Registration() {
 
   return (
     <>
-      <br />
-      <br />
+     
+      
       <div className="signInContainer">
-      <img src={image} className="woman" alt="" />
+      <Header />
+        <img src={image} className="woman" alt="" />
         <div className="reg-form">
           <h1 className="signin-h1">REGISTER</h1>
           <div className="flex-start">
@@ -177,12 +273,85 @@ function Registration() {
               onChange={handlePhoneNumberChange}
               type="text"
             />
-            <label className="signin-label">Address*</label> {/* New address field */}
+            <label className="signin-label">Division*</label>
+            <select
+              className="signin-input"
+              value={division}
+              onChange={handleDivisionChange}
+            >
+              <option value="">Select Division</option>
+              {divisions.map((division) => (
+                <option key={division.division_id} value={division.division_id}>
+                  {division.division_name}
+                </option>
+              ))}
+            </select>
+            <label className="signin-label">District*</label>
+            <select
+              className="signin-input"
+              value={district}
+              onChange={handleDistrictChange}
+              disabled={!division}
+            >
+              <option value="">Select District</option>
+              {districts.map((district) => (
+                <option key={district.district_id} value={district.district_id}>
+                  {district.district_name}
+                </option>
+              ))}
+            </select>
+            <label className="signin-label">Upazila*</label>
+            <select
+              className="signin-input"
+              value={upazila}
+              onChange={handleUpazilaChange}
+              disabled={!district}
+            >
+              <option value="">Select Upazila</option>
+              {upazilas.map((upazila) => (
+                <option key={upazila.upazila_id} value={upazila.upazila_id}>
+                  {upazila.upazila_name}
+                </option>
+              ))}
+            </select>
+            <label className="signin-label">Union Name*</label>
             <input
               className="signin-input"
-              value={address}
-              placeholder="123 Main St, City, Country"
-              onChange={handleAddressChange}
+              value={unionName}
+              placeholder="Union Name"
+              onChange={handleUnionNameChange}
+              type="text"
+            />
+            <label className="signin-label">Ward Name*</label>
+            <input
+              className="signin-input"
+              value={wardName}
+              placeholder="Ward Name"
+              onChange={handleWardNameChange}
+              type="text"
+            />
+            <label className="signin-label">Village Name*</label>
+            <input
+              className="signin-input"
+              value={villageName}
+              placeholder="Village Name"
+              onChange={handleVillageNameChange}
+              type="text"
+            />
+            <label className="signin-label">Street Address*</label>
+            <input
+              className="signin-input"
+              value={streetAddress}
+              placeholder="Street Address"
+              onChange={handleStreetAddressChange}
+              type="text"
+            />
+            <label className="signin-label">Postal Code*</label>
+            <input
+              className="signin-input"
+              value={postalCode}
+              placeholder="Postal Code"
+              onChange={handlePostalCodeChange}
               type="text"
             />
             <label className="signin-label">Medical History*</label>
@@ -245,7 +414,10 @@ function Registration() {
         {showSuccess && (
           <>
             <Backdrop />
-            <Successful message={`Registered successfully!\nWelcome to pagolkhana`} onClose={handleShowSuccess} />
+            <Successful
+              message={`Registered successfully!\nWelcome to pagolkhana`}
+              onClose={handleShowSuccess}
+            />
           </>
         )}
       </div>
