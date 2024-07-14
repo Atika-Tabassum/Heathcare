@@ -97,14 +97,14 @@ const OrgMedicalCamp = () => {
       <Header />
       <navbar className="navbar">
         <div className="navbar-icons">
-          <img src={img1} alt="contact us" className="contact-us-icon" />
+          <img src={img2} alt="contact us" className="contact-us-icon" />
           <div className="tool-tip">Contact Us</div>
         </div>
       </navbar>
 
       <navbar className="navbar2">
         <div className="bottom-icon">
-          <img src={img2} alt="about us" className="about-us-icon" />
+          <img src={img1} alt="about us" className="about-us-icon" />
           <div className="tool-tip">About Us</div>
         </div>
       </navbar>

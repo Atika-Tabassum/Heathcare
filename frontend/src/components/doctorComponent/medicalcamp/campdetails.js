@@ -5,6 +5,10 @@ import "../../homeComponent/page.css";
 import "../../general/general.css";
 import img1 from "../../general/logo.svg";
 import img2 from "../../general/user.svg";
+import img3 from "../../general/location.svg";
+import img4 from "../../general/phone.svg";
+import img5 from "../../general/email.svg";
+import img6 from "../../general/calendar.svg";
 import image3 from "../../general/notification.svg";
 import image5 from "../../homeComponent/contact-us.svg";
 import image6 from "../../homeComponent/about-us.svg";
@@ -123,15 +127,31 @@ const CampDetails = () => {
                     style={{ width: "100%", height: "auto" }}
                   />
                 )}
+                <br/>
+                <br/>
                 {/* </div> */}
-                <p>Location : {item.location}</p>
-                <p>Date : {item.camp_date}</p>
+                <div className="location-info">
+                  <img src={img3} alt="location" className="location-icon" />
+                  <span>{item.location}</span>
+                </div>
+                <br />
+                <div className="location-info">
+                  <img src={img6} alt="location" className="location-icon" />
+                  <span>{item.camp_date}</span>
+                </div>
                 <p>
                   <b>Organizer</b>{" "}
                 </p>
                 <p>Name : {item.name}</p>
-                <p>Email : {item.email}</p>
-                <p>Contact_no : {item.contact_no}</p>
+                <div className="location-info">
+                  <img src={img5} alt="location" className="location-icon" />
+                  <span>{item.email}</span>
+                </div>
+                <br />
+                <div className="location-info">
+                  <img src={img4} alt="location" className="location-icon" />
+                  <span>{item.contact_no}</span>
+                </div>
                 <p>
                   <b>Other Doctors </b>
                 </p>
@@ -139,8 +159,23 @@ const CampDetails = () => {
                   {doctors.map((doctor) => (
                     <li key={doctor.email}>
                       <p>Name : {doctor.name}</p>
-                      <p>Email : {doctor.email}</p>
-                      <p>contact_no : {doctor.contact_no}</p>
+                      <div className="location-info">
+                        <img
+                          src={img5}
+                          alt="location"
+                          className="location-icon"
+                        />
+                        <span>{doctor.email}</span>
+                      </div>
+                      <br />
+                      <div className="location-info">
+                        <img
+                          src={img4}
+                          alt="location"
+                          className="location-icon"
+                        />
+                        <span>{doctor.contact_no}</span>
+                      </div>
                     </li>
                   ))}
                 </ul>

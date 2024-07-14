@@ -39,3 +39,15 @@
     bottom: 6px;
     right: -100px;
 }
+
+.location-info {
+    display: flex;
+    align-items: center;
+  }
+  
+.location-icon {
+    width: 16px; 
+    height: 16px; 
+    margin-right: 8px;
+  }
+  
