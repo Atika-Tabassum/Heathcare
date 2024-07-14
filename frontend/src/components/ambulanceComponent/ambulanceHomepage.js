@@ -37,9 +37,15 @@ const AmbulanceHomepage = () => {
         navigate(`/ambulance/${id}`);
     };
 
+    const handleButtonClick = () => {
+        navigate("/bookambulance");
+    };
+
     return (
         <div className="page-container">
+            <button className="booking" onClick={handleButtonClick}>Book an ambulance</button>
             <h1 className="header">Which type of ambulance do you need?</h1>
+            
             <div className="container">
                 {ambulanceList.map((item) => (
                     <div key={item.id} className="card" onClick={() => handleCardClick(item.id)}>

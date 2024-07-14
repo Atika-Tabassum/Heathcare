@@ -15,6 +15,7 @@ import Notification from "./components/notificationComponent/Notification";
 import CampDetails from "./components/doctorComponent/medicalcamp/campdetails";
 import FindAmbulance from "./components/patientComponent/FindAmbulance";
 import AmbulanceHomepage from "./components/ambulanceComponent/ambulanceHomepage";
+import BookAmbulance from "./components/ambulanceComponent/bookAmbulance";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
             element={<FindAmbulance />}
           />
           <Route path="/ambulanceHomepage" element = {<AmbulanceHomepage />}/>
+          <Route path="/bookambulance" element={<BookAmbulance />} /> // add this line
         </Routes>
       </Fragment>
     </Router>
