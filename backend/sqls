@@ -464,3 +464,20 @@ INSERT INTO users (name, address, user_type) VALUES
 ('Ayesha Haque Hospital', 'Beanibazar, Sylhet', 'hospital');
 INSERT INTO users (name, address, user_type) VALUES
 ('Charkhai Multicare Hospital', 'Beanibazar', 'hospital');
+--location tables
+ALTER TABLE users DROP COLUMN address;
+ALTER TABLE users ADD COLUMN location_id (INT);
+CREATE TABLE divisions (
+    division_id INTEGER PRIMARY KEY,
+    division_name VARCHAR(255) NOT NULL
+);
+CREATE TABLE districts (
+    district_id INTEGER PRIMARY KEY,
+    district_name VARCHAR(255) NOT NULL,
+    division_id INTEGER REFERENCES divisions(division_id) ON DELETE CASCADE
+);
+CREATE TABLE upazilas (
+    upazila_id INTEGER PRIMARY KEY,
+    upazila_name VARCHAR(255) NOT NULL,
+    district_id INTEGER REFERENCES districts(district_id) ON DELETE CASCADE
+);

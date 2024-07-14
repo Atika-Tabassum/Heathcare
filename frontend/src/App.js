@@ -18,6 +18,7 @@ import ViewCamp from './components/doctorComponent/medicalcamp/ViewCamp';
 
 function App() {
   return (
+    
     <Router>
       <Fragment>
         <Routes>
@@ -38,6 +39,7 @@ function App() {
         </Routes>
       </Fragment>
     </Router>
+    
   );
 }
 
