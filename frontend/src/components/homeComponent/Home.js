@@ -27,7 +27,7 @@ const Home = () => {
   };
 
   const emergencyService = () => {
-    window.location.href = "http://localhost:3000/emergency";
+    window.location.href = "http://localhost:3000/ambulanceHomepage";
   };
 
   const findHospital = () => {

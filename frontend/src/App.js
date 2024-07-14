@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// import "./App.css";
 import Profile from "./components/profile";
 import Home from "./components/homeComponent/Home";
 import Content from "./components/contentComponent/Content";
@@ -14,6 +13,8 @@ import FindHospital from "./components/patientComponent/FindHospital";
 import EmergencyService from "./components/patientComponent/EmergencyService";
 import Notification from "./components/notificationComponent/Notification";
 import CampDetails from "./components/doctorComponent/medicalcamp/campdetails";
+import FindAmbulance from "./components/patientComponent/FindAmbulance";
+import AmbulanceHomepage from "./components/ambulanceComponent/ambulanceHomepage";
 
 function App() {
   return (
@@ -34,6 +35,11 @@ function App() {
           <Route path="/emergency" element={<EmergencyService />} />
           <Route path="/:userId/notifications" element={<Notification />} />
           <Route path="/:campId/camp_details" element={<CampDetails />} />
+          <Route
+            path="/findambulance/:patientUserId/:hospitalUserId"
+            element={<FindAmbulance />}
+          />
+          <Route path="/ambulanceHomepage" element = {<AmbulanceHomepage />}/>
         </Routes>
       </Fragment>
     </Router>

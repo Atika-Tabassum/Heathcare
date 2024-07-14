@@ -1,0 +1,53 @@
+body {
+    background-color: #f2cddd; /* Light pink background for the whole page */
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three columns */
+    gap: 30px; /* Increased space between cards */
+    justify-items: center;
+    padding: 16px;
+}
+
+.card {
+    border: 1px solid #e8a7c5;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(184, 24, 82, 0.1);
+    width: 70%; /* Slightly reduced width within grid cell to prevent overlap */
+    height: 200px; /* Vertically long card */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition */
+    background-color: #efe5e9; /* Dark pink background for the card */
+    color: #0a0707; /* White text color for contrast */
+
+}
+
+.card:hover {
+    transform: translateY(-10px); /* Move the card up slightly */
+    box-shadow: 0 10px 20px rgba(175, 24, 97, 0.2); /* Darker shadow */
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.card p {
+    margin: 8px 0 0;
+}
+
+.header {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 2em;
+    color: #333;
+}
