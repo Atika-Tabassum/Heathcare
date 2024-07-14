@@ -4,3 +4,8 @@ body {
     font-family: Montserrat, 'Arial';
     height: 700px;
 }
+
+.spacer {
+    flex-grow: 1;
+  }
+  

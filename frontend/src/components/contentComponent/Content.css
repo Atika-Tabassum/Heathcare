@@ -13,3 +13,12 @@
     height: 100% ;
   }
   
+
+  .video-grid
+  {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 120px;
+    grid-gap: 20px;
+    padding: 20px;
+  }

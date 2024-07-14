@@ -180,10 +180,18 @@ CREATE TABLE appointments (
 CREATE TABLE notifications (
     notification_id SERIAL PRIMARY KEY,
     user_id INTEGER,
+    camp_id INTEGER, ---pore add korsi
     message TEXT,
     is_read BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    type VARCHAR(50), ---pore add korsi
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (camp_id) REFERENCES medical_camps(camp_id)  ---pore add korsi
 );
+
+
+
+-- sql
+-- alter table notifications add column type varchar(50);
 
 
 CREATE TABLE ambulance_bookings (
@@ -196,6 +204,8 @@ CREATE TABLE ambulance_bookings (
     FOREIGN KEY (hospital_user_id) REFERENCES users(user_id)
 );
 
+INSERT INTO ambulance_bookings (patient_user_id, hospital_user_id, booking_date, is_booked) VALUES (1, 2, '2021-07-01 10:00:00', TRUE);
+
 
 CREATE TABLE medical_camps (
     camp_id SERIAL PRIMARY KEY,
@@ -203,8 +213,15 @@ CREATE TABLE medical_camps (
     location VARCHAR(255),
     camp_date TIMESTAMP,
     description TEXT,
+    image bytea, --pore add korsi
     FOREIGN KEY (doctor_user_id) REFERENCES users(user_id)
 );
+
+--  alter table medical_camps add column image bytea;
+
+-- \lo_import "C:/Users/User/Documents/hackathon/camp_default_img.jpg"
+-- return the oid of the image
+-- update medical_camps set image = lo_get(oid) ;
 
 CREATE TABLE medical_camp_doctors (
     camp_id INTEGER,
@@ -229,19 +246,31 @@ CREATE TABLE content(
 );
 
 
+
+
+INSERT INTO users (NAME, EMAIL,CONTACT_NO,ADDRESS, PASSWORD, USER_TYPE) VALUES ('doctor1', 'doctor1@mail.com', '01345678989', 'buet', 'password123', 'doctor');
+
+
+
 INSERT INTO users (NAME, EMAIL,CONTACT_NO,ADDRESS, PASSWORD, USER_TYPE)
 VALUES ('John Doe', 'john.doe@example.com','01345678989','buet', 'password123', 'patient');
 
+INSERT INTO doctors (doctor_user_id, specialisation, hospital_user_id, description) VALUES (379, 'Cardiologist', 265, 'Dr. doctor1 is a cardiologist with 10 years of experience.');
+
 
 INSERT INTO users(name, email, contact_no, address, password, user_type) values('Square Hospitals Ltd.', 'https://www.squarehospital.com/', '+8809610010616', 'Nafi Tower, Level-3 (2nd floor),53 Gulshan Avenue, Gulshan-1, Dhaka-
+INSERT INTO content (topic, description, video) 
+VALUES ('Hygiene', '10 Steps to Washing Your Hands.',  'https://youtu.be/Br4sQmiJ1jU?si=3lvqP2u3OjoAyc66');
+
+
+
+INSERT INTO users(name, email, contact_no, address, password, user_type) values('Square Hospitals Ltd.', 'square@mail', '+8809610010616', 'Nafi Tower, Level-3 (2nd floor),53 Gulshan Avenue, Gulshan-1, Dhaka-
  1212','1234', 'hospital');
-
-
 
 INSERT INTO users (name, address, user_type) VALUES
 ('Anwer Khan Modern Medical College', 'Dhanmondi, Dhaka', 'hospital');
 INSERT INTO users (name, address, user_type) VALUES
-('Aichi Hospital', 'Dhaka', 'hospital');
+('Aichi Hospital', 'Dhaka', 'hospital'),
 INSERT INTO users (name, address, user_type) VALUES
 ('Arif Memorial Hospital', 'Barishal', 'hospital');
 INSERT INTO users (name, address, user_type) VALUES

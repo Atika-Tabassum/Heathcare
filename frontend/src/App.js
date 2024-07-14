@@ -15,6 +15,16 @@ import DoctorHome from './components/doctorComponent/DoctorHome';
 import OrgMedicalCamp from './components/doctorComponent/medicalcamp/OrgMedicalCamp';
 import ViewCamp from './components/doctorComponent/medicalcamp/ViewCamp';
 
+import HospitalProfile from "./components/profilesComponent/hospital/HospitalProfile";
+import Content from "./components/contentComponent/Content";
+import Login from "./components/loginComponent/Login";
+import FindDoctor from "./components/patientComponent/FindDoctor";
+import EmergencyService from "./components/patientComponent/EmergencyService";
+import FindHospital from "./components/patientComponent/FindHospital";
+import Notification from "./components/notificationComponent/Notification";
+import CampDetails from "./components/doctorComponent/medicalcamp/campdetails";
+import DoctorProfile from "./components/profilesComponent/doctor/DoctorProfile";
+import Map from "./components/patientComponent/Map";
 
 function App() {
   return (
@@ -23,6 +33,14 @@ function App() {
       <Fragment>
         <Routes>
           <Route path="/:userId/myprofile" element={<Profile />} />
+          <Route path="/:userId/hospitalprofile" element={<HospitalProfile />} />
+          <Route path="/:userId/doctorprofile" element={<DoctorProfile />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/contents" element={<Content />} />
+          <Route path="/patient/register" element={<UserReg />} />
+          <Route path="/:userId/doctorHome" element={<DoctorHome />} />
+          <Route path="/:userId/orgmedicalcamp" element={<OrgMedicalCamp />} />
+          <Route path="/:userId/org_camps" element={<ViewCamp />} />
           <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/finddoctor" element={<FindDoctor />} />
@@ -36,6 +54,9 @@ function App() {
           <Route path="/:userId/doctorHome" element={<DoctorHome />} />
           <Route path="/:userId/orgmedicalcamp" element={<OrgMedicalCamp />} />  
           <Route path="/:userId/org_camps" element={<ViewCamp />} />
+          <Route path="/emergencyservice" element={<EmergencyService />} />
+          <Route path="/:userId/notifications" element={<Notification />} />
+          <Route path="/:campId/camp_details" element={<CampDetails />} />
         </Routes>
       </Fragment>
     </Router>
