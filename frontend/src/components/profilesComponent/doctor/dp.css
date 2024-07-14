@@ -1,0 +1,31 @@
+.img1
+{
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    border-style: solid;
+    border-width: 0.5px;
+    margin: 0 auto;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 15px;
+}
+
+.doctor-info
+{
+    margin: 0 250px;
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 70px;
+}
+
+.doctor-info-list
+{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    padding: 0 45px;
+}

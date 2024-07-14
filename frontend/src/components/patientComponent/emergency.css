@@ -1,0 +1,13 @@
+.ambulance-grid
+{
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: space-evenly;
+    padding: 10px;
+    margin: 10px;
+    /* border: 1px solid #ccc; */
+    /* background-color: lightyellow; */
+    width: 40%;
+}
