@@ -23,6 +23,9 @@ import EmergencyService from "./components/patientComponent/EmergencyService";
 import FindHospital from "./components/patientComponent/FindHospital";
 import Notification from "./components/notificationComponent/Notification";
 import CampDetails from "./components/doctorComponent/medicalcamp/campdetails";
+import FindAmbulance from "./components/patientComponent/FindAmbulance";
+import AmbulanceHomepage from "./components/ambulanceComponent/ambulanceHomepage";
+import BookAmbulance from "./components/ambulanceComponent/bookAmbulance";
 import DoctorProfile from "./components/profilesComponent/doctor/DoctorProfile";
 import Map from "./components/patientComponent/Map";
 
@@ -57,6 +60,12 @@ function App() {
           <Route path="/emergencyservice" element={<EmergencyService />} />
           <Route path="/:userId/notifications" element={<Notification />} />
           <Route path="/:campId/camp_details" element={<CampDetails />} />
+          <Route
+            path="/findambulance/:patientUserId/:hospitalUserId"
+            element={<FindAmbulance />}
+          />
+          <Route path="/ambulanceHomepage" element = {<AmbulanceHomepage />}/>
+          <Route path="/bookambulance" element={<BookAmbulance />} /> // add this line
         </Routes>
       </Fragment>
     </Router>

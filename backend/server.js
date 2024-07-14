@@ -82,6 +82,14 @@ app.use("/view", viewRouter);
 const doctorsRouter = require("./src/routers/doctorsRouter");
 app.use("/doctors", doctorsRouter);
 
+const ambulanceRouter = require("./src/routers/ambulanceRouter");
+app.use("/ambulance", ambulanceRouter);
+
+const hospitalRouter = require("./src/routers/hospitalRouter");
+app.use("/hospital", hospitalRouter);
+// app.use('/', (req, res) => {
+//     res.send('Welcome to Home Page');
+// });
 
 
 app.get('/healthcare/getHospitalInfo/:id', async (req, res) => {

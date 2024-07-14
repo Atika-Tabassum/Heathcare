@@ -246,6 +246,13 @@ CREATE TABLE content(
 );
 
 
+CREATE TABLE ambulance (
+    ambulance_id SERIAL PRIMARY KEY,
+    hospital_user_id INTEGER,
+    type VARCHAR(50), -- 'AC', 'ICU', 'CCU', 'NICU', 'Freezing'
+    count INTEGER,
+    FOREIGN KEY (hospital_user_id) REFERENCES hospitals(hospital_user_id)
+);
 
 
 INSERT INTO users (NAME, EMAIL,CONTACT_NO,ADDRESS, PASSWORD, USER_TYPE) VALUES ('doctor1', 'doctor1@mail.com', '01345678989', 'buet', 'password123', 'doctor');
