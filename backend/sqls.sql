@@ -98,6 +98,10 @@ INSERT INTO users (NAME, EMAIL,CONTACT_NO,ADDRESS, PASSWORD, USER_TYPE)
 VALUES ('John Doe', 'john.doe@example.com','01345678989','buet', 'password123', 'patient');
 
 
+INSERT INTO users (NAME, EMAIL,CONTACT_NO,ADDRESS, PASSWORD, USER_TYPE)
+VALUES ('John Smith', 'smith@gmail.com","01345678989','buet', 'password123', 'patient');
+
+
 INSERT INTO content (topic, description, video) 
 VALUES ('Hygiene', '10 Steps to Washing Your Hands.',  'https://youtu.be/Br4sQmiJ1jU?si=3lvqP2u3OjoAyc66');
 --fariha

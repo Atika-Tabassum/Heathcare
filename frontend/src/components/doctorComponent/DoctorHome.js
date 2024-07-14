@@ -61,7 +61,8 @@ const DoctorHome = () => {
         </div>
         <div>*services*</div>
         <div className="services">
-          <button className="service-icons">
+          <button className="service-icons"
+          onClick={() => navigate(`/${userId}/appointments`)}>
             <img src={image1} alt="appointment" className="clinic-icon" />
             <div className="tool-tip">appointments</div>
           </button>

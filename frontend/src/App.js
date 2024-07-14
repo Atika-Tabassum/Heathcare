@@ -24,6 +24,8 @@ import BookAmbulance from "./components/ambulanceComponent/bookAmbulance";
 import DoctorProfile from "./components/profilesComponent/doctor/DoctorProfile";
 import Map from "./components/patientComponent/Map";
 
+import Appointment from './components/doctorComponent/appointment';
+
 function App() {
   return (
     
@@ -60,7 +62,8 @@ function App() {
             element={<FindAmbulance />}
           />
           <Route path="/ambulanceHomepage" element = {<AmbulanceHomepage />}/>
-          <Route path="/bookambulance" element={<BookAmbulance />} /> // add this line
+          <Route path="/bookambulance" element={<BookAmbulance />} /> 
+          <Route path="/:userId/appointments" element={<Appointment />} />
         </Routes>
       </Fragment>
     </Router>

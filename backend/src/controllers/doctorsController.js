@@ -91,4 +91,28 @@ const addSpecialization = async (req, res) => {
   }
 };
 
-module.exports = { getDoctors, registerDoctor, getSpecializations, addSpecialization };
+const getAppointments = async (req, res) => {
+  try {
+    const appointments = await pool.query(
+      `SELECT a.*, u.name AS patient_name, u.contact_no AS patient_contact_no
+       FROM appointments a
+       JOIN users u ON a.patient_user_id = u.user_id
+       WHERE a.doctor_user_id = $1`,
+      [req.params.userId]
+    );
+
+    if (appointments.rows.length === 0) {
+      res.status(404).json({ message: "No appointments found" });
+    } else {
+      res.status(200).json({
+        message: "Appointments loaded successfully",
+        data: appointments.rows,
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching appointments:", error);
+    res.status(500).json({ message: "An error occurred. Please try again later." });
+  }
+};
+
+module.exports = { getDoctors, registerDoctor, getSpecializations, addSpecialization, getAppointments };
