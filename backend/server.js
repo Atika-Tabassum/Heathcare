@@ -38,6 +38,8 @@ app.use("/doctors", doctorsRouter);
 const ambulanceRouter = require("./src/routers/ambulanceRouter");
 app.use("/ambulance", ambulanceRouter);
 
+const hospitalRouter = require("./src/routers/hospitalRouter");
+app.use("/hospital", hospitalRouter);
 // app.use('/', (req, res) => {
 //     res.send('Welcome to Home Page');
 // });
