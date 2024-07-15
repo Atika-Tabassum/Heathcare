@@ -205,6 +205,8 @@ app.get('/getambulance', async (req, res) => {
             console.error(err.message);
         }
     });
+
+    
 });
 
 app.listen(port, () => {
