@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Profile from './components/profile';
+import Profile from './components/profilesComponent/profile';
 import Home from './components/homeComponent/Home';
 import Login from './components/loginComponent/Login';
 import FindDoctor from './components/patientComponent/FindDoctor';
@@ -15,6 +15,16 @@ import DoctorHome from './components/doctorComponent/DoctorHome';
 import OrgMedicalCamp from './components/doctorComponent/medicalcamp/OrgMedicalCamp';
 import ViewCamp from './components/doctorComponent/medicalcamp/ViewCamp';
 
+import HospitalProfile from "./components/profilesComponent/hospital/HospitalProfile";
+import Notification from "./components/notificationComponent/Notification";
+import CampDetails from "./components/doctorComponent/medicalcamp/campdetails";
+import FindAmbulance from "./components/patientComponent/FindAmbulance";
+import AmbulanceHomepage from "./components/ambulanceComponent/ambulanceHomepage";
+import BookAmbulance from "./components/ambulanceComponent/bookAmbulance";
+import DoctorProfile from "./components/profilesComponent/doctor/DoctorProfile";
+import Map from "./components/patientComponent/Map";
+
+import Appointment from './components/doctorComponent/appointment';
 
 function App() {
   return (
@@ -23,6 +33,14 @@ function App() {
       <Fragment>
         <Routes>
           <Route path="/:userId/myprofile" element={<Profile />} />
+          <Route path="/:userId/hospitalprofile" element={<HospitalProfile />} />
+          <Route path="/:userId/doctorprofile" element={<DoctorProfile />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/contents" element={<Content />} />
+          <Route path="/patient/register" element={<UserReg />} />
+          <Route path="/:userId/doctorHome" element={<DoctorHome />} />
+          <Route path="/:userId/orgmedicalcamp" element={<OrgMedicalCamp />} />
+          <Route path="/:userId/org_camps" element={<ViewCamp />} />
           <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/finddoctor" element={<FindDoctor />} />
@@ -36,6 +54,16 @@ function App() {
           <Route path="/:userId/doctorHome" element={<DoctorHome />} />
           <Route path="/:userId/orgmedicalcamp" element={<OrgMedicalCamp />} />  
           <Route path="/:userId/org_camps" element={<ViewCamp />} />
+          <Route path="/emergencyservice" element={<EmergencyService />} />
+          <Route path="/:userId/notifications" element={<Notification />} />
+          <Route path="/:campId/camp_details" element={<CampDetails />} />
+          <Route
+            path="/findambulance/:patientUserId/:hospitalUserId"
+            element={<FindAmbulance />}
+          />
+          <Route path="/ambulanceHomepage" element = {<AmbulanceHomepage />}/>
+          <Route path="/bookambulance" element={<BookAmbulance />} /> 
+          <Route path="/:userId/appointments" element={<Appointment />} />
         </Routes>
       </Fragment>
     </Router>
