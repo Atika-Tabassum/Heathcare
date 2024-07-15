@@ -60,6 +60,7 @@ import Map from './Map';
 import Header from '../general/Header'
 import './emergency.css'
 
+
 const EmergencyService = () => {
   const [selectedLocation, setSelectedLocation] = useState({
     latitude: 6.92708,
@@ -77,21 +78,49 @@ const EmergencyService = () => {
 
 
   const [ambulances, setambulances] = useState([]);
+  const [hospital_ambulance_map, sethospital_ambulance_map] = useState([]);
+  const [availableArr, setavailableArr] = useState([]);
+  const [totalAvailable, settotalAvailable] = useState(0);
 
   const getAmbulances = async () => {
     try {
       const response = await fetch("http://localhost:3001/getambulance");
       const jsonData = await response.json();
       setambulances(jsonData.data);
+      console.log("pppppp");
       console.log(jsonData.data);
       sethospital_ambulance_map(jsonData.ambulance_hospital_map);
+      setavailableArr(jsonData.availableAmbulances);
+      console.log("///");
+      console.log(jsonData.availableAmbulances);
+      console.log(".....");
+      settotalAvailable(jsonData.totalAvailable);
+      console.log(jsonData.totalAvailable);
     } catch (error) {
       console.error(error.message);
     }
   }
 
-  const [hospital_ambulance_map, sethospital_ambulance_map] = useState([]);
-
+  const bookAmbulance = async (id) => {
+    console.log("booked");
+    try {
+      const bookingId = id;
+      console.log("hihihi" + bookingId);
+      const response = await fetch(`http://localhost:3001/bookambulance/${bookingId}`,
+        {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const jsonData = await response.json();
+      console.log(jsonData);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
 
 
   useEffect(() => {
@@ -114,13 +143,14 @@ const EmergencyService = () => {
           <div className='ambulance-grid'>
             {ambulances.map((ambulance, index) => (
               <div className='ambulance-booking' key={index}>
-                <div style={{borderStyle:'solid', borderColor:'lightgray', borderWidth:'0.5px', margin:'10px', paddingLeft:'20px'}}> 
-                  <h4>Ambulance: {ambulance.booking_id}</h4>
+                <div style={{ borderStyle: 'solid', borderColor: 'lightgray', borderWidth: '0.5px', margin: '10px', paddingLeft: '20px' }}>
+                  <h4>Ambulance: {ambulance}</h4>
                   <h5>Hospital:</h5>
                   <ul>
-                    {hospital_ambulance_map[ambulance.booking_id]?.map((name, idx) => (
+                    {hospital_ambulance_map[ambulance]?.map((name, idx) => (
                       <li key={idx}>{name}</li>
                     ))}
+                    {availableArr.includes(ambulance) ? <button style={{ fontFamily: 'Montserrat', backgroundColor: 'lightblue', color: 'black', border: 'none', borderRadius: '2px', padding: '5px' }} onClick={() => { bookAmbulance(ambulance) }}>Book</button> : <button style={{ fontFamily: 'Montserrat', backgroundColor: 'lightcoral', color: 'black', border: 'none', borderRadius: '2px', padding: '5px' }}>Not Available</button>}
                   </ul>
                 </div>
               </div>

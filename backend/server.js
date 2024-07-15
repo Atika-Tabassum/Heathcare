@@ -100,6 +100,10 @@ app.get('/healthcare/doctors', async (req, res) => {
 app.get('/getambulance', async (req, res) => {
     try {
         const allAmbulences = await pool.query("SELECT * FROM ambulance_bookings");
+        const arr = [];
+        allAmbulences.rows.forEach(row => {
+            arr.push(row.booking_id);
+        });
         const query = await pool.query("SELECT * FROM ambulance_bookings a join users u on a.hospital_user_id = u.user_id");
         let ambulance_hospital_map = {};
         query.rows.forEach(row => {
@@ -115,15 +119,51 @@ app.get('/getambulance', async (req, res) => {
         //         });
         //     }
         // }
+        const availableAmbulances = await pool.query("SELECT * FROM ambulance_bookings WHERE is_booked = 'true'");
+        const availableAmbulanceArray = [];
+        availableAmbulances.rows.forEach(row => {
+            availableAmbulanceArray.push(row.booking_id);
+        });
+        // for(let i = 0; i < availableAmbulanceArray.length; i++) {
+        //     console.log(availableAmbulanceArray[i]);
+        // }
+        const totalAvailable = await pool.query("SELECT COUNT(*) FROM ambulance_bookings WHERE is_booked = 'true'");
+        console.log(totalAvailable.rows[0].count);
         res.status(200).json({
             status: "success",
-            data: allAmbulences.rows,
-            ambulance_hospital_map: ambulance_hospital_map
+            data: arr,
+            ambulance_hospital_map: ambulance_hospital_map,
+            availableAmbulances: availableAmbulanceArray,
+            totalAvailable: totalAvailable.rows[0].count
         });
-        console.log(allAmbulences.rows);
+        // console.log(allAmbulences.rows);
     } catch (err) {
         console.error(err.message);
     }
+
+
+    app.put('/bookambulance/:id', async (req, res) => {
+        try {
+            console.log(`Received PUT request to /bookambulance/${req.params.id}`);
+            const { id } = req.params;
+            const bookingId = parseInt(id, 10);
+            console.log(bookingId + 'server');
+            const response = await pool.query("UPDATE ambulance_bookings SET is_booked = 'true' WHERE booking_id = $1", [bookingId]);
+            console.log('Database response:', response);
+
+            if (response.rows.length === 0) {
+                res.status(404).json({ error: "Booking ID not found" });
+            } else {
+                res.status(200).json({
+                    status: "success",
+                    data: response.rows[0]
+                });
+                console.log(response.rows[0]);
+            }
+        } catch (err) {
+            console.error(err.message);
+        }
+    });
 });
 
 app.listen(port, () => {
