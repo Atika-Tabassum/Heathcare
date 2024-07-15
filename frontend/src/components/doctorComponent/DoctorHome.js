@@ -38,17 +38,18 @@ const DoctorHome = () => {
 
           <div className="spacer"></div>
 
+          <button className="user-dashboard" onClick={handleNotifications}>
+            <div className="user-section">
+              <img src={image3} alt="notifications" className="user-icon" />
+            </div>
+          </button>
+
           <button className="user-dashboard" onClick={myProfile}>
             <div className="user-section">
               <img src={img2} alt="user" className="user-icon" />
             </div>
           </button>
           
-          <button className="user-dashboard" onClick={handleNotifications}>
-            <div className="user-section">
-              <img src={image3} alt="notifications" className="user-icon" />
-            </div>
-          </button>
         </div>
       </header>
 
@@ -60,7 +61,8 @@ const DoctorHome = () => {
         </div>
         <div>*services*</div>
         <div className="services">
-          <button className="service-icons">
+          <button className="service-icons"
+          onClick={() => navigate(`/${userId}/appointments`)}>
             <img src={image1} alt="appointment" className="clinic-icon" />
             <div className="tool-tip">appointments</div>
           </button>

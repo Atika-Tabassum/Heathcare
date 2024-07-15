@@ -20,6 +20,144 @@ CREATE TABLE doctors (
     FOREIGN KEY (hospital_user_id) REFERENCES users(user_id)
 );
 
+CREATE TABLE patients (
+    patient_user_id INTEGER PRIMARY KEY,
+    medical_history TEXT,
+    FOREIGN KEY (patient_user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE hospitals (
+    hospital_user_id INTEGER PRIMARY KEY,
+    description VARCHAR(255),
+    image VARCHAR(255),
+    FOREIGN KEY (hospital_user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE appointments (
+    appointment_id SERIAL PRIMARY KEY,
+    patient_user_id INTEGER,
+    doctor_user_id INTEGER,
+    appointment_date TIMESTAMP,
+    FOREIGN KEY (patient_user_id) REFERENCES users(user_id),
+    FOREIGN KEY (doctor_user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE notifications (
+    notification_id SERIAL PRIMARY KEY,
+    user_id INTEGER,
+    message TEXT,
+    is_read BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+
+CREATE TABLE ambulance_bookings (
+    booking_id SERIAL PRIMARY KEY,
+    patient_user_id INTEGER,
+    hospital_user_id INTEGER,
+    booking_date TIMESTAMP,
+    is_booked BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (patient_user_id) REFERENCES users(user_id),
+    FOREIGN KEY (hospital_user_id) REFERENCES users(user_id)
+);
+
+
+CREATE TABLE medical_camps (
+    camp_id SERIAL PRIMARY KEY,
+    doctor_user_id INTEGER,
+    location VARCHAR(255),
+    camp_date TIMESTAMP,
+    description TEXT,
+    FOREIGN KEY (doctor_user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE medical_camp_doctors (
+    camp_id INTEGER,
+    doctor_user_id INTEGER,
+    FOREIGN KEY (doctor_user_id) REFERENCES users(user_id),
+    FOREIGN KEY (camp_id) REFERENCES medical_camps(camp_id)
+);
+
+CREATE TABLE medical_camp_patients (
+    camp_id INTEGER,
+    patient_user_id INTEGER,
+    FOREIGN KEY (patient_user_id) REFERENCES users(user_id),
+    FOREIGN KEY (camp_id) REFERENCES medical_camps(camp_id)
+);
+
+CREATE TABLE content(
+    content_id SERIAL PRIMARY KEY,
+    topic VARCHAR(255),
+    description TEXT,
+    image VARCHAR(255),
+    video VARCHAR(255)
+);
+
+
+INSERT INTO users (NAME, EMAIL,CONTACT_NO,ADDRESS, PASSWORD, USER_TYPE)
+VALUES ('John Doe', 'john.doe@example.com','01345678989','buet', 'password123', 'patient');
+
+
+INSERT INTO users (NAME, EMAIL,CONTACT_NO,ADDRESS, PASSWORD, USER_TYPE)
+VALUES ('John Smith', 'smith@gmail.com","01345678989','buet', 'password123', 'patient');
+
+
+INSERT INTO content (topic, description, video) 
+VALUES ('Hygiene', '10 Steps to Washing Your Hands.',  'https://youtu.be/Br4sQmiJ1jU?si=3lvqP2u3OjoAyc66');
+--fariha
+CREATE TABLE specializations (
+    specialization_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) UNIQUE
+);
+CREATE TABLE doctor_specializations (
+    doctor_user_id INTEGER,
+    specialization_id INTEGER,
+    FOREIGN KEY (doctor_user_id) REFERENCES doctors(doctor_user_id),
+    FOREIGN KEY (specialization_id) REFERENCES specializations(specialization_id),
+    PRIMARY KEY (doctor_user_id, specialization_id)
+);
+ALTER TABLE doctors ADD COLUMN image VARCHAR(100); 
+ALTER TABLE doctors
+DROP COLUMN specialisation;
+INSERT INTO users (name, email, contact_no, address, user_type, password) VALUES
+  ('Dr. John Smith', 'john.smith@example.com', '1234567890', '123 Main St, City, Country', 'doctor', 'password123'),
+  ('Dr. Emily Brown', 'emily.brown@example.com', '9876543210', '456 Park Ave, Town, Country', 'doctor', 'securepass'),
+  ('City Hospital', 'city.hospital@example.com', '1112223333', '789 Elm St, City, Country', 'hospital', 'hospital123');
+;
+INSERT INTO doctors (doctor_user_id, image, hospital_user_id, description) VALUES
+  (1, 'doctor1.jpg', 3, 'Experienced cardiologist with over 10 years of practice.'),
+  (2, 'doctor2.jpg', 3, 'Specializes in pediatrics and child healthcare.');
+INSERT INTO specializations (name) VALUES
+  ('Cardiology'),
+  ('Dermatology'),
+  ('Neurology'),
+  ('Pediatrics'),
+  ('Psychiatry'),
+  ('Orthopedics'),
+  ('Ophthalmology');
+
+  
+
+CREATE TABLE users (
+    user_id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
+    contact_no VARCHAR(20),
+    address VARCHAR(255),
+    user_type VARCHAR(50), -- 'doctor', 'patient', 'hospital'
+    password VARCHAR(255)
+);
+
+
+CREATE TABLE doctors (
+    doctor_user_id INTEGER PRIMARY KEY,
+    specialisation VARCHAR(100),
+    hospital_user_id INTEGER,
+    description TEXT,
+    FOREIGN KEY (doctor_user_id) REFERENCES users(user_id),
+    FOREIGN KEY (hospital_user_id) REFERENCES users(user_id)
+);
+
 
 CREATE TABLE patients (
     patient_user_id INTEGER PRIMARY KEY,
@@ -112,6 +250,13 @@ CREATE TABLE content(
 );
 
 
+CREATE TABLE ambulance (
+    ambulance_id SERIAL PRIMARY KEY,
+    hospital_user_id INTEGER,
+    type VARCHAR(50), -- 'AC', 'ICU', 'CCU', 'NICU', 'Freezing'
+    count INTEGER,
+    FOREIGN KEY (hospital_user_id) REFERENCES hospitals(hospital_user_id)
+);
 
 
 INSERT INTO users (NAME, EMAIL,CONTACT_NO,ADDRESS, PASSWORD, USER_TYPE) VALUES ('doctor1', 'doctor1@mail.com', '01345678989', 'buet', 'password123', 'doctor');
@@ -124,6 +269,7 @@ VALUES ('John Doe', 'john.doe@example.com','01345678989','buet', 'password123', 
 INSERT INTO doctors (doctor_user_id, specialisation, hospital_user_id, description) VALUES (379, 'Cardiologist', 265, 'Dr. doctor1 is a cardiologist with 10 years of experience.');
 
 
+INSERT INTO users(name, email, contact_no, address, password, user_type) values('Square Hospitals Ltd.', 'https://www.squarehospital.com/', '+8809610010616', 'Nafi Tower, Level-3 (2nd floor),53 Gulshan Avenue, Gulshan-1, Dhaka-
 INSERT INTO content (topic, description, video) 
 VALUES ('Hygiene', '10 Steps to Washing Your Hands.',  'https://youtu.be/Br4sQmiJ1jU?si=3lvqP2u3OjoAyc66');
 
@@ -358,3 +504,20 @@ INSERT INTO users (name, address, user_type) VALUES
 ('Ayesha Haque Hospital', 'Beanibazar, Sylhet', 'hospital');
 INSERT INTO users (name, address, user_type) VALUES
 ('Charkhai Multicare Hospital', 'Beanibazar', 'hospital');
+--location tables
+ALTER TABLE users DROP COLUMN address;
+ALTER TABLE users ADD COLUMN location_id (INT);
+CREATE TABLE divisions (
+    division_id INTEGER PRIMARY KEY,
+    division_name VARCHAR(255) NOT NULL
+);
+CREATE TABLE districts (
+    district_id INTEGER PRIMARY KEY,
+    district_name VARCHAR(255) NOT NULL,
+    division_id INTEGER REFERENCES divisions(division_id) ON DELETE CASCADE
+);
+CREATE TABLE upazilas (
+    upazila_id INTEGER PRIMARY KEY,
+    upazila_name VARCHAR(255) NOT NULL,
+    district_id INTEGER REFERENCES districts(district_id) ON DELETE CASCADE
+);

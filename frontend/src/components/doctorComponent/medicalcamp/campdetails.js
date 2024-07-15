@@ -5,18 +5,23 @@ import "../../homeComponent/page.css";
 import "../../general/general.css";
 import img1 from "../../general/logo.svg";
 import img2 from "../../general/user.svg";
+import img3 from "../../general/location.svg";
+import img4 from "../../general/phone.svg";
+import img5 from "../../general/email.svg";
+import img6 from "../../general/calendar.svg";
 import image3 from "../../general/notification.svg";
 import image5 from "../../homeComponent/contact-us.svg";
 import image6 from "../../homeComponent/about-us.svg";
-import c1 from "../../homeComponent/facebook.svg";
-import c2 from "../../homeComponent/instagram.svg";
-import c3 from "../../homeComponent/twitter.svg";
-import c4 from "../../homeComponent/whatsapp.svg";
+// import c1 from "../../homeComponent/facebook.svg";
+// import c2 from "../../homeComponent/instagram.svg";
+// import c3 from "../../homeComponent/twitter.svg";
+// import c4 from "../../homeComponent/whatsapp.svg";
 
 const CampDetails = () => {
   const campId = useParams().campId;
   const [isLoading, setIsLoading] = useState(true);
   const [camps, setCamps] = useState([]);
+  const [doctors, setDoctors] = useState([]);
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
 
@@ -35,6 +40,8 @@ const CampDetails = () => {
       .then((data) => {
         if (Array.isArray(data.data)) {
           setCamps(data.data);
+          if (Array.isArray(data.doctors)) setDoctors(data.doctors);
+          else setDoctors([]);
         } else {
           console.error("Received data is not an array:", data);
         }
@@ -61,15 +68,15 @@ const CampDetails = () => {
 
           <div className="spacer"></div>
 
-          <button className="user-dashboard" onClick={myProfile}>
+          <button className="user-dashboard" onClick={handleNotifications}>
             <div className="user-section">
-              <img src={img2} alt="user" className="user-icon" />
+              <img src={image3} alt="notifications" className="user-icon" />
             </div>
           </button>
 
-          <button className="user-dashboard">
+          <button className="user-dashboard" onClick={myProfile}>
             <div className="user-section">
-              <img src={image3} alt="notifications" className="user-icon" />
+              <img src={img2} alt="user" className="user-icon" />
             </div>
           </button>
         </div>
@@ -89,7 +96,7 @@ const CampDetails = () => {
         </div>
       </navbar>
 
-      <div className="bottom-bar">
+      {/* <div className="bottom-bar">
         <div className="contact-icons">
           <img src={c1} alt="contact us" />
         </div>
@@ -102,7 +109,7 @@ const CampDetails = () => {
         <div className="contact-icons">
           <img src={c4} alt="contact us" />
         </div>
-      </div>
+      </div> */}
 
       <div className="page-container">
         <div className="page-content"></div>
@@ -112,6 +119,7 @@ const CampDetails = () => {
             camps.map((item) => (
               <li key={item.camp_id}>
                 <h2>{item.description}</h2>
+                {/* <div classname=> */}
                 {item.img && (
                   <img
                     src={`data:image/jpg;base64,${item.img}`}
@@ -119,8 +127,58 @@ const CampDetails = () => {
                     style={{ width: "100%", height: "auto" }}
                   />
                 )}
-                <p>Location : {item.location}</p>
-                <p>Date : {item.camp_date}</p>
+                <br/>
+                <br/>
+                {/* </div> */}
+                <div className="location-info">
+                  <img src={img3} alt="location" className="location-icon" />
+                  <span>{item.location}</span>
+                </div>
+                <br />
+                <div className="location-info">
+                  <img src={img6} alt="location" className="location-icon" />
+                  <span>{item.camp_date}</span>
+                </div>
+                <p>
+                  <b>Organizer</b>{" "}
+                </p>
+                <p>Name : {item.name}</p>
+                <div className="location-info">
+                  <img src={img5} alt="location" className="location-icon" />
+                  <span>{item.email}</span>
+                </div>
+                <br />
+                <div className="location-info">
+                  <img src={img4} alt="location" className="location-icon" />
+                  <span>{item.contact_no}</span>
+                </div>
+                <p>
+                  <b>Other Doctors </b>
+                </p>
+                <ul>
+                  {doctors.map((doctor) => (
+                    <li key={doctor.email}>
+                      <p>Name : {doctor.name}</p>
+                      <div className="location-info">
+                        <img
+                          src={img5}
+                          alt="location"
+                          className="location-icon"
+                        />
+                        <span>{doctor.email}</span>
+                      </div>
+                      <br />
+                      <div className="location-info">
+                        <img
+                          src={img4}
+                          alt="location"
+                          className="location-icon"
+                        />
+                        <span>{doctor.contact_no}</span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               </li>
             ))
           ) : (

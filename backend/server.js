@@ -3,13 +3,32 @@ const app = express();
 const port = 3001;
 const pool = require('./db');
 const cors = require('cors');
+const path = require('path');
 
+//const bodyParser = require("body-parser");
 //middleware
 app.use(cors());
 app.use(express.json());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+const locationRouter = require("./src/routers/locationRouter");
+app.use("/location",locationRouter);
+
+const hospitalRouter=require("./src/routers/hospitalRouter");
+app.use("/hospital",hospitalRouter);
+
+const contentsRouter = require("./src/routers/contentsRouter");
+app.use("/contents", contentsRouter);
+
+const orgmedicalcampRouter = require("./src/routers/orgmedicalcampRouter");
+app.use("/org", orgmedicalcampRouter);
+
+
+const doctorsRouter = require("./src/routers/doctorsRouter");
+app.use("/doctors", doctorsRouter);
 
 const patientRouter = require("./src/routers/patientRouter");
 app.use("/patient", patientRouter);
+
 const myprofileRouter = require("./src/routers/myprofileRouter");
 app.use("/users", myprofileRouter);
 
@@ -23,18 +42,40 @@ app.get('/healthcare/hospitals', async (req, res) => {
     }
 });
 
-const contentsRouter = require("./src/routers/contentsRouter");
-app.use("/contents", contentsRouter);
+//login
+app.post('/login',async (req, res) => {
+    const { email, password, userType } = req.body;
+    
+    try {
+        // Check if the user exists and get the stored password
+        const query = `
+            SELECT user_id, password FROM users WHERE email = $1 AND user_type = $2
+        `;
+        const result = await pool.query(query, [email, userType]);
+        
+        if (result.rows.length === 0) {
+            return res.status(401).json({ message: 'Invalid email, password, or user type.' });
+        }
+        
+        const user = result.rows[0];
+        res.status(200).json({ message: 'Login successful!', userId: user.user_id });
+    } catch (error) {
+        console.error('Error logging in user:', error.message);
+        res.status(500).json({ message: 'An error occurred during login.' });
+    }
+});
 
-const orgmedicalcampRouter = require("./src/routers/orgmedicalcampRouter");
-app.use("/org", orgmedicalcampRouter);
 
 const viewRouter = require("./src/routers/viewRouter");
 app.use("/view", viewRouter);
 
-const doctorsRouter = require("./src/routers/doctorsRouter");
-app.use("/doctors", doctorsRouter);
 
+const ambulanceRouter = require("./src/routers/ambulanceRouter");
+app.use("/ambulance", ambulanceRouter);
+
+// app.use('/', (req, res) => {
+//     res.send('Welcome to Home Page');
+// });
 
 
 app.get('/healthcare/getHospitalInfo/:id', async (req, res) => {
@@ -169,6 +210,4 @@ app.get('/getambulance', async (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
-
-
 
