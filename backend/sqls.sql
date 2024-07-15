@@ -93,6 +93,15 @@ CREATE TABLE content(
     video VARCHAR(255)
 );
 
+ CREATE TABLE book_ambulance (
+    booking_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    mobile VARCHAR(20) NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    selectedHospital VARCHAR(100) NOT NULL
+);
+
 
 INSERT INTO users (NAME, EMAIL,CONTACT_NO,ADDRESS, PASSWORD, USER_TYPE)
 VALUES ('John Doe', 'john.doe@example.com','01345678989','buet', 'password123', 'patient');

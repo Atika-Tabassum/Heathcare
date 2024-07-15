@@ -3,25 +3,20 @@ const { get } = require("../routers/ambulanceRouter");
 
 const getAmbulance = async (req, res, next) => {
   try {
-    const patientUserId = req.params.patientUserId;
-    const hospitalUserId = req.params.hospitalUserId;
-    console.log("patientUserId:", patientUserId);
-    console.log("hospitalUserId:", hospitalUserId);
-    const ambulances = await pool.query(
-      `SELECT * from ambulance_bookings where patient_user_id = $1;
-`,
-      [patientUserId]
-    );
-    console.log("ambulances:", ambulances.rows);
+    console.log("at ambulance controller");
+    const name = req.body.name;
+    const location = req.body.location;
+    const mobile = req.body.mobile;
+    const type = req.body.type;
+    const selectedHospital = req.body.selectedHospital;
 
-    if (ambulances.rows.length === 0) {
-      res.status(404).json({ message: "No ambulance found" });
-    } else {
-      res.status(200).json({
-        message: "Ambulances loaded successfully",
-        data: ambulances.rows,
-      });
-    }
+    const newBooking = await pool.query(
+      'INSERT INTO book_ambulance (name, location, mobile, type, selectedHospital) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [name, location, mobile, type, selectedHospital]
+    );
+
+    res.status(200)
+       .json({success: true, message: "booked", data : name, location, mobile, type, selectedHospital});
   } catch (error) {
     console.log(error.message);
     next(error);
