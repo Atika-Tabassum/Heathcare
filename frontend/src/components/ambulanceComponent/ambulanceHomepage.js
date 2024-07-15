@@ -34,7 +34,7 @@ const AmbulanceHomepage = () => {
     const navigate = useNavigate();
 
     const handleCardClick = (id) => {
-        navigate(`/ambulance/${id}`);
+        //navigate(`/ambulance/${id}`);
     };
 
     const handleButtonClick = () => {
@@ -42,13 +42,13 @@ const AmbulanceHomepage = () => {
     };
 
     return (
-        <div className="page-container">
-            <button className="booking" onClick={handleButtonClick}>Book an ambulance</button>
-            <h1 className="header">Which type of ambulance do you need?</h1>
+        <div className="page-container-amb">
+            <button className="bookingamb" onClick={handleButtonClick}>Book an ambulance</button>
+            <h1 className="headeramb">Which type of ambulance do you need?</h1>
             
-            <div className="container">
+            <div className="containeramb">
                 {ambulanceList.map((item) => (
-                    <div key={item.id} className="card" onClick={() => handleCardClick(item.id)}>
+                    <div key={item.id} className="cardamb" onClick={() => handleCardClick(item.id)}>
                         <h3>{item.type} Ambulance</h3>
                         <p>{item.description}</p>
                     </div>

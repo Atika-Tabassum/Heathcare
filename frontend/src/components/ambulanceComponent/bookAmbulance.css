@@ -1,51 +1,71 @@
-/* .booking {
-    background-color: darkpink;
-    border: none;
-    color: rgb(10, 8, 8);
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    position: absolute;
-    top: 80px;
-    right: 60px;
-    cursor: pointer;
+
+
+/* Centering the form on the page */
+.page-container-2-amb {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f9;
+    padding: 20px;
 }
 
-.layout {
-    margin: auto;
-    width: 100%;
-    border: 1px solid #0b0909;
+/* Styling the form container */
+.layoutamb {
+    background-color: #fff;
+    padding: 30px;
     border-radius: 10px;
-    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    border: 1px solid #931256;
 }
 
-.inputs{
-    display : flex;
+/* Styling the inputs and select elements */
+.inputsamb {
+    display: flex;
     flex-direction: column;
     justify-content: center;
     margin: auto;
     padding: 5px;
 }
 
-input{
-    width: 500px;
+.inputamb, .selectamb, .bookButton {
+    width: 100%;
     border-radius: 10px;
-    padding: 20px;
-    margin: 10px;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-select{
-    width: 540px;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px;
+.inputamb:focus, .selectamb:focus, .bookButton:focus {
+    border-color: #931256;
+    box-shadow: 0 0 8px rgba(147, 18, 86, 0.6);
+    outline: none;
 }
 
-button{
-    width: 500px;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px;
-} */
+/* Styling the button */
+.bookButton {
+    background-color: #931256;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.bookButton:hover {
+    background-color: #7a0f47;
+}
+
+/* Styling the heading */
+.bookampheader {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+/* Responsive Design */
+
