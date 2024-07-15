@@ -10,7 +10,7 @@ import EmergencyService from './components/patientComponent/EmergencyService';
 import Content from './components/contentComponent/Content';
 import UserReg from './components/userRegComponent/userReg';
 import HospitalReg from './components/userRegComponent/hospitalReg';
-import DoctorReg from './components/userRegComponent/doctorReg';
+import DoctorReg from './components/userRegComponent/formsComponent/doctorRegForm';
 import DoctorHome from './components/doctorComponent/DoctorHome';
 import OrgMedicalCamp from './components/doctorComponent/medicalcamp/OrgMedicalCamp';
 import ViewCamp from './components/doctorComponent/medicalcamp/ViewCamp';

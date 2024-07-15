@@ -69,9 +69,9 @@ const Login = () => {
                                         onChange={(e) => setUserType(e.target.value)}
                                     >
                                         <option value="0">Select type:</option>
-                                        <option value="Doctor">Doctor</option>
-                                        <option value="Patient">Patient</option>
-                                        <option value="Hospital">Hospital</option>
+                                        <option value="doctor">Doctor</option>
+                                        <option value="patient">Patient</option>
+                                        <option value="hospital">Hospital</option>
                                     </select>
                                 </div>
                             </div>

@@ -13,6 +13,7 @@ const getDivisions = async (req, res) => {
 
 const getDistrictsByDivision = async (req, res) => {
   const { divisionId } = req.params;
+  //console.log(req.params);
   
   try {
     const districts = await pool.query("SELECT district_id, district_name FROM districts WHERE division_id = $1", [divisionId]);
@@ -25,9 +26,10 @@ const getDistrictsByDivision = async (req, res) => {
 
 const getUpazilasByDistrict = async (req, res) => {
     const { districtId } = req.params;
-    
+    console.log(districtId);
     try {
       const upazilas = await pool.query("SELECT upazila_id, upazila_name FROM upazilas WHERE district_id = $1", [districtId]);
+      console.lo
       res.status(200).json(upazilas.rows);
     } catch (error) {
       console.error("Error fetching upazilas:", error.message);

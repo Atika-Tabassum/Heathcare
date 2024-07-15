@@ -24,20 +24,25 @@ const getDoctors = async (req, res, next) => {
 
 const registerDoctor = async (req, res, next) => {
   try {
-    const { name, email, contact_no, division_id, 
-      district_id, 
-      upazila_id, 
-      union_name, 
-      ward_name, 
-      village_name, 
-      street_address, 
-      postal_code, password, description, image, specializations } = req.body;
+    const { 
+      name, email, phoneNumber: contact_no, division, 
+      district, upazila, unionName, wardName, 
+      villageName, streetAddress, postalCode, 
+      password, description, image, reg_no, specializations 
+    } = req.body;
 
-    // Insert into users table
+    console.log('Request body:', req.body);
+
+    // Check for missing required fields
+    if (!name || !email || !contact_no || !division || !district || !upazila || !unionName || !wardName || !villageName || !streetAddress || !postalCode || !password) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
+
+    // Insert into locations table
     const newLocation = await pool.query(
-      `INSERT INTO location (division_id, district_id, upazila_id, union_name, ward_name, village_name, street_address, postal_code)
+      `INSERT INTO locations (division_id, district_id, upazila_id, union_name, ward_name, village_name, street_address, postal_code)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING location_id`,
-      [division_id, district_id, upazila_id, union_name, ward_name, village_name, street_address, postal_code]
+      [division, district, upazila, unionName, wardName, villageName, streetAddress, postalCode]
     );
 
     const locationId = newLocation.rows[0].location_id;
@@ -53,9 +58,9 @@ const registerDoctor = async (req, res, next) => {
 
     // Insert into doctors table
     await pool.query(
-      `INSERT INTO doctors (doctor_user_id, description, image)
+      `INSERT INTO doctors (doctor_user_id, description, reg_no)
        VALUES ($1, $2, $3)`,
-      [userId, description, image]
+      [userId, description,reg_no]
     );
 
     // Insert specializations
