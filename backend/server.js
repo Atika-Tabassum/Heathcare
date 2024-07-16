@@ -92,21 +92,17 @@ app.get("/healthcare/hospitals", async (req, res) => {
 app.post('/login', async (req, res) => {
     const { email, password, userType } = req.body;
     try {
-        // Check if the user exists and get the stored password
-        console.log('in server '+ email +' usertype: '+ userType + ' ' + password);
         const query = `
-            SELECT user_id, password FROM users WHERE email = $1 AND lower(user_type) = $2
+            SELECT user_id, password, user_type FROM users WHERE email = $1 AND lower(user_type) = $2
         `;
         const result = await pool.query(query, [email, userType.toLowerCase()]);
-        console.log(result.rows);
-
+        
         if (result.rows.length === 0) {
             return res.status(401).json({ message: 'Invalid email, password, or user type.' });
         }
 
         const user = result.rows[0];
-        console.log(user.user_type);
-
+        
         res.status(200).json({ message: 'Login successful!', userId: user.user_id, userType: user.user_type });
     } catch (error) {
         console.error('Error logging in user:', error.message);
