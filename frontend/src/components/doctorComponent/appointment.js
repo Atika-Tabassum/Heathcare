@@ -57,26 +57,30 @@ const Appointment = () => {
       </navbar>
 
       <div className="page-container">
-        <h1 align="center"><i>Appointments</i></h1>
+        <h1 align="center">
+          <i>Appointments</i>
+        </h1>
         <div className="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Appointment ID</th>
-                <th>Patient Name</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {appointments.map((appointment) => (
-                <tr key={appointment.appointment_id} text-align="center">
-                  <td>{appointment.appointment_id}</td>
-                  <td>{appointment.patient_name}</td>
-                  <td>{appointment.appointment_date}</td>
+          <div className="text_alignment">
+            <table>
+              <thead>
+                <tr>
+                  <th>Appointment ID</th>
+                  <th>Patient Name</th>
+                  <th>Date</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {appointments.map((appointment) => (
+                  <tr key={appointment.appointment_id} text-align="center">
+                    <td>{appointment.appointment_id}</td>
+                    <td>{appointment.patient_name}</td>
+                    <td>{appointment.appointment_date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </Fragment>

@@ -155,10 +155,10 @@
 }
 
 .contact-icons {
-    display: flex; /* Ensuring flexbox layout */
-    flex-direction: row; /* Aligning items horizontally */
-    justify-content: space-evenly; /* Distributing space evenly */
-    align-items: center; /* Centering items vertically */
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-evenly; 
+    align-items: center; 
     transition-duration: 0.1s;
     transition-timing-function: ease-in-out;
 }
@@ -166,3 +166,12 @@
 .contact-icons:hover {
     transform: scale(1.15);
 }
+
+
+.new-chat table {
+    text-align: left;
+  }
+
+  .new_chat tr,td,th {
+    text-align: left;
+  }

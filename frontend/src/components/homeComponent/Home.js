@@ -34,7 +34,9 @@ const Home = () => {
     window.location.href = "http://localhost:3000/findhospital";
   };
 
-  const goTo = () => {};
+  const goTo = () => {
+    window.location.href = "http://localhost:3000/medicalcampdetails";
+  };
 
   return (
     <Fragment>
@@ -49,7 +51,7 @@ const Home = () => {
             </div>
           </button>
 
-          
+
           <button class="user-dashboard" onClick={myProfile}>
             <div class="user-section">
               <img src={img2} alt="user" className="user-icon" />
@@ -80,10 +82,11 @@ const Home = () => {
           </button>
           <button class="service-icons" onClick={goTo}>
             <img src={image7} alt="awareness" className="awareness-icon" />
-            <div class="tool-tip">*ki naam dibo*</div>
+            <div class="tool-tip">Medical Camp</div>
           </button>
         </div>
       </div>
+
 
       <navbar class="navbar">
         <div class="navbar-icons">
@@ -101,7 +104,6 @@ const Home = () => {
           <div class="tool-tip">About Us</div>
         </div>
       </navbar>
-
       <div class="bottom-bar">
         <div class="contact-icons">
           <img src={c1} alt="contact us" />
@@ -116,6 +118,7 @@ const Home = () => {
           <img src={c4} alt="contact us" />
         </div>
       </div>
+
     </Fragment>
   );
 };
