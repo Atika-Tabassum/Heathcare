@@ -68,7 +68,7 @@ const MediCampDetails = () => {
                                             )) :
                                             'no data available'}
                                         <div className='booking' style={{ paddingTop: '15px' }}>
-                                            <button className='book-btn' style={{
+                                            <button style={{
                                                 height: '30px',
                                                 fontFamily: 'Montserrat', backgroundColor: bookedCamps.some(booked => booked.camp_id === camp.camp_id) ? 'lightcoral' : 'lightblue',
                                                 color: 'black', border: 'none', borderRadius: '2px', padding: '5px'

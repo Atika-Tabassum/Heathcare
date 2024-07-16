@@ -13,9 +13,9 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            console.log('email:', email);
-            console.log('password:', password);
-            console.log('userType:', userType);
+            // console.log('email:', email);
+            // console.log('password:', password);
+            // console.log('userType:', userType);
 
             const response = await fetch('http://localhost:3001/login', {
                 method: 'POST',
@@ -28,9 +28,23 @@ const Login = () => {
             if (response.ok) {
                 const data = await response.json();
                 console.log('Login data:', data);
-                localStorage.setItem('user', JSON.stringify(data.userId)); 
+                console.log('user type:', data.userType);
+                localStorage.setItem('user', JSON.stringify(data.userId));
+                localStorage.setItem('userType', JSON.stringify(data.userType));
 
-                navigate('/home');
+                console.log('User type:', data.userType);
+                console.log('User ID:', data.userId);
+
+                if(data.userType.toLowerCase() === 'doctor') {
+                    navigate(`/${data.userId}/doctorHome`);
+                }
+                else if(data.userType.toLowerCase() === 'patient') {
+                    navigate(`/${data.userId}/home`);
+                }
+                else if(data.userType === 'Hospital') {
+                    // navigate(`/${data.userId}/hospitalHome`);
+                }
+
             } else {
                 const data = await response.json();
                 alert(data.message);

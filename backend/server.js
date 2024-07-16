@@ -48,7 +48,7 @@ app.post('/login', async (req, res) => {
 
     try {
         // Check if the user exists and get the stored password
-        console.log('in server '+ email +' '+ userType + ' ' + password);
+        console.log('in server '+ email +' usertype: '+ userType + ' ' + password);
         const query = `
             SELECT user_id, password FROM users WHERE email = $1 AND lower(user_type) = $2
         `;
@@ -60,7 +60,9 @@ app.post('/login', async (req, res) => {
         }
 
         const user = result.rows[0];
-        res.status(200).json({ message: 'Login successful!', userId: user.user_id });
+        console.log(user.user_type);
+
+        res.status(200).json({ message: 'Login successful!', userId: user.user_id, userType: user.user_type });
     } catch (error) {
         console.error('Error logging in user:', error.message);
         res.status(500).json({ message: 'An error occurred during login.' });
