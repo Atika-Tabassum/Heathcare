@@ -84,16 +84,19 @@ const Profile = () => {
         </div>
       </navbar>
       
-      <div className="page-container">
-        <div className="page-content">
-          <p><b>Name:</b> {user.name}</p>
-          <p><b>Email:</b> {user.email}</p>
-          <p><b>Will Donate Blood:</b> {user.will_donate_blood ? "Yes" : "No"}</p>
-          <div>
-            <button onClick={() => updateDonationStatus(true)}>Yes</button>
-            <button onClick={() => updateDonationStatus(false)}>No</button>
-          </div>
-        </div>
+      <div className="page-container" style={{ maxWidth: "600px", margin: "0 auto", padding: "20px", backgroundColor: "#ffc0cb", borderRadius: "5px", boxShadow: "0 0 10px rgba(0,0,0,0.1)" }}>
+      <div className="page-content">
+         <h2 style={{ marginBottom: "20px", textAlign: "center" }}>User Profile</h2>
+         <div style={{ marginBottom: "15px" }}>
+            <p><b>Name: </b> {user.name}</p>
+            <p><b>Email: </b> {user.email}</p>
+            <p><b>Ready to Donate Blood? </b> {user.will_donate_blood ? "Yes" : "No"}</p>
+         </div>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+         <button onClick={() => updateDonationStatus(true)} style={{ marginRight: "10px", padding: "10px 20px", fontSize: "16px", cursor: "pointer", backgroundColor: "#ff69b4", color: "#fff", border: "none", borderRadius: "5px" }}>Yes, I will donate</button>
+         <button onClick={() => updateDonationStatus(false)} style={{ padding: "10px 20px", fontSize: "16px", cursor: "pointer", backgroundColor: "#ff69b4", color: "#fff", border: "none", borderRadius: "5px" }}>No, I won't donate</button>
+      </div>
+      </div>
       </div>
     </Fragment>
   );

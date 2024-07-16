@@ -29,8 +29,7 @@ const getBloodDonors = async (req, res, next) => {
         districts dis ON up.district_id = dis.district_id
       JOIN 
         divisions d ON dis.division_id = d.division_id
-      WHERE 
-        p.will_donate_blood = True;
+      ;
       `
     );
 
