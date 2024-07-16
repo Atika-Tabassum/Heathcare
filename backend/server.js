@@ -19,6 +19,9 @@ app.use("/hospital",hospitalRouter);
 const hospitalForAmbRouter=require("./src/routers/hospitalForAmbRouter");
 app.use("/hospitalForAmb",hospitalForAmbRouter);
 
+const bloodDonationRouter = require("./src/routers/bloodDonationRouter");
+app.use("/bloodDonation", bloodDonationRouter);
+
 const contentsRouter = require("./src/routers/contentsRouter");
 app.use("/contents", contentsRouter);
 

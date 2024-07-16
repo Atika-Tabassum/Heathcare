@@ -4,6 +4,15 @@ import "./bookAmbulance.css";
 
 const typeList = ["AC", "ICU", "CCU", "NICU", "Freezing"];
 
+const Modal = ({ message, onClose }) => (
+    <div className="modal">
+        <div className="modal-content">
+            <span className="close" onClick={onClose}>&times;</span>
+            <p>{message}</p>
+        </div>
+    </div>
+);
+
 const BookAmbulance = () => {
     const [name, setName] = useState("");
     const [location, setLocation] = useState("");
@@ -11,10 +20,14 @@ const BookAmbulance = () => {
     const [type, setType] = useState("");
     const [hospitals, setHospitals] = useState([]);
     const [selectedHospital, setSelectedHospital] = useState("");
-    
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [showMessage, setShowMessage] = useState("");
+    const [bookingMessage, setBookingMessage] = useState("");
 
     useEffect(() => {
-        fetch("http://localhost:3001/hospital/getAllHospital")
+        console.log("Component mounted, fetching hospitals...");
+        fetch("http://localhost:3001/hospitalForAmb/getAllHospital")
             .then((res) => res.json())
             .then((data) => {
                 console.log("Fetched hospitals data:", data);
@@ -23,14 +36,57 @@ const BookAmbulance = () => {
             .catch((err) => console.log("Error received", err));
     }, []);
 
-    const handleButtonClick = (e) => {
+    const onBookButtonClick = async (e) => {
         e.preventDefault();
-        alert("Booking submitted!");
-    }
+        console.log("onBookButtonClick function is triggered");
+        console.log("Name:", name);
+        try {
+            const body = {
+                name,
+                location,
+                mobile,
+                type,
+                selectedHospital,
+            };
+    
+            const response = await fetch("http://localhost:3001/ambulance/bookAmbulance", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+            });
+    
+            const responseData = await response.json();
+            console.log("Response Data:", responseData);
+    
+            if (!response.ok) {
+                setShowMessage(responseData.message);
+                setIsModalOpen(true);
+                return;
+            }
+    
+            localStorage.setItem("name", responseData.name);
+            localStorage.setItem("location", responseData.location);
+            localStorage.setItem("mobile", responseData.mobile);
+            localStorage.setItem("type", responseData.type);
+            localStorage.setItem("selectedHospital", responseData.selectedHospital);
+
+            // Display booking confirmation message
+            setBookingMessage("Ambulance is coming soon.");
+            setIsModalOpen(true);
+
+        } catch (error) {
+            console.error("Error:", error.message);
+        }
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setBookingMessage("");
+    };
 
     return (
         <div className="page-container-2-amb">
-            <form className="layoutamb" onSubmit={handleButtonClick}>
+            <form className="layoutamb">
                 <div className='inputsamb'>
                     <h2 className='bookampheader'>Book an Ambulance</h2>
                     <input className='inputamb'
@@ -76,9 +132,16 @@ const BookAmbulance = () => {
                             </option>
                         ))}
                     </select>
-                    <button className='bookButton' type="submit">Book</button>
+                    <button onClick={onBookButtonClick}
+                        className='bookButton' 
+                        type="button"
+                    >Book</button>
                 </div>
             </form>
+            
+            {isModalOpen && (
+                <Modal message={bookingMessage} onClose={closeModal} />
+            )}
         </div>
     );
 };

@@ -102,6 +102,16 @@ CREATE TABLE content(
     selectedHospital VARCHAR(100) NOT NULL
 );
 
+ALTER TABLE patients 
+ADD COLUMN blood_group VARCHAR(3);
+
+ALTER TABLE patients 
+ADD COLUMN will_donate_blood BOOLEAN;
+
+UPDATE patients 
+SET blood_group = 'O+', 
+    will_donate_blood = FALSE;
+
 
 INSERT INTO users (NAME, EMAIL,CONTACT_NO,ADDRESS, PASSWORD, USER_TYPE)
 VALUES ('John Doe', 'john.doe@example.com','01345678989','buet', 'password123', 'patient');
