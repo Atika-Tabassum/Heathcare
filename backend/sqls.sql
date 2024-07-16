@@ -98,6 +98,24 @@ CREATE TABLE content(
     video VARCHAR(255)
 );
 
+ CREATE TABLE book_ambulance (
+    booking_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    mobile VARCHAR(20) NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    selectedHospital VARCHAR(100) NOT NULL
+);
+
+ALTER TABLE patients 
+ADD COLUMN blood_group VARCHAR(3);
+
+ALTER TABLE patients 
+ADD COLUMN will_donate_blood BOOLEAN;
+
+UPDATE patients 
+SET blood_group = 'O+', 
+    will_donate_blood = FALSE;
 CREATE TABLE chats
 (
     chat_id SERIAL PRIMARY KEY,
