@@ -16,7 +16,7 @@ const Login = () => {
             console.log('email:', email);
             console.log('password:', password);
             console.log('userType:', userType);
-            
+
             const response = await fetch('http://localhost:3001/login', {
                 method: 'POST',
                 headers: {
@@ -27,7 +27,9 @@ const Login = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                localStorage.setItem('user', JSON.stringify(data.user)); // Save user info in localStorage
+                console.log('Login data:', data);
+                localStorage.setItem('user', JSON.stringify(data.userId)); 
+
                 navigate('/home');
             } else {
                 const data = await response.json();

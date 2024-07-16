@@ -53,6 +53,7 @@ app.post('/login', async (req, res) => {
             SELECT user_id, password FROM users WHERE email = $1 AND lower(user_type) = $2
         `;
         const result = await pool.query(query, [email, userType.toLowerCase()]);
+        console.log(result.rows);
 
         if (result.rows.length === 0) {
             return res.status(401).json({ message: 'Invalid email, password, or user type.' });

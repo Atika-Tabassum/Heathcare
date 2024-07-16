@@ -63,10 +63,11 @@ const FindDoctor = () => {
         setInputValue(e.target.value);
     };
 
-    const bookAppointment = async (doctorId) => { 
+    const bookAppointment = async (doctorId) => {
         try {
             console.log(doctorId);
-            const patientId = localStorage.getItem("userId");
+            const user = localStorage.getItem("user");
+            const patientId = user.user_id;
             console.log(patientId);
             const res = await fetch(`http://localhost:3001/healthcare/appointment/${doctorId}/${patientId}`, {
                 method: 'POST',
@@ -80,7 +81,7 @@ const FindDoctor = () => {
             });
         } catch (error) {
             console.error("Error booking appointment:", error);
-        }  
+        }
     }
 
 
@@ -152,12 +153,12 @@ const FindDoctor = () => {
                         </div>
                     </div>
                     <div className='doctor-specialization'>{doctor.specialisation}</div>
-                    <button className='book-btn' onClick={()=>{bookAppointment(doctor.user_id)}}>
+                    <button className='book-btn' onClick={() => { bookAppointment(doctor.user_id) }}>
                         Book
                     </button>
-                </div> 
+                </div>
             ))}
-            
+
         </div>
     </Fragment>
 }
