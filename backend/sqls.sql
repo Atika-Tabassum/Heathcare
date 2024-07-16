@@ -78,6 +78,11 @@ CREATE TABLE medical_camp_doctors (
     FOREIGN KEY (camp_id) REFERENCES medical_camps(camp_id)
 );
 
+INSERT INTO medical_camp_doctors (camp_id, doctor_user_id) VALUES (1, 379);
+INSERT INTO medical_camp_doctors (camp_id, doctor_user_id) VALUES (2, 380);
+INSERT INTO medical_camp_doctors (camp_id, doctor_user_id) VALUES (1, 380);
+INSERT INTO medical_camp_doctors (camp_id, doctor_user_id) VALUES (2, 379);
+
 CREATE TABLE medical_camp_patients (
     camp_id INTEGER,
     patient_user_id INTEGER,
@@ -110,6 +115,7 @@ CREATE TABLE specializations (
     specialization_id SERIAL PRIMARY KEY,
     name VARCHAR(100) UNIQUE
 );
+
 CREATE TABLE doctor_specializations (
     doctor_user_id INTEGER,
     specialization_id INTEGER,
@@ -223,7 +229,9 @@ CREATE TABLE medical_camps (
 );
 
 INSERT INTO medical_camps (doctor_user_id, location, camp_date, description) VALUES (1, 'Dhanmondi, Dhaka', '2021-07-01 10:00:00', 'Free medical camp for all.');
-
+INSERT INTO medical_camps (doctor_user_id, location, camp_date, description) VALUES (1, 'du', '2021-07-01 10:00:00', 'Vaccination');
+INSERT INTO medical_camps (doctor_user_id, location, camp_date, description) VALUES (379, 'Uttara', '2021-07-01 10:00:00', 'Free Diabetes Checkup Camp');
+INSERT INTO medical_camps (doctor_user_id, location, camp_date, description) VALUES (380, 'BUET', '2021-07-01 10:00:00', 'Free Eye Checkup Camp');
 --  alter table medical_camps add column image bytea;
 
 -- \lo_import "C:/Users/User/Documents/hackathon/camp_default_img.jpg"

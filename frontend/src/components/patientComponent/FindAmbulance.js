@@ -13,7 +13,7 @@ const FindAmbulance = ({ patientUserId, hospitalUserId }) => {
                 throw new Error('Network response was not ok');
             }
             const data = await res.json();
-            setAmbulance(data); // Adjust according to your backend response structure
+            setAmbulance(data); 
         } catch (error) {
             console.error('Error fetching ambulance data:', error);
         }

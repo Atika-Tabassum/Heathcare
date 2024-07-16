@@ -63,6 +63,26 @@ const FindDoctor = () => {
         setInputValue(e.target.value);
     };
 
+    const bookAppointment = async (doctorId) => { 
+        try {
+            console.log(doctorId);
+            const patientId = localStorage.getItem("userId");
+            console.log(patientId);
+            const res = await fetch(`http://localhost:3001/healthcare/appointment/${doctorId}/${patientId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-auth-token': localStorage.getItem('token')
+                },
+                body: JSON.stringify({
+                    doctor_id: doctorId
+                })
+            });
+        } catch (error) {
+            console.error("Error booking appointment:", error);
+        }  
+    }
+
 
     useEffect(() => {
         getDoctors();
@@ -132,8 +152,12 @@ const FindDoctor = () => {
                         </div>
                     </div>
                     <div className='doctor-specialization'>{doctor.specialisation}</div>
-                </div>
+                    <button className='book-btn' onClick={()=>{bookAppointment(doctor.user_id)}}>
+                        Book
+                    </button>
+                </div> 
             ))}
+            
         </div>
     </Fragment>
 }

@@ -112,11 +112,7 @@ const EmergencyService = () => {
           headers: { 'Content-Type': 'application/json' },
         }
       );
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const jsonData = await response.json();
-      console.log(jsonData);
+      window.location.reload();
     } catch (error) {
       console.error(error.message);
     }
