@@ -29,6 +29,31 @@ const Profile = () => {
     }
   };
 
+  const goToBloodDonation = () => {
+    // TODO: blood donation link fix
+    window.location.href = "http://localhost:3000/showDonors";
+  };
+
+  const updateDonationStatus = async (status) => {
+    try {
+      console.log("frontend profile.js");
+      const response = await fetch(`http://localhost:3001/bloodDonation/${userId}/updateDonationStatus`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ will_donate_blood: status }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to update donation status");
+      }
+      const data = await response.json();
+      setUser((prevUser) => ({ ...prevUser, will_donate_blood: status }));
+    } catch (error) {
+      console.error("Error updating donation status:", error);
+    }
+  };
+
   useEffect(() => {
     fetchUserProfile();
   }, [userId]);
@@ -46,6 +71,10 @@ const Profile = () => {
           <img src={image5} alt="contact us" className="contact-us-icon" />
           <div className="tool-tip">Contact Us</div>
         </div>
+        <div className="navbar-icons">
+          <img src={image5} onClick={goToBloodDonation} alt="contact us" className="contact-us-icon" />
+          <div className="tool-tip">Need Blood?</div>
+        </div>
       </navbar>
 
       <navbar className="navbar2">
@@ -54,14 +83,17 @@ const Profile = () => {
           <div className="tool-tip">About Us</div>
         </div>
       </navbar>
+      
       <div className="page-container">
-        <div className="page-content"></div>
-        <p>
-          <b>Name:</b> {user.name}
-        </p>
-        <p>
-          <b>Email:</b> {user.email}
-        </p>
+        <div className="page-content">
+          <p><b>Name:</b> {user.name}</p>
+          <p><b>Email:</b> {user.email}</p>
+          <p><b>Will Donate Blood:</b> {user.will_donate_blood ? "Yes" : "No"}</p>
+          <div>
+            <button onClick={() => updateDonationStatus(true)}>Yes</button>
+            <button onClick={() => updateDonationStatus(false)}>No</button>
+          </div>
+        </div>
       </div>
     </Fragment>
   );
