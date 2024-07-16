@@ -7,7 +7,7 @@ import image1 from "../general/find_doctor.svg";
 import image2 from "./ambulance.svg";
 import image3 from "./clinic-building.svg";
 import image4 from "./location.svg";
-import image5 from "./contact-us.svg";
+import image5 from "./infusion.svg";
 import image6 from "./about-us.svg";
 import image7 from "./awareness.svg";
 import image8 from "../general/notification.svg";
@@ -15,6 +15,7 @@ import c1 from "./facebook.svg";
 import c2 from "./instagram.svg";
 import c3 from "./twitter.svg";
 import c4 from "./whatsapp.svg";
+
 
 const Home = () => {
   const myProfile = () => {
@@ -36,6 +37,20 @@ const Home = () => {
 
   const goTo = () => {
     window.location.href = "http://localhost:3000/medicalcampdetails";
+  };
+
+  const goToNearbyHospital = () => {
+    window.location.href = "http://localhost:3000/findnearbyhospital";
+  };
+
+  const goToBloodDonation = () => {
+    // TODO: blood donation link fix
+    window.location.href = "http://localhost:3000/bloodDonation";
+  };
+
+
+  const aboutUs = () => {
+    window.location.href = "http://localhost:3000/aboutus";
   };
 
   return (
@@ -90,17 +105,17 @@ const Home = () => {
 
       <navbar class="navbar">
         <div class="navbar-icons">
-          <img src={image4} alt="location" className="location-icon" />
+          <img src={image4} onClick={goToNearbyHospital} alt="location" className="location-icon" />
           <div class="tool-tip">Find nearby Hospitals</div>
         </div>
         <div class="navbar-icons">
-          <img src={image5} alt="contact us" className="contact-us-icon" />
-          <div class="tool-tip">Contact Us</div>
+          <img src={image5} onClick={goToBloodDonation} alt="contact us" className="contact-us-icon" />
+          <div class="tool-tip">Blood Donation</div>
         </div>
       </navbar>
       <navbar class="navbar2">
         <div class="bottom-icon">
-          <img src={image6} alt="about us" className="about-us-icon" />
+          <img src={image6} onClick={aboutUs} alt="about us" className="about-us-icon" />
           <div class="tool-tip">About Us</div>
         </div>
       </navbar>

@@ -76,6 +76,19 @@ const Appointment = () => {
                     <td>{appointment.appointment_id}</td>
                     <td>{appointment.patient_name}</td>
                     <td>{appointment.appointment_date}</td>
+                    <td className="button--class">
+                      {appointment.status === 'pending' ? (
+                        <button className="app-btn" style={{backgroundColor:'lightgreen'}}>
+                          Accept
+                        </button>
+                      ) :
+                        (
+                          <button className="app-btn" style={{backgroundColor:'gray'}} disabled>
+                            Accepted
+                          </button>
+                        )}
+                    </td>
+
                   </tr>
                 ))}
               </tbody>
