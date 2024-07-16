@@ -166,3 +166,12 @@
 .contact-icons:hover {
     transform: scale(1.15);
 }
+
+
+.new-chat table {
+    text-align: left;
+  }
+
+  .new_chat tr,td,th {
+    text-align: left;
+  }

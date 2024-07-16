@@ -1,17 +1,56 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 const port = 3001;
-const pool = require('./db');
-const cors = require('cors');
-const path = require('path');
+const pool = require("./db");
+const cors = require("cors");
+const path = require("path");
+const http = require("http");
+const socketIo = require("socket.io");
+const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log("A user connected");
+
+  socket.on("joinChat", (userId) => {
+    socket.join(userId);
+  });
+
+  socket.on("sendMessage", async (message) => {
+    const { sender_id, receiver_id, message: text, sent_at } = message;
+    const query =
+      "INSERT INTO chats (sender_id, receiver_id, message, sent_at) VALUES ($1, $2, $3, $4) RETURNING *";
+    try {
+      const result = await pool.query(query, [
+        sender_id,
+        receiver_id,
+        text,
+        sent_at,
+      ]);
+      const savedMessage = result.rows[0];
+      io.to(receiver_id).emit("newMessage", savedMessage);
+    } catch (error) {
+      console.error("Error saving message:", error);
+    }
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected");
+  });
+});
 
 //const bodyParser = require("body-parser");
 //middleware
 app.use(cors());
 app.use(express.json());
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 const locationRouter = require("./src/routers/locationRouter");
-app.use("/location", locationRouter);
+app.use("/location",  locationRouter);
 
 const hospitalRouter = require("./src/routers/hospitalRouter");
 app.use("/hospital", hospitalRouter);
@@ -22,7 +61,6 @@ app.use("/contents", contentsRouter);
 const orgmedicalcampRouter = require("./src/routers/orgmedicalcampRouter");
 app.use("/org", orgmedicalcampRouter);
 
-
 const doctorsRouter = require("./src/routers/doctorsRouter");
 app.use("/doctors", doctorsRouter);
 
@@ -32,14 +70,16 @@ app.use("/patient", patientRouter);
 const myprofileRouter = require("./src/routers/myprofileRouter");
 app.use("/users", myprofileRouter);
 
-app.get('/healthcare/hospitals', async (req, res) => {
-    try {
-        const allHospitals = await pool.query("SELECT * FROM users WHERE user_type = 'hospital'");
-        res.json(allHospitals.rows);
-        console.log(allHospitals.rows);
-    } catch (err) {
-        console.error(err.message);
-    }
+app.get("/healthcare/hospitals", async (req, res) => {
+  try {
+    const allHospitals = await pool.query(
+      "SELECT * FROM users WHERE user_type = 'hospital'"
+    );
+    res.json(allHospitals.rows);
+    console.log(allHospitals.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
 });
 
 //login
@@ -69,10 +109,8 @@ app.post('/login', async (req, res) => {
     }
 });
 
-
 const viewRouter = require("./src/routers/viewRouter");
 app.use("/view", viewRouter);
-
 
 const ambulanceRouter = require("./src/routers/ambulanceRouter");
 app.use("/ambulance", ambulanceRouter);
@@ -83,50 +121,56 @@ app.use("/ambulance", ambulanceRouter);
 //     res.send('Welcome to Home Page');
 // });
 
-
-app.get('/healthcare/getHospitalInfo/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-        const hospitalId = parseInt(id, 10);
-        console.log(hospitalId);
-        const hospitalInfo = await pool.query("SELECT * FROM users WHERE user_type = 'hospital' and user_id = $1", [hospitalId]);
-        console.log('hello');
-        const doctorsInfo = await pool.query("SELECT u.*, d.specialisation from users u join doctors d on u.user_id = d.doctor_user_id where d.hospital_user_id=$1", [hospitalId]);
-        console.log('hello');
-        console.log(hospitalInfo.rows);
-        console.log(doctorsInfo.rows);
-        res.status(200).json({
-            status: "success",
-            data: {
-                hospital: hospitalInfo.rows[0],
-                doctors: doctorsInfo.rows
-            },
-        });
-    } catch (err) {
-        console.error(err.message);
-    }
+app.get("/healthcare/getHospitalInfo/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const hospitalId = parseInt(id, 10);
+    console.log(hospitalId);
+    const hospitalInfo = await pool.query(
+      "SELECT * FROM users WHERE user_type = 'hospital' and user_id = $1",
+      [hospitalId]
+    );
+    console.log("hello");
+    const doctorsInfo = await pool.query(
+      "SELECT u.*, d.specialisation from users u join doctors d on u.user_id = d.doctor_user_id where d.hospital_user_id=$1",
+      [hospitalId]
+    );
+    console.log("hello");
+    console.log(hospitalInfo.rows);
+    console.log(doctorsInfo.rows);
+    res.status(200).json({
+      status: "success",
+      data: {
+        hospital: hospitalInfo.rows[0],
+        doctors: doctorsInfo.rows,
+      },
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
 });
 
-app.get('/healthcare/doctors/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-        const doctorId = parseInt(id, 10);
-        console.log(doctorId);
-        const doctorInfo = await pool.query(`SELECT u.*, d.specialisation, h.name as hospital_name 
+app.get("/healthcare/doctors/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const doctorId = parseInt(id, 10);
+    console.log(doctorId);
+    const doctorInfo = await pool.query(
+      `SELECT u.*, d.specialisation, h.name as hospital_name 
                 FROM users u 
                 JOIN doctors d ON u.user_id = d.doctor_user_id 
                 JOIN users h ON d.hospital_user_id = h.user_id 
-                WHERE u.user_type = 'doctor' AND u.user_id =  $1`
-            , [doctorId]);
-        console.log(doctorInfo.rows);
-        res.status(200).json({
-            status: "success",
-            data: doctorInfo.rows[0]
-        });
-    }
-    catch (err) {
-        console.error(err.message);
-    }
+                WHERE u.user_type = 'doctor' AND u.user_id =  $1`,
+      [doctorId]
+    );
+    console.log(doctorInfo.rows);
+    res.status(200).json({
+      status: "success",
+      data: doctorInfo.rows[0],
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
 });
 
 app.get('/healthcare/doctors', async (req, res) => {
@@ -283,9 +327,6 @@ app.post('/healthcare/appointment/:docid/:patid', async (req, res) => {
     }
 });
 
-
-
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
-
