@@ -151,7 +151,7 @@ CREATE TABLE users (
 
 CREATE TABLE doctors (
     doctor_user_id INTEGER PRIMARY KEY,
-    specialisation VARCHAR(100),
+    specialisation_id VARCHAR(100),
     hospital_user_id INTEGER,
     description TEXT,
     FOREIGN KEY (doctor_user_id) REFERENCES users(user_id),

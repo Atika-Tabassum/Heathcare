@@ -23,7 +23,7 @@ const Login = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                localStorage.setItem('user', JSON.stringify(data.user)); // Save user info in localStorage
+                localStorage.setItem('user', JSON.stringify(data.userId)); // Save user info in localStorage
                 navigate('/home');
             } else {
                 const data = await response.json();

@@ -28,6 +28,9 @@ function Registration() {
   const [showWarning, setShowWarning] = useState(false);
   const [warning, setWarning] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
+  const [bloodGroup, setBloodGroup] = useState("");
+const [willDonateBlood, setWillDonateBlood] = useState(false);
+
 
   useEffect(() => {
     fetchDivisions();
@@ -244,6 +247,8 @@ function Registration() {
           password,
           user_type: userType,
           medical_history: medicalHistory,
+          blood_group: bloodGroup,
+          will_donate_blood: willDonateBlood,
         }),
       });
 
@@ -411,6 +416,23 @@ function Registration() {
                 />
                 Show passwords
               </label>
+              <br/>
+              <label className="signin-label">Blood Group*</label>
+<input
+  className="signin-input"
+  value={bloodGroup}
+  placeholder="O+"
+  onChange={(e) => setBloodGroup(e.target.value)}
+  type="text"
+/>
+<label className="signin-label">Willing to Donate Blood?</label>
+<input
+  className="signin-input"
+  checked={willDonateBlood}
+  onChange={(e) => setWillDonateBlood(e.target.checked)}
+  type="checkbox"
+/>
+
             </div>
           </div>
           <br />

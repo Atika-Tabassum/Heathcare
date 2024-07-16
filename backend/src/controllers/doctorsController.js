@@ -2,10 +2,30 @@ const pool = require("../../db");
 
 const getDoctors = async (req, res, next) => {
   try {
-    const doctors = await pool.query(`SELECT u.*, d.specialisation, d.hospital_user_id, d.description 
-                                      FROM users u 
-                                      JOIN doctors d ON u.user_id = d.doctor_user_id 
-                                      WHERE u.user_type = 'Doctor' AND u.user_id <> $1`, [req.params.userId]);
+    const doctors = await pool.query(`SELECT
+    u.*,                        
+    ds.specialization_id,         
+    d.hospital_user_id,           
+    d.description,               
+    s.name AS specialization_name
+FROM
+    users u                       
+JOIN
+    doctors d                    
+ON
+    u.user_id = d.doctor_user_id  
+LEFT JOIN
+    doctor_specializations ds    
+ON
+    d.doctor_user_id = ds.doctor_user_id  
+LEFT JOIN
+    specializations s             
+ON
+    ds.specialization_id = s.specialization_id  
+WHERE
+    u.user_type = 'doctor'       
+    AND u.user_id <>$1
+`, [req.params.userId]);
     console.log("doctors:", doctors.rows);
 
     if (doctors.rows.length === 0) {

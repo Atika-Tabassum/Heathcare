@@ -4,6 +4,8 @@ import Header from "../../general/Header";
 import PersonalInfoForm from "./PersonalInfoForm";
 import QualificationsForm from "./QualificationsForm";
 import SpecializationsForm from "./SpecializationsForm";
+import Warning from "../../Warning/Warning";
+import Successful from "../../Successful/Successful";
 
 const DoctorRegistration = () => {
   const [step, setStep] = useState(1);
@@ -11,6 +13,9 @@ const DoctorRegistration = () => {
   const [districts, setDistricts] = useState([]);
   const [upazilas, setUpazilas] = useState([]);
   const [availableSpecializations, setAvailableSpecializations] = useState([]);
+  const [showWarning, setShowWarning] = useState(false);
+  const [warning, setWarning] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -27,7 +32,7 @@ const DoctorRegistration = () => {
     image: "",
     password: "",
     confirm: "",
-    reg_no:"",
+    reg_no: "",
     qualifications: [],
     specializations: [],
     newSpecialization: "",
@@ -120,35 +125,34 @@ const DoctorRegistration = () => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
-  const isValidEmail = (email) => {
-    return /\S+@\S+\.\S+/.test(email);
-  };
 
-  const isValidPhoneNumber = (phoneNumber) => {
-    return /^\d{11}$/.test(phoneNumber);
-  };
+  const isValidEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
-  const isValidPassword = (password) => {
-    return password.length >= 8;
-  };
-  if (!isValidEmail(email)) {
-    setWarning("Please enter a valid email address.");
-    setShowWarning(true);
-    return false;
-  }
+  const isValidPhoneNumber = (phoneNumber) => /^\d{11}$/.test(phoneNumber);
+
+  const isValidPassword = (password) => password.length >= 8;
+
   const isFormValid = () => {
-  if (!isValidPhoneNumber(phoneNumber)) {
-    setWarning("Please enter a valid phone number (11 digits).");
-    setShowWarning(true);
-    return false;
-  }
+    if (!isValidEmail(formData.email)) {
+      setWarning("Please enter a valid email address.");
+      setShowWarning(true);
+      return false;
+    }
 
-  if (!isValidPassword(password)) {
-    setWarning("Password must be at least 8 characters long.");
-    setShowWarning(true);
-    return false;
-  }
-  return true;};
+    if (!isValidPhoneNumber(formData.phoneNumber)) {
+      setWarning("Please enter a valid phone number (11 digits).");
+      setShowWarning(true);
+      return false;
+    }
+
+    if (!isValidPassword(formData.password)) {
+      setWarning("Password must be at least 8 characters long.");
+      setShowWarning(true);
+      return false;
+    }
+
+    return true;
+  };
 
   const handleSpecializationChange = (event) => {
     const { value } = event.target;
@@ -189,18 +193,22 @@ const DoctorRegistration = () => {
   };
 
   const handleSubmit = async () => {
+    if (!isFormValid()) {
+      return;
+    }
+
+    if (formData.password !== formData.confirm) {
+      setWarning("Passwords must match!");
+      setShowWarning(true);
+      setFormData({
+        ...formData,
+        confirm: "",
+        password: "",
+      });
+      return;
+    }
+
     try {
-        if (!isFormValid()) {
-            return;
-          }
-          
-      if (password !== confirm) {
-        setWarning("Passwords must match!");
-        setShowWarning(true);
-        setConfirm("");
-        setPassword("");
-        return;
-      }
       const response = await fetch("http://localhost:3001/doctors/register", {
         method: "POST",
         headers: {
@@ -226,7 +234,6 @@ const DoctorRegistration = () => {
         <Header />
         <h1>Doctor Registration</h1>
         <p>Register as a doctor to provide your services on our platform.</p>
-        {/* <img src={image1} alt="Registration" /> */}
       </div>
       <div className="right-section">
         <div className="form-content">
