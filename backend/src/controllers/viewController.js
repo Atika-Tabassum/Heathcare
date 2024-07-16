@@ -1,5 +1,5 @@
 const pool = require("../../db");
-const { get } = require("../routers/patientRouter");
+// const { get } = require("../routers/patientRouter");
 
 const getCamps = async (req, res, next) => {
   try {
