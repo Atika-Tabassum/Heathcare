@@ -79,7 +79,7 @@ const Chats = () => {
               >
                 {chat.sender_id != userId && (
                   <div className="profile_img">
-                  <img src={img2} alt="account" className="account-icon" />
+                    <img src={img2} alt="account" className="account-icon" />
                   </div>
                 )}
                 <div className="chat-message">
@@ -94,19 +94,21 @@ const Chats = () => {
               </li>
             ))}
           </ul>
-          <form onSubmit={sendMessage}>
-            <input
-              type="text"
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              placeholder="Type a message..."
-            />
-            <div className="submit-button">
-              <button type="submit">
-                <img src={img} alt="send" />
-              </button>
-            </div>
-          </form>
+          <div className="chat_form">
+            <form onSubmit={sendMessage}>
+              <input
+                type="text"
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                placeholder="Type a message..."
+              />
+              <div className="submit-button">
+                <button type="submit">
+                  <img src={img} alt="send" />
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
