@@ -27,6 +27,7 @@ const Login = () => {
 
             if (response.ok) {
                 const data = await response.json();
+                localStorage.setItem('user', JSON.stringify(data.userId)); // Save user info in localStorage
                 console.log('Login data:', data);
                 console.log('user type:', data.userType);
                 localStorage.setItem('user', JSON.stringify(data.userId));
@@ -44,7 +45,6 @@ const Login = () => {
                 else if(data.userType === 'Hospital') {
                     // navigate(`/${data.userId}/hospitalHome`);
                 }
-
             } else {
                 const data = await response.json();
                 alert(data.message);
@@ -89,9 +89,9 @@ const Login = () => {
                                         onChange={(e) => setUserType(e.target.value)}
                                     >
                                         <option value="0">Select type:</option>
-                                        <option value="Doctor">Doctor</option>
-                                        <option value="Patient">Patient</option>
-                                        <option value="Hospital">Hospital</option>
+                                        <option value="doctor">Doctor</option>
+                                        <option value="patient">Patient</option>
+                                        <option value="hospital">Hospital</option>
                                     </select>
                                 </div>
                             </div>

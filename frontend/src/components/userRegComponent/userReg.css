@@ -1,65 +1,113 @@
 .signInContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f7f7f7;
-  }
-  
-  .reg-form {
-    background-color: #ffe3e3;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 600px;
-  }
-  
-  .signin-h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .signin-label {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .signin-input {
-    width: calc(100% - 20px);
-    margin-bottom: 20px;
-  }
-  
-  .label-wrap {
-    margin-bottom: 20px;
-  }
-  
-  .btn {
-    width: 100%;
-    background-color: #e50914;
-    color: #fff;
-    padding: 10px 0;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .side-by-side {
-    text-align: center;
-    margin-top: 10px;
-  }
-  
-  .reg-text {
-    cursor: pointer;
-    color: #e50914;
-  }
-  
-  .reg-text:hover {
-    text-decoration: underline;
-  }
-  
-  .woman {
-    width: 500px;
-    height: auto;
-    margin-right: 20px;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f7f7f7;
+}
+
+.reg-form {
+  background-color: #ffe3e3;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 600px;
+}
+
+.signin-h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.signin-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.signin-input {
+  width: calc(100% - 20px);
+  height: 30px;
+  margin-bottom: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.label-wrap {
+  margin-bottom: 20px;
+}
+
+.btn {
+  width: 100%;
+  background-color: #e50914;
+  color: #fff;
+  padding: 10px 0;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.side-by-side {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.reg-text {
+  cursor: pointer;
+  color: #e50914;
+}
+
+.reg-text:hover {
+  text-decoration: underline;
+}
+
+.woman {
+  width: 500px;
+  height: auto;
+  margin-right: 20px;
+}
+
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input {
+  flex: 1;
+  padding-right: 30px; /* Add padding to avoid text overlap with the icon */
+}
+
+.password-icon {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}
+
+.specializations-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.specialization-item {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.specialization-item input[type="checkbox"] {
+  margin-right: 10px;
+  transform: scale(1.5);
+}
+
+.specialization-item label {
+  margin: 0;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; 
+}

@@ -85,7 +85,6 @@ app.get("/healthcare/hospitals", async (req, res) => {
 //login
 app.post('/login', async (req, res) => {
     const { email, password, userType } = req.body;
-
     try {
         // Check if the user exists and get the stored password
         console.log('in server '+ email +' usertype: '+ userType + ' ' + password);

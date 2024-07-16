@@ -17,7 +17,9 @@ const registerPatient = async (req, res, next) => {
       postal_code, 
       password, 
       user_type, 
-      medical_history 
+      medical_history,
+      blood_group ,
+      will_donate_blood, 
     } = req.body;
     
     console.log("Request Body:", req.body);
@@ -45,9 +47,9 @@ const registerPatient = async (req, res, next) => {
 
     // Insert into patients table
     await pool.query(
-      `INSERT INTO patients (patient_user_id, medical_history)
-       VALUES ($1, $2)`,
-      [userId, medical_history]
+      `INSERT INTO patients (patient_user_id, medical_history, blood_group ,will_donate_blood)
+       VALUES ($1, $2,$3,$4)`,
+      [userId, medical_history, blood_group,will_donate_blood,]
     );
 
     console.log("New User:", newUser);

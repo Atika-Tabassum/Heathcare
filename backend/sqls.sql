@@ -173,7 +173,7 @@ CREATE TABLE users (
 
 CREATE TABLE doctors (
     doctor_user_id INTEGER PRIMARY KEY,
-    specialisation VARCHAR(100),
+    specialisation_id VARCHAR(100),
     hospital_user_id INTEGER,
     description TEXT,
     FOREIGN KEY (doctor_user_id) REFERENCES users(user_id),
@@ -559,6 +559,32 @@ CREATE TABLE upazilas (
     upazila_id INTEGER PRIMARY KEY,
     upazila_name VARCHAR(255) NOT NULL,
     district_id INTEGER REFERENCES districts(district_id) ON DELETE CASCADE
+);
+CREATE TABLE location (
+  location_id SERIAL PRIMARY KEY,
+  division_id INT NOT NULL,
+  district_id INT NOT NULL,
+  upazila_id INT NOT NULL,
+  union_name VARCHAR(255),
+  ward_name VARCHAR(255),
+  village_name VARCHAR(255),
+  street_address VARCHAR(255),
+  postal_code VARCHAR(20),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+--doctor alters
+ALTER TABLE doctors ADD COLUMN reg_no INT;
+CREATE TABLE qualifications (
+  qualification_id SERIAL PRIMARY KEY,
+  name VARCHAR(255) UNIQUE NOT NULL
+);
+CREATE TABLE doctor_qualifications (
+  doctor_qualification_id SERIAL PRIMARY KEY,
+  doctor_user_id INT REFERENCES users(user_id),
+  qualification_id INT REFERENCES qualifications(qualification_id),
+  institution VARCHAR(255),
+  year_of_completion INT
 );
 
 

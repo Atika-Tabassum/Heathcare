@@ -28,6 +28,9 @@ function Registration() {
   const [showWarning, setShowWarning] = useState(false);
   const [warning, setWarning] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
+  const [bloodGroup, setBloodGroup] = useState("");
+const [willDonateBlood, setWillDonateBlood] = useState(false);
+
 
   useEffect(() => {
     fetchDivisions();
@@ -48,15 +51,38 @@ function Registration() {
   };
   
   const fetchDistricts = async (divisionId) => {
-    // Fetch districts based on selected division
-    const response = await fetch(`http://localhost:3001/location/districts?division_id=${divisionId}`);
-    const data = await response.json();
-    setDistricts(data);
+    try {
+      const intDivisionId = parseInt(divisionId, 10); // Convert to integer
+      const response = await fetch(`http://localhost:3001/location/districts/${intDivisionId}`);
+      
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`Failed to fetch districts: ${response.statusText}. Response: ${text}`);
+      }
+  
+      const data = await response.json();
+      setDistricts(data);
+    } catch (error) {
+      console.error("Error fetching districts:", error.message);
+    }
   };
+  
+  // const handleDivisionChange = (e) => {
+  //   const divisionId = e.target.value;
+  //   setFormData({
+  //     ...formData,
+  //     division: divisionId,
+  //   });
+  //   fetchDistricts(parseInt(divisionId, 10)); // Convert to integer
+  // };
+  
+  
+  
 
   const fetchUpazilas = async (districtId) => {
     // Fetch upazilas based on selected district
-    const response = await fetch(`http://localhost:3001/location/upazilas?district_id=${districtId}`);
+    const intdistrictId = parseInt(districtId, 10); // Convert to integer
+    const response = await fetch(`http://localhost:3001/location/upazilas/${intdistrictId }`);
     const data = await response.json();
     setUpazilas(data);
   };
@@ -98,6 +124,7 @@ function Registration() {
   const handleDistrictChange = (event) => {
     const districtId = event.target.value;
     setDistrict(districtId);
+    console.log(upazilas);
     fetchUpazilas(districtId);
   };
 
@@ -220,6 +247,8 @@ function Registration() {
           password,
           user_type: userType,
           medical_history: medicalHistory,
+          blood_group: bloodGroup,
+          will_donate_blood: willDonateBlood,
         }),
       });
 
@@ -387,6 +416,23 @@ function Registration() {
                 />
                 Show passwords
               </label>
+              <br/>
+              <label className="signin-label">Blood Group*</label>
+<input
+  className="signin-input"
+  value={bloodGroup}
+  placeholder="O+"
+  onChange={(e) => setBloodGroup(e.target.value)}
+  type="text"
+/>
+<label className="signin-label">Willing to Donate Blood?</label>
+<input
+  className="signin-input"
+  checked={willDonateBlood}
+  onChange={(e) => setWillDonateBlood(e.target.checked)}
+  type="checkbox"
+/>
+
             </div>
           </div>
           <br />
@@ -398,7 +444,7 @@ function Registration() {
           <div className="side-by-side">
             Already a member?&nbsp;
             <u
-              onClick={() => (window.location.href = "/signin")}
+              onClick={() => (window.location.href = "/Login")}
               className="reg-text"
             >
               <b>Sign In</b>
