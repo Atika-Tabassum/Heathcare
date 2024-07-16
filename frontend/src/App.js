@@ -24,13 +24,14 @@ import BookAmbulance from "./components/ambulanceComponent/bookAmbulance";
 import DoctorProfile from "./components/profilesComponent/doctor/DoctorProfile";
 import Map from "./components/patientComponent/Map";
 import Chats from './components/chatComponent/chats';
+import MediCampDetails from './components/patientComponent/MediCampDetails';
 
 import Appointment from './components/doctorComponent/appointment';
 import ChatPreview from './components/chatComponent/chatPreview';
 
 function App() {
   return (
-    
+
     <Router>
       <Fragment>
         <Routes>
@@ -54,24 +55,22 @@ function App() {
           <Route path="/doctors/register" element={<DoctorReg />} />
           <Route path="/hospital/register" element={<HospitalReg />} />
           <Route path="/:userId/doctorHome" element={<DoctorHome />} />
-          <Route path="/:userId/orgmedicalcamp" element={<OrgMedicalCamp />} />  
+          <Route path="/:userId/orgmedicalcamp" element={<OrgMedicalCamp />} />
           <Route path="/:userId/org_camps" element={<ViewCamp />} />
           <Route path="/emergencyservice" element={<EmergencyService />} />
           <Route path="/:userId/notifications" element={<Notification />} />
           <Route path="/:campId/camp_details" element={<CampDetails />} />
-          <Route
-            path="/findambulance/:patientUserId/:hospitalUserId"
-            element={<FindAmbulance />}
-          />
-          <Route path="/ambulanceHomepage" element = {<AmbulanceHomepage />}/>
-          <Route path="/bookambulance" element={<BookAmbulance />} /> 
+          <Route path="/findambulance/:patientUserId/:hospitalUserId" element={<FindAmbulance />} />
+          <Route path="/ambulanceHomepage" element={<AmbulanceHomepage />} />
+          <Route path="/bookambulance" element={<BookAmbulance />} />
           <Route path="/:userId/appointments" element={<Appointment />} />
           <Route path="/:userId/chat_preview" element={<ChatPreview />} />
           <Route path="/:userId/:receiver/chats" element={<Chats />} />
+          <Route path="/medicalcampdetails" element={<MediCampDetails />} />
         </Routes>
       </Fragment>
     </Router>
-    
+
   );
 }
 

@@ -13,6 +13,10 @@ const Login = () => {
         e.preventDefault();
 
         try {
+            console.log('email:', email);
+            console.log('password:', password);
+            console.log('userType:', userType);
+            
             const response = await fetch('http://localhost:3001/login', {
                 method: 'POST',
                 headers: {
@@ -80,7 +84,7 @@ const Login = () => {
                             <button className="login-btn">Login</button>
                         </div>
                         <div className="login-link">
-                            <Link to="/signup">
+                            <Link to="/patient/register">
                                 <div className="link">Don't have an account? Sign up</div>
                             </Link>
                         </div>
