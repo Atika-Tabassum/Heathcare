@@ -93,6 +93,21 @@ CREATE TABLE content(
     video VARCHAR(255)
 );
 
+CREATE TABLE chats
+(
+    chat_id SERIAL PRIMARY KEY,
+    sender_id INTEGER,
+    receiver_id INTEGER,
+    message TEXT,
+    sent_at TIMESTAMP,
+    FOREIGN KEY (sender_id) REFERENCES users(user_id),
+    FOREIGN KEY (receiver_id) REFERENCES users(user_id)
+);
+
+-- INSERT INTO chats (sender_id, receiver_id, message, sent_at)
+-- VALUES (117, 1, 'Hello, this is a test message', NOW());
+
+
 
 INSERT INTO users (NAME, EMAIL,CONTACT_NO,ADDRESS, PASSWORD, USER_TYPE)
 VALUES ('John Doe', 'john.doe@example.com','01345678989','buet', 'password123', 'patient');
@@ -521,3 +536,14 @@ CREATE TABLE upazilas (
     upazila_name VARCHAR(255) NOT NULL,
     district_id INTEGER REFERENCES districts(district_id) ON DELETE CASCADE
 );
+
+
+SELECT C.SENDER_ID,C.MESSAGE,C.SENT_AT,U.NAME AS CHAT_NAME
+FROM CHATS C JOIN USERS U 
+ON C.SENDER_ID=U.USER_ID 
+WHERE C.RECEIVER_ID=1 AND C.SENDER_ID=117
+UNION
+SELECT C.SENDER_ID,C.MESSAGE,C.SENT_AT,U.NAME AS CHAT_NAME
+FROM CHATS C JOIN USERS U
+ON C.RECEIVER_ID=U.USER_ID
+WHERE C.RECEIVER_ID=117 AND C.SENDER_ID=1;
