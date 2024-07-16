@@ -6,17 +6,34 @@ const getBloodDonors = async (req, res, next) => {
     
     donors = await pool.query(
       `SELECT 
-    users.name,
-    users.email,
-    users.contact_no,
-    users.address,
-    patients.medical_history,
-    patients.blood_group,
-    patients.will_donate_blood
+    u.name,
+    u.email,
+    u.contact_no,
+    d.division_name,
+    dis.district_name,
+    up.upazila_name,
+    loc.union_name,
+    loc.ward_name,
+    loc.village_name,
+    loc.street_address,
+    loc.postal_code,
+    p.blood_group,
+    p.will_donate_blood
 FROM 
-    users
-INNER JOIN 
-    patients ON users.user_id = patients.patient_user_id;
+    users u
+JOIN 
+    patients p ON u.user_id = p.patient_user_id
+JOIN 
+    location loc ON u.location_id = loc.location_id
+JOIN 
+    upazilas up ON loc.upazila_id = up.upazila_id
+JOIN 
+    districts dis ON up.district_id = dis.district_id
+JOIN 
+    divisions d ON dis.division_id = d.division_id
+WHERE 
+    p.will_donate_blood = False;
+
 `
     );
 
@@ -37,3 +54,13 @@ INNER JOIN
 };
 
 module.exports = { getBloodDonors};
+
+
+
+
+
+
+
+
+
+

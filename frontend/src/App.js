@@ -21,6 +21,7 @@ import CampDetails from "./components/doctorComponent/medicalcamp/campdetails";
 import FindAmbulance from "./components/patientComponent/FindAmbulance";
 import AmbulanceHomepage from "./components/ambulanceComponent/ambulanceHomepage";
 import BookAmbulance from "./components/ambulanceComponent/bookAmbulance";
+import ShowDonor from "./components/bloodDonationComponent/showDonors";
 import DoctorProfile from "./components/profilesComponent/doctor/DoctorProfile";
 import Map from "./components/patientComponent/Map";
 import Chats from './components/chatComponent/chats';
@@ -31,7 +32,6 @@ import ChatPreview from './components/chatComponent/chatPreview';
 
 function App() {
   return (
-
     <Router>
       <Fragment>
         <Routes>
@@ -67,10 +67,10 @@ function App() {
           <Route path="/:userId/chat_preview" element={<ChatPreview />} />
           <Route path="/:userId/:receiver/chats" element={<Chats />} />
           <Route path="/medicalcampdetails" element={<MediCampDetails />} />
+          <Route path="/showDonors" element={<ShowDonor />} />
         </Routes>
       </Fragment>
     </Router>
-
   );
 }
 

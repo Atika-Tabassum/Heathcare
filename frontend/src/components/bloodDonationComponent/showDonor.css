@@ -1,0 +1,132 @@
+/* Styles for the ShowDonor component */
+
+.show-donor-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .show-donor-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .filter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .filter-container label {
+    margin-right: 10px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .filter-container select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #333;
+    transition: border-color 0.3s;
+  }
+  
+  .filter-container select:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #bb1d5f;
+    margin-bottom: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 2px 5px rgba(174, 17, 96, 0.1);
+  }
+  
+  thead th {
+    background-color: #c93e7f;
+    color: rgb(253, 253, 253);
+    border: 1px solid #cc7aa0;
+    padding: 10px;
+  }
+  
+  tbody td {
+    border: 1px solid #eeb7dc;
+    padding: 10px;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #ffd8ee;
+  }
+  
+  tbody tr:hover {
+    background-color: #ffffff;
+  }
+  
+  td, th {
+    text-align: left;
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      width: 95%;
+    }
+  
+    table, thead, tbody, th, td, tr {
+      display: block;
+    }
+  
+    thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+  
+    tr {
+      margin: 0 0 1rem 0;
+    }
+  
+    tr:nth-child(even) {
+      background-color: transparent;
+    }
+  
+    td {
+      border: none;
+      position: relative;
+      padding-left: 50%;
+      text-align: right;
+    }
+  
+    td:before {
+      position: absolute;
+      top: 0;
+      left: 6px;
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap;
+      text-align: left;
+      font-weight: bold;
+    }
+  
+    td:nth-of-type(1):before { content: "Name"; }
+    td:nth-of-type(2):before { content: "Email"; }
+    td:nth-of-type(3):before { content: "Contact No"; }
+    td:nth-of-type(4):before { content: "Location"; }
+    td:nth-of-type(5):before { content: "Blood Group"; }
+    td:nth-of-type(6):before { content: "Will Donate Blood"; }
+  }
+  
