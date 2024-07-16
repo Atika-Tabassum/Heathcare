@@ -78,6 +78,11 @@ CREATE TABLE medical_camp_doctors (
     FOREIGN KEY (camp_id) REFERENCES medical_camps(camp_id)
 );
 
+INSERT INTO medical_camp_doctors (camp_id, doctor_user_id) VALUES (1, 379);
+INSERT INTO medical_camp_doctors (camp_id, doctor_user_id) VALUES (2, 380);
+INSERT INTO medical_camp_doctors (camp_id, doctor_user_id) VALUES (1, 380);
+INSERT INTO medical_camp_doctors (camp_id, doctor_user_id) VALUES (2, 379);
+
 CREATE TABLE medical_camp_patients (
     camp_id INTEGER,
     patient_user_id INTEGER,
@@ -111,6 +116,21 @@ ADD COLUMN will_donate_blood BOOLEAN;
 UPDATE patients 
 SET blood_group = 'O+', 
     will_donate_blood = FALSE;
+CREATE TABLE chats
+(
+    chat_id SERIAL PRIMARY KEY,
+    sender_id INTEGER,
+    receiver_id INTEGER,
+    message TEXT,
+    sent_at TIMESTAMP,
+    FOREIGN KEY (sender_id) REFERENCES users(user_id),
+    FOREIGN KEY (receiver_id) REFERENCES users(user_id)
+);
+
+-- INSERT INTO chats (sender_id, receiver_id, message, sent_at)
+-- VALUES (117, 1, 'Hello, this is a test message', NOW());
+
+
 
 
 INSERT INTO users (NAME, EMAIL,CONTACT_NO,ADDRESS, PASSWORD, USER_TYPE)
@@ -128,6 +148,7 @@ CREATE TABLE specializations (
     specialization_id SERIAL PRIMARY KEY,
     name VARCHAR(100) UNIQUE
 );
+
 CREATE TABLE doctor_specializations (
     doctor_user_id INTEGER,
     specialization_id INTEGER,
@@ -170,7 +191,7 @@ CREATE TABLE users (
 
 CREATE TABLE doctors (
     doctor_user_id INTEGER PRIMARY KEY,
-    specialisation VARCHAR(100),
+    specialisation_id VARCHAR(100),
     hospital_user_id INTEGER,
     description TEXT,
     FOREIGN KEY (doctor_user_id) REFERENCES users(user_id),
@@ -240,6 +261,10 @@ CREATE TABLE medical_camps (
     FOREIGN KEY (doctor_user_id) REFERENCES users(user_id)
 );
 
+INSERT INTO medical_camps (doctor_user_id, location, camp_date, description) VALUES (1, 'Dhanmondi, Dhaka', '2021-07-01 10:00:00', 'Free medical camp for all.');
+INSERT INTO medical_camps (doctor_user_id, location, camp_date, description) VALUES (1, 'du', '2021-07-01 10:00:00', 'Vaccination');
+INSERT INTO medical_camps (doctor_user_id, location, camp_date, description) VALUES (379, 'Uttara', '2021-07-01 10:00:00', 'Free Diabetes Checkup Camp');
+INSERT INTO medical_camps (doctor_user_id, location, camp_date, description) VALUES (380, 'BUET', '2021-07-01 10:00:00', 'Free Eye Checkup Camp');
 --  alter table medical_camps add column image bytea;
 
 -- \lo_import "C:/Users/User/Documents/hackathon/camp_default_img.jpg"
@@ -288,9 +313,22 @@ VALUES ('John Doe', 'john.doe@example.com','01345678989','buet', 'password123', 
 INSERT INTO doctors (doctor_user_id, specialisation, hospital_user_id, description) VALUES (379, 'Cardiologist', 265, 'Dr. doctor1 is a cardiologist with 10 years of experience.');
 
 
-INSERT INTO users(name, email, contact_no, address, password, user_type) values('Square Hospitals Ltd.', 'https://www.squarehospital.com/', '+8809610010616', 'Nafi Tower, Level-3 (2nd floor),53 Gulshan Avenue, Gulshan-1, Dhaka-
+INSERT INTO users(name, email, contact_no, address, password, user_type) values('Square Hospitals Ltd.', 'https://www.squarehospital.com/', '+8809610010616', 'Nafi Tower, Level-3 (2nd floor),53 Gulshan Avenue, Gulshan-1, Dhaka','1234', 'hospital');
+
+
 INSERT INTO content (topic, description, video) 
 VALUES ('Hygiene', '10 Steps to Washing Your Hands.',  'https://youtu.be/Br4sQmiJ1jU?si=3lvqP2u3OjoAyc66');
+
+
+INSERT INTO content(topic, description, video) VALUES
+('Hygiene', 'Hygiene Habits for Kids - Compilation - Handwashing, Personal Hygiene and Tooth Brushing', 'https://www.youtube.com/watch?v=l6XGE-Xuq3M&pp=ygUSaHlnaWVuZSB2aWRlbyBraWRz');
+
+INSERT INTO content(topic, description, video) VALUES
+('Mental Health', 'What Mental Health Is and Importance of Taking Care of It?', 'https://www.youtube.com/watch?v=tY8NY6CMDFA&pp=ygUWbWVudGFsIGhlYWx0aCBmb3Iga2lkcw%3D%3D');
+
+-- https://i.ytimg.com/vi/tY8NY6CMDFA/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAWAvwD548uZHaQH7-1X9VPVppTFw
+-- https://www.youtube.com/watch?v=tY8NY6CMDFA&pp=ygUWbWVudGFsIGhlYWx0aCBmb3Iga2lkcw%3D%3D
+-- What Mental Health Is and Why It’s Important to Take Care of It? - Kids Academy
 
 
 
@@ -540,3 +578,40 @@ CREATE TABLE upazilas (
     upazila_name VARCHAR(255) NOT NULL,
     district_id INTEGER REFERENCES districts(district_id) ON DELETE CASCADE
 );
+CREATE TABLE location (
+  location_id SERIAL PRIMARY KEY,
+  division_id INT NOT NULL,
+  district_id INT NOT NULL,
+  upazila_id INT NOT NULL,
+  union_name VARCHAR(255),
+  ward_name VARCHAR(255),
+  village_name VARCHAR(255),
+  street_address VARCHAR(255),
+  postal_code VARCHAR(20),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+--doctor alters
+ALTER TABLE doctors ADD COLUMN reg_no INT;
+CREATE TABLE qualifications (
+  qualification_id SERIAL PRIMARY KEY,
+  name VARCHAR(255) UNIQUE NOT NULL
+);
+CREATE TABLE doctor_qualifications (
+  doctor_qualification_id SERIAL PRIMARY KEY,
+  doctor_user_id INT REFERENCES users(user_id),
+  qualification_id INT REFERENCES qualifications(qualification_id),
+  institution VARCHAR(255),
+  year_of_completion INT
+);
+
+
+SELECT C.SENDER_ID,C.MESSAGE,C.SENT_AT,U.NAME AS CHAT_NAME
+FROM CHATS C JOIN USERS U 
+ON C.SENDER_ID=U.USER_ID 
+WHERE C.RECEIVER_ID=1 AND C.SENDER_ID=117
+UNION
+SELECT C.SENDER_ID,C.MESSAGE,C.SENT_AT,U.NAME AS CHAT_NAME
+FROM CHATS C JOIN USERS U
+ON C.RECEIVER_ID=U.USER_ID
+WHERE C.RECEIVER_ID=117 AND C.SENDER_ID=1;

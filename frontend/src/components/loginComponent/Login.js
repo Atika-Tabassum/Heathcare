@@ -13,6 +13,10 @@ const Login = () => {
         e.preventDefault();
 
         try {
+            // console.log('email:', email);
+            // console.log('password:', password);
+            // console.log('userType:', userType);
+
             const response = await fetch('http://localhost:3001/login', {
                 method: 'POST',
                 headers: {
@@ -23,8 +27,24 @@ const Login = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                localStorage.setItem('user', JSON.stringify(data.user)); // Save user info in localStorage
-                navigate('/home');
+                localStorage.setItem('user', JSON.stringify(data.userId)); // Save user info in localStorage
+                console.log('Login data:', data);
+                console.log('user type:', data.userType);
+                localStorage.setItem('user', JSON.stringify(data.userId));
+                localStorage.setItem('userType', JSON.stringify(data.userType));
+
+                console.log('User type:', data.userType);
+                console.log('User ID:', data.userId);
+
+                if(data.userType.toLowerCase() === 'doctor') {
+                    navigate(`/${data.userId}/doctorHome`);
+                }
+                else if(data.userType.toLowerCase() === 'patient') {
+                    navigate(`/${data.userId}/home`);
+                }
+                else if(data.userType === 'Hospital') {
+                    // navigate(`/${data.userId}/hospitalHome`);
+                }
             } else {
                 const data = await response.json();
                 alert(data.message);
@@ -69,9 +89,9 @@ const Login = () => {
                                         onChange={(e) => setUserType(e.target.value)}
                                     >
                                         <option value="0">Select type:</option>
-                                        <option value="Doctor">Doctor</option>
-                                        <option value="Patient">Patient</option>
-                                        <option value="Hospital">Hospital</option>
+                                        <option value="doctor">Doctor</option>
+                                        <option value="patient">Patient</option>
+                                        <option value="hospital">Hospital</option>
                                     </select>
                                 </div>
                             </div>
@@ -80,7 +100,7 @@ const Login = () => {
                             <button className="login-btn">Login</button>
                         </div>
                         <div className="login-link">
-                            <Link to="/signup">
+                            <Link to="/patient/register">
                                 <div className="link">Don't have an account? Sign up</div>
                             </Link>
                         </div>

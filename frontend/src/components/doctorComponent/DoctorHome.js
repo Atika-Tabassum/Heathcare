@@ -80,6 +80,11 @@ const DoctorHome = () => {
             <img src={image2} alt="medical camp" className="clinic-icon" />
             <div className="tool-tip">view your medical camps</div>
           </button>
+          <button className="service-icons"
+          onClick={() => navigate(`/${userId}/chat_preview`)}>
+            <img src={image1} alt="appointment" className="clinic-icon" />
+            <div className="tool-tip">chats</div>
+          </button>
         </div>
       </div>
 

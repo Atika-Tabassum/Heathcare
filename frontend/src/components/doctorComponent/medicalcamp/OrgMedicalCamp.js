@@ -3,24 +3,38 @@ import { useNavigate, useParams } from "react-router-dom";
 import Header from "../../general/Header";
 import img1 from "../../homeComponent/about-us.svg";
 import img2 from "../../homeComponent/contact-us.svg";
-
 import "./OrgMedicalCamp.css";
 
 const OrgMedicalCamp = () => {
-  const [location, setLocation] = useState("");
-  const [date, setDate] = useState("");
-  const [description, setDescription] = useState("");
+  const [formData, setFormData] = useState({
+    division: "",
+    district: "",
+    upazila: "",
+    unionName: "",
+    wardName: "",
+    villageName: "",
+    streetAddress: "",
+    postalCode: "",
+    date: "",
+    description: ""
+  });
+  const [divisions, setDivisions] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [upazilas, setUpazilas] = useState([]);
+  const [division, setDivision] = useState(""); // New state for division
+  const [district, setDistrict] = useState(""); // New state for district
+  const [upazila, setUpazila] = useState(""); // New state for upazila
   const [doctors, setDoctors] = useState([]);
-  const [selectedDoctors, setSelectedDoctors] = useState([]); // Use an array for multiple selections
+  const [selectedDoctors, setSelectedDoctors] = useState([]);
   const [showDoctorsList, setShowDoctorsList] = useState(false);
-  const [image, setImage] = useState(null); // New state for the image file
+  const [image, setImage] = useState(null);
   const navigate = useNavigate();
   const { userId } = useParams();
 
   useEffect(() => {
-    fetchDoctors();
+    fetchDivisions();
+    fetchDoctors ();
   }, []);
-
   const fetchDoctors = async () => {
     try {
       const response = await fetch(
@@ -41,6 +55,111 @@ const OrgMedicalCamp = () => {
       console.error("Error fetching doctors:", error);
     }
   };
+  const fetchDivisions = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/location/divisions");
+      if (!response.ok) {
+        throw new Error('Failed to fetch divisions');
+      }
+      const data = await response.json();
+      setDivisions(data);
+    } catch (error) {
+      console.error("Error fetching divisions:", error.message);
+      // Handle error state or display a message
+    }
+  };
+  
+  const fetchDistricts = async (divisionId) => {
+    try {
+      const intDivisionId = parseInt(divisionId, 10); // Convert to integer
+      const response = await fetch(`http://localhost:3001/location/districts/${intDivisionId}`);
+      
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`Failed to fetch districts: ${response.statusText}. Response: ${text}`);
+      }
+  
+      const data = await response.json();
+      setDistricts(data);
+    } catch (error) {
+      console.error("Error fetching districts:", error.message);
+    }
+  };
+  
+  
+  
+
+  const fetchUpazilas = async (districtId) => {
+    // Fetch upazilas based on selected district
+    const intdistrictId = parseInt(districtId, 10); // Convert to integer
+    const response = await fetch(`http://localhost:3001/location/upazilas/${intdistrictId }`);
+    const data = await response.json();
+    setUpazilas(data);
+  };
+
+  
+  
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const selectedDoctorIds = selectedDoctors.map((doctor) => doctor.user_id);
+      const formData = new FormData();
+      formData.append("division", division);
+      formData.append("district", district);
+      formData.append("upazila",upazila);
+      formData.append("unionName", formData.unionName);
+      formData.append("wardName", formData.wardName);
+      formData.append("villageName", formData.villageName);
+      formData.append("streetAddress", formData.streetAddress);
+      formData.append("postalCode", formData.postalCode);
+      formData.append("date", formData.date ? formData.date.toISOString().split('T')[0] : new Date().toISOString().split('T')[0]);
+
+      formData.append("description", formData.description);
+      formData.append("selectedDoctors", JSON.stringify(selectedDoctorIds));
+      if (image) {
+        formData.append("image", image);
+      }
+      const response = await fetch(`http://localhost:3001/org/${userId}/orgmedicalcamp`, {
+        method: "POST",
+        body: formData
+      });
+      const data = await response.json();
+      console.log(data);
+      navigate(`/${userId}/doctorHome`, { replace: true });
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+  const handleDivisionChange = (event) => {
+    const divisionId = event.target.value;
+    setDivision(divisionId);
+    fetchDistricts(divisionId);
+  };
+
+  const handleDistrictChange = (event) => {
+    const districtId = event.target.value;
+    setDistrict(districtId);
+    console.log(upazilas);
+    fetchUpazilas(districtId);
+  };
+
+  const handleUpazilaChange = (event) => {
+    setUpazila(event.target.value);
+  };
+
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
 
   const handleDoctorClick = (doctorId) => {
     const updatedDoctors = doctors.map((doctor) =>
@@ -49,47 +168,8 @@ const OrgMedicalCamp = () => {
         : doctor
     );
     setDoctors(updatedDoctors);
-
-    const updatedSelectedDoctors = updatedDoctors.filter(
-      (doctor) => doctor.selected
-    );
+    const updatedSelectedDoctors = updatedDoctors.filter((doctor) => doctor.selected);
     setSelectedDoctors(updatedSelectedDoctors);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const selectedDoctorIds = selectedDoctors
-        ? selectedDoctors.map((doctor) => doctor.user_id)
-        : [];
-
-      const formData = new FormData();
-      formData.append("location", location);
-      formData.append("date", date);
-      formData.append("description", description);
-      formData.append("selectedDoctors", JSON.stringify(selectedDoctorIds));
-      if (image) {
-        formData.append("image", image);
-      }
-
-      const response = await fetch(
-        `http://localhost:3001/org/${userId}/orgmedicalcamp`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-      const data = await response.json();
-      console.log(data);
-
-      navigate(`/${userId}/doctorHome`, { replace: true });
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
-
-  const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
   };
 
   return (
@@ -101,25 +181,116 @@ const OrgMedicalCamp = () => {
           <div className="tool-tip">Contact Us</div>
         </div>
       </navbar>
-
       <navbar className="navbar2">
         <div className="bottom-icon">
           <img src={img1} alt="about us" className="about-us-icon" />
           <div className="tool-tip">About Us</div>
         </div>
       </navbar>
-
       <div className="page-container">
         <div className="page-content"></div>
         <h1>Organize Medical Camp</h1>
         <form className="form-container" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="location">Location:</label>
+            <label htmlFor="division">Division:</label>
+            <select
+              className="signin-input"
+              value={division}
+              onChange={handleDivisionChange}
+            >
+              <option value="">Select Division</option>
+              {divisions.map((division) => (
+                <option key={division.division_id} value={division.division_id}>
+                  {division.division_name}
+                </option>
+              ))}
+            </select>
+
+          </div>
+          <div className="form-group">
+            <label htmlFor="district">District:</label>
+            <select
+              className="signin-input"
+              value={district}
+              onChange={handleDistrictChange}
+              disabled={!division}
+            >
+              <option value="">Select District</option>
+              {districts.map((district) => (
+                <option key={district.district_id} value={district.district_id}>
+                  {district.district_name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="upazila">Upazila:</label>
+            <select
+              className="signin-input"
+              value={upazila}
+              onChange={handleUpazilaChange}
+              disabled={!district}
+            >
+              <option value="">Select Upazila</option>
+              {upazilas.map((upazila) => (
+                <option key={upazila.upazila_id} value={upazila.upazila_id}>
+                  {upazila.upazila_name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="unionName">Union Name:</label>
             <input
               type="text"
-              id="location"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
+              id="unionName"
+              name="unionName"
+              value={formData.unionName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="wardName">Ward Name:</label>
+            <input
+              type="text"
+              id="wardName"
+              name="wardName"
+              value={formData.wardName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="villageName">Village Name:</label>
+            <input
+              type="text"
+              id="villageName"
+              name="villageName"
+              value={formData.villageName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="streetAddress">Street Address:</label>
+            <input
+              type="text"
+              id="streetAddress"
+              name="streetAddress"
+              value={formData.streetAddress}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="postalCode">Postal Code:</label>
+            <input
+              type="text"
+              id="postalCode"
+              name="postalCode"
+              value={formData.postalCode}
+              onChange={handleChange}
               required
             />
           </div>
@@ -128,8 +299,9 @@ const OrgMedicalCamp = () => {
             <input
               type="date"
               id="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
               required
             />
           </div>
@@ -137,8 +309,9 @@ const OrgMedicalCamp = () => {
             <label htmlFor="description">Description:</label>
             <textarea
               id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
               required
             />
           </div>

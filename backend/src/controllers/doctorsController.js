@@ -2,10 +2,30 @@ const pool = require("../../db");
 
 const getDoctors = async (req, res, next) => {
   try {
-    const doctors = await pool.query(`SELECT u.*, d.specialisation, d.hospital_user_id, d.description 
-                                      FROM users u 
-                                      JOIN doctors d ON u.user_id = d.doctor_user_id 
-                                      WHERE u.user_type = 'Doctor' AND u.user_id <> $1`, [req.params.userId]);
+    const doctors = await pool.query(`SELECT
+    u.*,                        
+    ds.specialization_id,         
+    d.hospital_user_id,           
+    d.description,               
+    s.name AS specialization_name
+FROM
+    users u                       
+JOIN
+    doctors d                    
+ON
+    u.user_id = d.doctor_user_id  
+LEFT JOIN
+    doctor_specializations ds    
+ON
+    d.doctor_user_id = ds.doctor_user_id  
+LEFT JOIN
+    specializations s             
+ON
+    ds.specialization_id = s.specialization_id  
+WHERE
+    u.user_type = 'doctor'       
+    AND u.user_id <>$1
+`, [req.params.userId]);
     console.log("doctors:", doctors.rows);
 
     if (doctors.rows.length === 0) {
@@ -24,22 +44,43 @@ const getDoctors = async (req, res, next) => {
 
 const registerDoctor = async (req, res, next) => {
   try {
-    const { name, email, contact_no, address, password, description, image, specializations } = req.body;
+    const { 
+      name, email, phoneNumber: contact_no, division, 
+      district, upazila, unionName, wardName, 
+      villageName, streetAddress, postalCode, 
+      password, description, image, reg_no, specializations 
+    } = req.body;
+
+    console.log('Request body:', req.body);
+
+    // Check for missing required fields
+    if (!name || !email || !contact_no || !division || !district || !upazila || !unionName || !wardName || !villageName || !streetAddress || !postalCode || !password) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
+
+    // Insert into locations table
+    const newLocation = await pool.query(
+      `INSERT INTO locations (division_id, district_id, upazila_id, union_name, ward_name, village_name, street_address, postal_code)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING location_id`,
+      [division, district, upazila, unionName, wardName, villageName, streetAddress, postalCode]
+    );
+
+    const locationId = newLocation.rows[0].location_id;
 
     // Insert into users table
     const newUser = await pool.query(
-      `INSERT INTO users (name, email, contact_no, address, user_type, password)
+      `INSERT INTO users (name, email, contact_no, location_id, user_type, password)
        VALUES ($1, $2, $3, $4, 'doctor', $5) RETURNING user_id`,
-      [name, email, contact_no, address, password]
+      [name, email, contact_no, locationId, password]
     );
 
     const userId = newUser.rows[0].user_id;
 
     // Insert into doctors table
     await pool.query(
-      `INSERT INTO doctors (doctor_user_id, description, image)
+      `INSERT INTO doctors (doctor_user_id, description, reg_no)
        VALUES ($1, $2, $3)`,
-      [userId, description, image]
+      [userId, description,reg_no]
     );
 
     // Insert specializations

@@ -4,6 +4,10 @@
     height: 0;
     overflow: hidden;
   }
+
+  .video-container:hover .play-button {
+    display: block;
+  }
   
   .react-player {
     position: absolute;
@@ -14,11 +18,7 @@
   }
   
 
-  .video-grid
-  {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    height: 120px;
-    grid-gap: 20px;
-    padding: 20px;
-  }
+.list::marker
+{
+  color: lightcoral;
+}
