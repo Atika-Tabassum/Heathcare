@@ -42,6 +42,12 @@ CREATE TABLE appointments (
     FOREIGN KEY (doctor_user_id) REFERENCES users(user_id)
 );
 
+
+-- new 
+alter table appointments add column status varchar(50);
+-- pending accepted
+
+
 CREATE TABLE notifications (
     notification_id SERIAL PRIMARY KEY,
     user_id INTEGER,
@@ -145,10 +151,21 @@ VALUES ('John Smith', 'smith@gmail.com","01345678989','buet', 'password123', 'pa
 INSERT INTO content (topic, description, video) 
 VALUES ('Hygiene', '10 Steps to Washing Your Hands.',  'https://youtu.be/Br4sQmiJ1jU?si=3lvqP2u3OjoAyc66');
 --fariha
+
+----- korsi------------------------------------
 CREATE TABLE specializations (
     specialization_id SERIAL PRIMARY KEY,
     name VARCHAR(100) UNIQUE
 );
+
+INSERT INTO specializations (name) VALUES
+  ('Cardiology'),
+  ('Dermatology'),
+  ('Neurology'),
+  ('Pediatrics'),
+  ('Psychiatry'),
+  ('Orthopedics'),
+  ('Ophthalmology');
 
 CREATE TABLE doctor_specializations (
     doctor_user_id INTEGER,
@@ -158,9 +175,19 @@ CREATE TABLE doctor_specializations (
     PRIMARY KEY (doctor_user_id, specialization_id)
 );
 
+
+
+INSERT INTO doctor_specializations (doctor_user_id, specialization_id) VALUES
+  (379, 1),
+  (380, 4);
+
+  INSERT INTO doctor_specializations (doctor_user_id, specialization_id) VALUES (379, 5);
+
 ALTER TABLE doctors ADD COLUMN image VARCHAR(100); 
 ALTER TABLE doctors
 DROP COLUMN specialisation;
+
+-----------------------------------------------
 
 INSERT INTO users (name, email, contact_no, address, user_type, password) VALUES
   ('Dr. John Smith', 'john.smith@example.com', '1234567890', '123 Main St, City, Country', 'doctor', 'password123'),
@@ -240,6 +267,9 @@ CREATE TABLE notifications (
 
 -- sql
 -- alter table notifications add column type varchar(50);
+
+
+-----------------------------------------------------------------------------------------
 
 
 CREATE TABLE ambulance_bookings (
@@ -565,6 +595,10 @@ INSERT INTO users (name, address, user_type) VALUES
 ('Ayesha Haque Hospital', 'Beanibazar, Sylhet', 'hospital');
 INSERT INTO users (name, address, user_type) VALUES
 ('Charkhai Multicare Hospital', 'Beanibazar', 'hospital');
+
+
+
+----------------------------------------------------------------------------------------------
 --location tables
 ALTER TABLE users DROP COLUMN address;
 ALTER TABLE users ADD COLUMN location_id (INT);
@@ -601,6 +635,7 @@ CREATE TABLE qualifications (
   qualification_id SERIAL PRIMARY KEY,
   name VARCHAR(255) UNIQUE NOT NULL
 );
+
 CREATE TABLE doctor_qualifications (
   doctor_qualification_id SERIAL PRIMARY KEY,
   doctor_user_id INT REFERENCES users(user_id),
@@ -608,7 +643,7 @@ CREATE TABLE doctor_qualifications (
   institution VARCHAR(255),
   year_of_completion INT
 );
-
+----------------------------------------------------------------------------------------
 
 SELECT C.SENDER_ID,C.MESSAGE,C.SENT_AT,U.NAME AS CHAT_NAME
 FROM CHATS C JOIN USERS U 

@@ -22,12 +22,14 @@ import FindAmbulance from "./components/patientComponent/FindAmbulance";
 import AmbulanceHomepage from "./components/ambulanceComponent/ambulanceHomepage";
 import BookAmbulance from "./components/ambulanceComponent/bookAmbulance";
 import DoctorProfile from "./components/profilesComponent/doctor/DoctorProfile";
-import Map from "./components/patientComponent/Map";
 import Chats from './components/chatComponent/chats';
 import MediCampDetails from './components/patientComponent/MediCampDetails';
 
 import Appointment from './components/doctorComponent/appointment';
 import ChatPreview from './components/chatComponent/chatPreview';
+
+import FindNearbyHosopital from './components/patientComponent/FindNearbyHosopital';
+import AboutUs from './components/patientComponent/AboutUs';
 
 function App() {
   return (
@@ -67,6 +69,8 @@ function App() {
           <Route path="/:userId/chat_preview" element={<ChatPreview />} />
           <Route path="/:userId/:receiver/chats" element={<Chats />} />
           <Route path="/medicalcampdetails" element={<MediCampDetails />} />
+          <Route path="/findnearbyhospital" element={<FindNearbyHosopital />} />
+          <Route path="/aboutus" element={<AboutUs />} />
         </Routes>
       </Fragment>
     </Router>
