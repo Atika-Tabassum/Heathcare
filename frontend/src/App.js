@@ -32,7 +32,7 @@ import BlogList from './components/blogComponent/blogList';
 import BlogPost from './components/blogComponent/blogPost';
 import NewPost from './components/blogComponent/newPost';
 
-import FindNearbyHosopital from './components/patientComponent/FindNearbyHosopital';
+import FindNearbyHospital from './components/patientComponent/FindNearbyHospital';
 import AboutUs from './components/patientComponent/AboutUs';
 
 function App() {
@@ -76,7 +76,7 @@ function App() {
           <Route path="/blog" element={<BlogList />} />
           <Route path="/blog/:id" element={<BlogPost />} />
           <Route path="/:userId/new-post" element={<NewPost />} />
-          <Route path="/findnearbyhospital" element={<FindNearbyHosopital />} />
+          <Route path="/findnearbyhospital" element={<FindNearbyHospital />} />
           <Route path="/aboutus" element={<AboutUs />} />
         </Routes>
       </Fragment>

@@ -26,22 +26,22 @@
     font-size: 16px;
     width: 100%;
     box-sizing: border-box;
-    border: 1px solid #ccc;
+    border: 1px solid #c6bfc2;
     border-radius: 4px;
   }
   
   .form-group button {
     padding: 10px 20px;
     font-size: 16px;
-    color: white;
-    background-color: #007bff;
+    color: rgb(254, 254, 254);
+    background-color: #f079ad;
     border: none;
     border-radius: 4px;
     cursor: pointer;
   }
   
   .form-group button:hover {
-    background-color: #0056b3;
+    background-color: #df327d;
   }
   
   .doctors-table-container {
@@ -59,11 +59,11 @@
   .doctors-table td {
     padding: 10px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #f5a2d4;
   }
   
   .doctors-table th {
-    background-color: #f2f2f2;
+    background-color:#f079ad;
   }
   
   .doctors-table td {
@@ -71,8 +71,16 @@
   }
 
   .selected {
-    background-color: lightblue; 
+    background-color: rgb(231, 165, 203); 
     cursor: pointer; 
   }
   
+  .submitBtn{
+    background-color:#f079ad; 
+  }
+  
+
+  .submitBtn:hover {
+    background-color: #df327d;
+  }
   

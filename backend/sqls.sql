@@ -214,7 +214,7 @@ CREATE TABLE users (
     name VARCHAR(100),
     email VARCHAR(100) UNIQUE,
     contact_no VARCHAR(20),
-    address VARCHAR(255),
+    location_id INT,
     user_type VARCHAR(50), -- 'doctor', 'patient', 'hospital'
     password VARCHAR(255)
 );
