@@ -6,10 +6,15 @@ const getCamps = async (req, res, next) => {
     const userId = req.params.userId;
     console.log("userId:", userId);
     const camps = await pool.query(
-      `SELECT m.*
+      `SELECT m.*, l.*,div.division_name,dis.district_name,up.upazila_name
 FROM medical_camps m
 LEFT JOIN medical_camp_doctors md ON m.camp_id = md.camp_id
-WHERE m.doctor_user_id = $1 OR md.doctor_user_id = $1;
+LEFT JOIN location l ON m.location = l.location_id
+LEFT JOIN divisions div ON l.division_id=div.division_id
+LEFT JOIN districts dis on l.district_id=dis.district_id
+LEFT JOIN upazilas up on up.upazila_id = l.upazila_id
+WHERE m.doctor_user_id = $1 OR md.doctor_user_id = $1
+;
 `,
       [userId]
     );
@@ -68,25 +73,34 @@ const getCampDetails = async (req, res, next) => {
     const campId = req.params.campId;
     console.log("campId:", campId);
     const camp = await pool.query(
-      `SELECT m.*,u.name,u.email,u.contact_no ,encode(m.image, 'base64') AS img FROM medical_camps m 
+      `SELECT m.*,l.*,u.name,u.email,u.contact_no ,encode(m.image, 'base64') AS img ,
+      div.division_name,dis.district_name,up.upazila_name  
+      FROM medical_camps m 
        join users u on m.doctor_user_id=u.user_id
+       LEFT JOIN location l ON m.location = l.location_id
+LEFT JOIN divisions div ON l.division_id=div.division_id
+LEFT JOIN districts dis on l.district_id=dis.district_id
+LEFT JOIN upazilas up on up.upazila_id = l.upazila_id
        WHERE m.camp_id = $1`,
       [campId]
     );
 
-    const doctors=await pool.query(`SELECT u.name,u.email,u.contact_no 
-      FROM users u JOIN medical_camp_doctors md ON u.user_id=md.doctor_user_id WHERE md.camp_id=$1 `,[campId]);
+    const doctors = await pool.query(
+      `SELECT u.name,u.email,u.contact_no 
+      FROM users u JOIN medical_camp_doctors md ON u.user_id=md.doctor_user_id WHERE md.camp_id=$1 `,
+      [campId]
+    );
 
     // console.log("camp:", camp.rows);
     // console.log("doctors:",doctors.rows);
 
-    if (camp.rows.length === 0 ) {
+    if (camp.rows.length === 0) {
       res.status(404).json({ message: "No camp found" });
     } else {
       res.status(200).json({
         message: "Camp loaded successfully",
         data: camp.rows,
-        doctors:doctors.rows
+        doctors: doctors.rows,
       });
     }
   } catch (error) {

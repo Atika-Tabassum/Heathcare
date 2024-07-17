@@ -1,0 +1,36 @@
+/* blogpost.css */
+.blog-post {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.blog-post h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.blog-post p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.blog-post .category, .blog-post .author {
+    font-size: 1rem;
+    font-style: italic;
+    color: #666;
+}
+
+.blog-post .author {
+    margin-top: 20px;
+}
+
+.loading {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #888;
+}

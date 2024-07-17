@@ -25,10 +25,21 @@ const getMedicalCamp = async (req, res, next) => {
     console.log(date);
     const imageBuffer = req.file ? req.file.buffer : null;
     const newLocation = await pool.query(
-      `INSERT INTO locations (division_id, district_id, upazila_id, union_name, ward_name, village_name, street_address, postal_code)
+      `INSERT INTO location (division_id, district_id, upazila_id, union_name, ward_name, village_name, street_address, postal_code)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING location_id`,
       [division, district, upazila, unionName, wardName, villageName, streetAddress, postalCode]
     );
+
+    console.log('division '+division);
+    console.log('district '+district);
+    console.log('upazila '+upazila);
+    console.log('unionName '+unionName);
+    console.log('wardName '+wardName);
+    console.log('villageName '+req.body.villageName);
+    console.log('streetAddress '+streetAddress);
+    console.log('postalCode '+postalCode);
+    console.log('date '+date);
+    console.log('description '+description);
 
     const locationId = newLocation.rows[0].location_id;
     const newcamp = await pool.query(
