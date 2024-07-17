@@ -116,6 +116,7 @@ ADD COLUMN will_donate_blood BOOLEAN;
 UPDATE patients 
 SET blood_group = 'O+', 
     will_donate_blood = FALSE;
+
 CREATE TABLE chats
 (
     chat_id SERIAL PRIMARY KEY,
@@ -156,9 +157,11 @@ CREATE TABLE doctor_specializations (
     FOREIGN KEY (specialization_id) REFERENCES specializations(specialization_id),
     PRIMARY KEY (doctor_user_id, specialization_id)
 );
+
 ALTER TABLE doctors ADD COLUMN image VARCHAR(100); 
 ALTER TABLE doctors
 DROP COLUMN specialisation;
+
 INSERT INTO users (name, email, contact_no, address, user_type, password) VALUES
   ('Dr. John Smith', 'john.smith@example.com', '1234567890', '123 Main St, City, Country', 'doctor', 'password123'),
   ('Dr. Emily Brown', 'emily.brown@example.com', '9876543210', '456 Park Ave, Town, Country', 'doctor', 'securepass'),
@@ -167,6 +170,7 @@ INSERT INTO users (name, email, contact_no, address, user_type, password) VALUES
 INSERT INTO doctors (doctor_user_id, image, hospital_user_id, description) VALUES
   (1, 'doctor1.jpg', 3, 'Experienced cardiologist with over 10 years of practice.'),
   (2, 'doctor2.jpg', 3, 'Specializes in pediatrics and child healthcare.');
+  
 INSERT INTO specializations (name) VALUES
   ('Cardiology'),
   ('Dermatology'),
@@ -615,3 +619,6 @@ SELECT C.SENDER_ID,C.MESSAGE,C.SENT_AT,U.NAME AS CHAT_NAME
 FROM CHATS C JOIN USERS U
 ON C.RECEIVER_ID=U.USER_ID
 WHERE C.RECEIVER_ID=117 AND C.SENDER_ID=1;
+
+
+
