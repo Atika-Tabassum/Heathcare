@@ -388,7 +388,7 @@ const OrgMedicalCamp = () => {
               </table>
             </div>
           )}
-          <button type="submit">Submit</button>
+          <button className= "submitBtn" type="submit">Submit</button>
         </form>
       </div>
     </Fragment>
