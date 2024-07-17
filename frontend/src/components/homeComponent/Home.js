@@ -20,7 +20,10 @@ import c4 from "./whatsapp.svg";
 const Home = () => {
   const myProfile = () => {
     // TODO - userID
-    window.location.href = "http://localhost:3000/1/myprofile";
+    const user_id=localStorage.getItem("userId");
+    console.log(user_id);
+
+    window.location.href = `http://localhost:3000/${user_id}/myprofile`;
   };
 
   const findDoctor = () => {

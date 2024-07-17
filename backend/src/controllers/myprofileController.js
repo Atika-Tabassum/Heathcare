@@ -3,15 +3,18 @@ const pool = require("../../db");
 
 const getUser = async (req, res, next) => {
   try {
+    console.log("get user");
     const id = req.params.userId;
+// query change korsi
     console.log(id);
     const user = await pool.query(
-      `select u.name, u.email, u.user_type 
-      from  users u
+      `select u.name, u.email, u.password,u.contact_no, u.user_type, p.medical_history, l.*
+      from  users u join patients p on u.user_id = p.patient_user_id
+      join location l on u.location_id = l.location_id
       where user_id = $1`,
       [id]
     );
-    console.log(user.rows[0].user_type);
+    console.log(user.rows[0]);
     res.status(200).json({ message: "user is returned", data: user.rows });
   } catch (error) {
     console.log(error.message);

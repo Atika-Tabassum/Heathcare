@@ -45,7 +45,13 @@
     font-size: 2em;
     color: #333;
 }
+
 .bookingamb {
+    border: none;
+    height: 50px;
+    font-family: Montserrat;
+    border-radius: 5px;
+
     background-color: rgb(241, 87, 172);
     border: none;
     color: rgb(251, 246, 246);
@@ -58,4 +64,10 @@
     top: 80px;
     right: 60px;
     cursor: pointer;
+    transition: 0.15s;
+}
+
+.bookingamb:hover {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+    transform: scale3d(1.02, 1.02, 1.02);
 }

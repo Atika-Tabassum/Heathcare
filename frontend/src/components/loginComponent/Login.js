@@ -32,7 +32,7 @@ const Login = () => {
                 if (data.userType.toLowerCase() === 'doctor') {
                     navigate(`/${data.userId}/doctorHome`);
                 } else if (data.userType.toLowerCase() === 'patient') {
-                    navigate(`/${data.userId}/home`);
+                    navigate(`/home`);
                 } else if (data.userType.toLowerCase() === 'hospital') {
                     navigate(`/${data.userId}/hospitalHome`);
                 }
@@ -55,27 +55,47 @@ const Login = () => {
                 </div>
                 <div className="login-container">
                     <form className="login-form" onSubmit={handleLogin}>
-                        <div className="login-input">
-                            <input
+                        <div >
+                            <input style={{
+                                fontFamily: 'Montserrat',
+                                height: '30px',
+                                width: '300px',
+                                transitionTimingFunction: 'ease-in-out',
+                                margin: '10px 0',
+                                paddingLeft: '10px', 
+                                border: '1px solid gray', 
+                                borderRadius: '3px' 
+                            }}
                                 type="text"
                                 placeholder="User email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
-                        <div className="login-input">
-                            <input
+                        <div>
+                            <input style={{
+                                fontFamily: 'Montserrat',
+                                height: '30px',
+                                width: '308px',
+                                transitionTimingFunction: 'ease-in-out',
+                                margin: '10px 0',
+                                paddingLeft: '10px', 
+                                paddingTop: '8px',
+                                paddingBottom: '8px',
+                                border: '1px solid gray', 
+                                borderRadius: '3px'
+                            }}
                                 type="password"
                                 placeholder="Password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
-                        <div className="login-input">
+                        <div className="login-input2">
                             <div className="dropdown">
                                 <div className="custom-select" style={{ width: 300 }}>
                                     <select
-                                        style={{ width: '310px', fontFamily: 'Montserrat', fontSize: '13px', height: '35px' }}
+                                        style={{ width: '320px', fontFamily: 'Montserrat', fontSize: '13px', height: '50px', marginTop:'12px' }}
                                         value={userType}
                                         onChange={(e) => setUserType(e.target.value)}
                                     >
