@@ -625,6 +625,9 @@ CREATE TABLE location (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+INSERT INTO location (division_id, district_id, upazila_id, union_name, ward_name, village_name, street_address, postal_code)
+VALUES (1, 1, 1, 'Dhanmondi', 'Ward 1', 'Village 1', '123 Main St', '1209');
+
 --doctor alters
 ALTER TABLE doctors ADD COLUMN reg_no INT;
 CREATE TABLE qualifications (

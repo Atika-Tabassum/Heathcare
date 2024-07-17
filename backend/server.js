@@ -96,13 +96,13 @@ app.post('/login', async (req, res) => {
             SELECT user_id, password, user_type FROM users WHERE email = $1 AND lower(user_type) = $2
         `;
         const result = await pool.query(query, [email, userType.toLowerCase()]);
-        
+
         if (result.rows.length === 0) {
             return res.status(401).json({ message: 'Invalid email, password, or user type.' });
         }
 
         const user = result.rows[0];
-        
+
         res.status(200).json({ message: 'Login successful!', userId: user.user_id, userType: user.user_type });
     } catch (error) {
         console.error('Error logging in user:', error.message);
@@ -368,6 +368,21 @@ app.post('/healthcare/appointment', async (req, res) => {
         const pid = req.body.patient_id;
         const currentDate = new Date();
         const response = await pool.query("INSERT INTO appointments (patient_user_id, doctor_user_id, status,  appointment_date) VALUES ($1, $2, $3, $4) RETURNING *", [pid, did, 'pending', currentDate]);
+        console.log(response.rows);
+
+        res.status(200).json({
+            status: "success",
+            data: response.rows[0],
+        });
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.put('/healthcare/:userid/updateprofile', async (req, res) => {
+    try {
+        const { name, email, password, contact_no } = req.body;
+        const response = await pool.query("UPDATE users SET name = $1, email = $2, password = $3, contact_no=$4 WHERE user_id = $5 RETURNING *", [name, email, password, contact_no, req.params.userid]);
         console.log(response.rows);
 
         res.status(200).json({
