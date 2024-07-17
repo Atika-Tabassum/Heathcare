@@ -127,12 +127,16 @@ const CampDetails = () => {
                     style={{ width: "100%", height: "auto" }}
                   />
                 )}
-                <br/>
-                <br/>
+                <br />
+                <br />
                 {/* </div> */}
                 <div className="location-info">
                   <img src={img3} alt="location" className="location-icon" />
-                  <span>{item.location}</span>
+                  <span>
+                    {item.village_name}, {item.ward_name}, {item.union_name},
+                    {item.upazila_name},{item.district_name},{" "}
+                    {item.division_name}
+                  </span>
                 </div>
                 <br />
                 <div className="location-info">

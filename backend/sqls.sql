@@ -42,6 +42,12 @@ CREATE TABLE appointments (
     FOREIGN KEY (doctor_user_id) REFERENCES users(user_id)
 );
 
+
+-- new 
+alter table appointments add column status varchar(50);
+-- pending accepted
+
+
 CREATE TABLE notifications (
     notification_id SERIAL PRIMARY KEY,
     user_id INTEGER,
@@ -116,6 +122,7 @@ ADD COLUMN will_donate_blood BOOLEAN;
 UPDATE patients 
 SET blood_group = 'O+', 
     will_donate_blood = FALSE;
+
 CREATE TABLE chats
 (
     chat_id SERIAL PRIMARY KEY,
@@ -144,10 +151,21 @@ VALUES ('John Smith', 'smith@gmail.com","01345678989','buet', 'password123', 'pa
 INSERT INTO content (topic, description, video) 
 VALUES ('Hygiene', '10 Steps to Washing Your Hands.',  'https://youtu.be/Br4sQmiJ1jU?si=3lvqP2u3OjoAyc66');
 --fariha
+
+----- korsi------------------------------------
 CREATE TABLE specializations (
     specialization_id SERIAL PRIMARY KEY,
     name VARCHAR(100) UNIQUE
 );
+
+INSERT INTO specializations (name) VALUES
+  ('Cardiology'),
+  ('Dermatology'),
+  ('Neurology'),
+  ('Pediatrics'),
+  ('Psychiatry'),
+  ('Orthopedics'),
+  ('Ophthalmology');
 
 CREATE TABLE doctor_specializations (
     doctor_user_id INTEGER,
@@ -156,9 +174,21 @@ CREATE TABLE doctor_specializations (
     FOREIGN KEY (specialization_id) REFERENCES specializations(specialization_id),
     PRIMARY KEY (doctor_user_id, specialization_id)
 );
+
+
+
+INSERT INTO doctor_specializations (doctor_user_id, specialization_id) VALUES
+  (379, 1),
+  (380, 4);
+
+  INSERT INTO doctor_specializations (doctor_user_id, specialization_id) VALUES (379, 5);
+
 ALTER TABLE doctors ADD COLUMN image VARCHAR(100); 
 ALTER TABLE doctors
 DROP COLUMN specialisation;
+
+-----------------------------------------------
+
 INSERT INTO users (name, email, contact_no, address, user_type, password) VALUES
   ('Dr. John Smith', 'john.smith@example.com', '1234567890', '123 Main St, City, Country', 'doctor', 'password123'),
   ('Dr. Emily Brown', 'emily.brown@example.com', '9876543210', '456 Park Ave, Town, Country', 'doctor', 'securepass'),
@@ -167,6 +197,7 @@ INSERT INTO users (name, email, contact_no, address, user_type, password) VALUES
 INSERT INTO doctors (doctor_user_id, image, hospital_user_id, description) VALUES
   (1, 'doctor1.jpg', 3, 'Experienced cardiologist with over 10 years of practice.'),
   (2, 'doctor2.jpg', 3, 'Specializes in pediatrics and child healthcare.');
+  
 INSERT INTO specializations (name) VALUES
   ('Cardiology'),
   ('Dermatology'),
@@ -236,6 +267,9 @@ CREATE TABLE notifications (
 
 -- sql
 -- alter table notifications add column type varchar(50);
+
+
+-----------------------------------------------------------------------------------------
 
 
 CREATE TABLE ambulance_bookings (
@@ -561,6 +595,10 @@ INSERT INTO users (name, address, user_type) VALUES
 ('Ayesha Haque Hospital', 'Beanibazar, Sylhet', 'hospital');
 INSERT INTO users (name, address, user_type) VALUES
 ('Charkhai Multicare Hospital', 'Beanibazar', 'hospital');
+
+
+
+----------------------------------------------------------------------------------------------
 --location tables
 ALTER TABLE users DROP COLUMN address;
 ALTER TABLE users ADD COLUMN location_id (INT);
@@ -597,6 +635,7 @@ CREATE TABLE qualifications (
   qualification_id SERIAL PRIMARY KEY,
   name VARCHAR(255) UNIQUE NOT NULL
 );
+
 CREATE TABLE doctor_qualifications (
   doctor_qualification_id SERIAL PRIMARY KEY,
   doctor_user_id INT REFERENCES users(user_id),
@@ -604,7 +643,7 @@ CREATE TABLE doctor_qualifications (
   institution VARCHAR(255),
   year_of_completion INT
 );
-
+----------------------------------------------------------------------------------------
 
 SELECT C.SENDER_ID,C.MESSAGE,C.SENT_AT,U.NAME AS CHAT_NAME
 FROM CHATS C JOIN USERS U 
@@ -615,7 +654,7 @@ SELECT C.SENDER_ID,C.MESSAGE,C.SENT_AT,U.NAME AS CHAT_NAME
 FROM CHATS C JOIN USERS U
 ON C.RECEIVER_ID=U.USER_ID
 WHERE C.RECEIVER_ID=117 AND C.SENDER_ID=1;
-----blogs
+
 CREATE TABLE categories (
     category_id SERIAL PRIMARY KEY,
     name VARCHAR(100) UNIQUE NOT NULL
@@ -727,4 +766,5 @@ Supportive family and friends are important to good health. They may encourage y
 If you find you need support beyond your family and friends, consider joining a support group. This may put you in touch with people who can give you an emotional or morale boost and who can offer practical tips to cope with your condition.
 
  ', 2, 1, NOW());
+
 

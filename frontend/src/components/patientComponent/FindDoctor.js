@@ -9,6 +9,8 @@ const FindDoctor = () => {
     const [doctors, setDoctors] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [isCheckedRound, setIsCheckedRound] = useState(false);
+    const [existingAppointments, setExistingAppointments] = useState([]);
+    const [doctor_specializationArr, setDoctor_specializationArr] = useState([]);
 
     const handleToggleRound = () => {
         console.log('clicked');
@@ -50,10 +52,17 @@ const FindDoctor = () => {
 
     const getDoctors = async () => {
         try {
-            const res = await fetch('http://localhost:3001/healthcare/doctors');
+            // TODO: patient id fix 
+            const patientId = 1;
+            const res = await fetch(`http://localhost:3001/healthcare/doctors?patient_id=${patientId}`);
             const data = await res.json();
             console.log(data.data);
             setDoctors(data.data);
+            setExistingAppointments(data.appointment);
+            setDoctor_specializationArr(data.specializationArray);
+            console.log('LLLLL')
+            console.log(data.specializationArray);
+
         } catch (error) {
             console.error("Error fetching doctors:", error);
         }
@@ -66,23 +75,36 @@ const FindDoctor = () => {
     const bookAppointment = async (doctorId) => {
         try {
             console.log(doctorId);
-            const user = localStorage.getItem("user");
-            const patientId = user.user_id;
+            // TODO: patient id fix
+            // const user = localStorage.getItem("user");
+            const patientId = 1;
             console.log(patientId);
-            const res = await fetch(`http://localhost:3001/healthcare/appointment/${doctorId}/${patientId}`, {
+            const res = await fetch(`http://localhost:3001/healthcare/appointment`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'x-auth-token': localStorage.getItem('token')
                 },
                 body: JSON.stringify({
-                    doctor_id: doctorId
-                })
+                    doctor_id: doctorId,
+                    patient_id: patientId
+                }),
             });
+            window.location.reload();
+
         } catch (error) {
             console.error("Error booking appointment:", error);
         }
     }
+
+    const getSpecializations = (doctorId) => {
+        const doctor = doctor_specializationArr.find(doc => doc.doctor_user_id === doctorId);
+        const all = doctor ? doctor.specializations.join(', ') : '';
+        console.log("all: ")
+        console.log(all)
+        return all;
+    };
+
 
 
     useEffect(() => {
@@ -134,6 +156,7 @@ const FindDoctor = () => {
         <div className='doctor-data-container'>
             <div className='doctor-data'>
                 <div className='doctor-name' style={{ fontWeight: '600' }}>Doctor name</div>
+                <div className='doctor-hospital' style={{ fontWeight: '600' }}>Hospital name</div>
                 <div className='doctor-specialization' style={{ fontWeight: '600' }}>Doctor specialization</div>
             </div>
             {doctors.filter((item) => {
@@ -152,10 +175,45 @@ const FindDoctor = () => {
                             {doctor.email}
                         </div>
                     </div>
-                    <div className='doctor-specialization'>{doctor.specialisation}</div>
-                    <button className='book-btn' onClick={() => { bookAppointment(doctor.user_id) }}>
-                        Book
-                    </button>
+                    <div className='doctor-hospital'>
+                        {doctor.hospital_name}
+                    </div>
+                    <div className='doctor-specialization'>
+                        {getSpecializations(doctor.user_id)}
+                    </div>
+
+                    {Array.isArray(existingAppointments) ?
+                        (
+                            (existingAppointments.filter((item) => item.doctor_user_id === doctor.user_id).length === 0) ? (
+                                <button className='book-btn' style={{ backgroundColor: 'skyblue' }} onClick={() => { bookAppointment(doctor.user_id) }}>
+                                    Get an appointment
+                                </button>
+                            ) : (
+                                (existingAppointments.filter((item) => item.doctor_user_id === doctor.user_id)[0].status === 'pending') ?
+                                    (
+                                        <button className='book-btn' style={{ backgroundColor: '#FDE47F' }} disabled>
+                                            Requested
+                                        </button>
+                                    ) :
+                                    (
+                                        <button className='book-btn' style={{ backgroundColor: 'lightgreen' }} disabled>
+                                            Approved
+                                        </button>
+
+                                        // {
+                                        //     <button className='book-btn' style={{ backgroundColor: 'lightgreen' }} onClick={() => { bookAppointment(doctor.user_id) }}>
+                                        //     Get an appointment
+                                        // </button>
+                                        // }
+                                        // <button className='book-btn' style={{backgroundColor:'lightyellow'}} disabled>
+                                        //     Requested
+                                        // </button>
+
+                                    ))
+                        ) : (
+                            <></>
+                        )
+                    }
                 </div>
             ))}
 

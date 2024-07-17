@@ -7,7 +7,7 @@ const getDoctors = async (req, res, next) => {
     ds.specialization_id,         
     d.hospital_user_id,           
     d.description,               
-    s.name AS specialization_name
+    s.name AS specialization
 FROM
     users u                       
 JOIN
@@ -23,7 +23,7 @@ LEFT JOIN
 ON
     ds.specialization_id = s.specialization_id  
 WHERE
-    u.user_type = 'doctor'       
+    Lower(u.user_type) = 'doctor'       
     AND u.user_id <>$1
 `, [req.params.userId]);
     console.log("doctors:", doctors.rows);

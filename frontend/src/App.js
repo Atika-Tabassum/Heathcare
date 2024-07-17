@@ -22,7 +22,6 @@ import FindAmbulance from "./components/patientComponent/FindAmbulance";
 import AmbulanceHomepage from "./components/ambulanceComponent/ambulanceHomepage";
 import BookAmbulance from "./components/ambulanceComponent/bookAmbulance";
 import DoctorProfile from "./components/profilesComponent/doctor/DoctorProfile";
-import Map from "./components/patientComponent/Map";
 import Chats from './components/chatComponent/chats';
 import MediCampDetails from './components/patientComponent/MediCampDetails';
 
@@ -31,6 +30,9 @@ import ChatPreview from './components/chatComponent/chatPreview';
 import BlogList from './components/blogComponent/blogList';
 import BlogPost from './components/blogComponent/blogPost';
 import NewPost from './components/blogComponent/newPost';
+
+import FindNearbyHosopital from './components/patientComponent/FindNearbyHosopital';
+import AboutUs from './components/patientComponent/AboutUs';
 
 function App() {
   return (
@@ -73,6 +75,8 @@ function App() {
           <Route path="/blog" element={<BlogList />} />
           <Route path="/blog/:id" element={<BlogPost />} />
           <Route path="/:userId/new-post" element={<NewPost />} />
+          <Route path="/findnearbyhospital" element={<FindNearbyHosopital />} />
+          <Route path="/aboutus" element={<AboutUs />} />
         </Routes>
       </Fragment>
     </Router>

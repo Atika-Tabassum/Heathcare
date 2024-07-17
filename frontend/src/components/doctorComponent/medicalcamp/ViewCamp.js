@@ -62,7 +62,11 @@ const ViewCamp = () => {
                 <p>{item.camp_date}</p>
                 <div className="location-info">
                   <img src={img3} alt="location" className="location-icon" />
-                  <span>{item.location}</span>
+                  <span>
+                    {item.village_name}, {item.ward_name}, {item.union_name}, 
+                    {item.upazila_name}, 
+                    {item.district_name}, {item.division_name}
+                  </span>
                 </div>
                 <Link to={`/${item.camp_id}/camp_details`}>
                   <p>View details of the campaign</p>
