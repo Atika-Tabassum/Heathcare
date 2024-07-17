@@ -438,7 +438,33 @@ app.get('/hospitals', async (req, res) => {
     const result = await pool.query(`SELECT * FROM users where user_type='hospital'`);
     res.json(result.rows);
   });
-
+//get nearby hospitals
+app.get('/hospitals/nearby/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    try {
+      const userLocation = await pool.query(
+        'SELECT location_id FROM users WHERE user_id = $1',
+        [userId]
+      );
+      const locationId = userLocation.rows[0].location_id;
+  
+      const nearbyHospitals = await pool.query(
+        `SELECT h.*, u.name AS hospital_name, l.division_id, l.district_id, l.upazila_id
+         FROM hospitals h
+         JOIN users u ON h.hospital_user_id = u.user_id
+         JOIN locations l ON u.location_id = l.location_id
+         WHERE l.division_id = (SELECT division_id FROM locations WHERE location_id = $1)
+           AND l.district_id = (SELECT district_id FROM locations WHERE location_id = $1)
+           AND l.upazila_id = (SELECT upazila_id FROM locations WHERE location_id = $1)`,
+        [locationId]
+      );
+      res.json(nearbyHospitals.rows);
+    } catch (error) {
+      console.error('Error fetching nearby hospitals:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+  
 
 server.listen(port, () => {
     console.log(`Server is running on port ${port}`);
