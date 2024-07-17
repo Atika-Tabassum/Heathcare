@@ -83,15 +83,42 @@ main {
     border-radius: '5px';
 } */
 
-.clicked
-{
+.clicked {
     position: relative;
 }
 
-.cancel-icon
-{
+.cancel-icon {
     position: absolute;
     height: 25px;
     right: 8px;
     top: 28px;
+}
+
+.blood-don-tool-tip {
+
+    font-family: Montserrat;
+    font-size: 10px;
+    position: absolute;
+    right: 7px;
+    bottom: 5px;
+    opacity: 1;
+    transition: opacity 0.15s;
+    pointer-events: none;
+    white-space: nowrap;
+    background-color: rgb(254, 150, 150);
+    padding: 4px;
+    border-radius: 5px;
+}
+
+.blood--btn button
+{
+    cursor: pointer;
+    transition: 0.15s;
+} 
+
+.blood--btn button:hover
+{
+    background-color: rgb(255, 222, 222);
+    transform: scale(1.02);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
 }
