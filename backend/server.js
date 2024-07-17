@@ -132,14 +132,41 @@ app.get("/healthcare/getHospitalInfo/:id", async (req, res) => {
         const hospitalId = parseInt(id, 10);
         console.log(hospitalId);
         const hospitalInfo = await pool.query(
-            "SELECT * FROM users WHERE user_type = 'hospital' and user_id = $1",
+            `SELECT u.*,l.* FROM users u
+            JOIN location l ON u.location_id = l.location_id
+            WHERE user_type = 'hospital' and user_id = $1`,
             [hospitalId]
         );
         console.log("hello");
         const doctorsInfo = await pool.query(
+            `SELECT DISTINCT u.* from users u join doctors d on u.user_id = d.doctor_user_id 
+            join doctor_specializations ds on ds.doctor_user_id=d.doctor_user_id 
+            JOIN specializations s ON s.specialization_id = ds.specialization_id
+            where d.hospital_user_id=$1`,
+            [hospitalId]
+        );
+        const doctorsInfo2 = await pool.query(
             "SELECT u.*, s.name as specialisation from users u join doctors d on u.user_id = d.doctor_user_id join doctor_specializations ds on ds.doctor_user_id=d.doctor_user_id JOIN specializations s ON s.specialization_id = ds.specialization_id where d.hospital_user_id=$1",
             [hospitalId]
         );
+        const specializationMap = {};
+
+        doctorsInfo2.rows.forEach(row => {
+            const userId = row.user_id;
+            const specialization = row.specialisation;
+
+            if (!specializationMap[userId]) {
+                specializationMap[userId] = {
+                    doctor_user_id: userId,
+                    specializations: []
+                };
+            }
+
+            specializationMap[userId].specializations.push(specialization);
+        });
+
+        const specializationArray = Object.values(specializationMap);
+
         console.log("hello");
         console.log(hospitalInfo.rows);
         console.log(doctorsInfo.rows);
@@ -148,6 +175,7 @@ app.get("/healthcare/getHospitalInfo/:id", async (req, res) => {
             data: {
                 hospital: hospitalInfo.rows[0],
                 doctors: doctorsInfo.rows,
+                specializationArray: specializationArray
             },
         });
     } catch (err) {
@@ -214,10 +242,8 @@ app.get('/healthcare/doctors', async (req, res) => {
         const appointment = await pool.query("SELECT * FROM appointments WHERE patient_user_id = $1", [pid]);
         console.log(appointment.rows);
 
-        // 
         const specializationMap = {};
 
-        // Step 1: Group specializations by doctor_user_id
         allDoctors1.rows.forEach(row => {
             const userId = row.user_id;
             const specialization = row.specialisation;
@@ -232,7 +258,6 @@ app.get('/healthcare/doctors', async (req, res) => {
             specializationMap[userId].specializations.push(specialization);
         });
 
-        // Step 2: Convert the object back to an array if needed
         const specializationArray = Object.values(specializationMap);
 
         console.log(specializationArray);
@@ -444,29 +469,29 @@ app.get('/hospitals', async (req, res) => {
 app.get('/hospitals/nearby/:userId', async (req, res) => {
     const userId = req.params.userId;
     try {
-      const userLocation = await pool.query(
-        'SELECT location_id FROM users WHERE user_id = $1',
-        [userId]
-      );
-      const locationId = userLocation.rows[0].location_id;
-  
-      const nearbyHospitals = await pool.query(
-        `SELECT h.*, u.name AS hospital_name, l.division_id, l.district_id, l.upazila_id
+        const userLocation = await pool.query(
+            'SELECT location_id FROM users WHERE user_id = $1',
+            [userId]
+        );
+        const locationId = userLocation.rows[0].location_id;
+
+        const nearbyHospitals = await pool.query(
+            `SELECT h.*, u.name AS hospital_name, l.division_id, l.district_id, l.upazila_id
          FROM hospitals h
          JOIN users u ON h.hospital_user_id = u.user_id
          JOIN locations l ON u.location_id = l.location_id
          WHERE l.division_id = (SELECT division_id FROM locations WHERE location_id = $1)
            AND l.district_id = (SELECT district_id FROM locations WHERE location_id = $1)
            AND l.upazila_id = (SELECT upazila_id FROM locations WHERE location_id = $1)`,
-        [locationId]
-      );
-      res.json(nearbyHospitals.rows);
+            [locationId]
+        );
+        res.json(nearbyHospitals.rows);
     } catch (error) {
-      console.error('Error fetching nearby hospitals:', error);
-      res.status(500).json({ message: 'Internal server error' });
+        console.error('Error fetching nearby hospitals:', error);
+        res.status(500).json({ message: 'Internal server error' });
     }
-  });
-  
+});
+
 
 server.listen(port, () => {
     console.log(`Server is running on port ${port}`);

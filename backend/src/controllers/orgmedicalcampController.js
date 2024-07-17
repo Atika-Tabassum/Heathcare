@@ -5,6 +5,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage }).single("image");
 
 const getMedicalCamp = async (req, res, next) => {
+  
   upload(req, res, async (err) => {
     if (err) {
       return res.status(500).json({ message: "File upload failed", error: err.message });

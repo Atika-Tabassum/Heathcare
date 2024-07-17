@@ -53,7 +53,8 @@ const FindDoctor = () => {
     const getDoctors = async () => {
         try {
             // TODO: patient id fix 
-            const patientId = 1;
+            // const patientId = 1;
+            const patientId = localStorage.getItem("userId");
             const res = await fetch(`http://localhost:3001/healthcare/doctors?patient_id=${patientId}`);
             const data = await res.json();
             console.log(data.data);
@@ -77,7 +78,7 @@ const FindDoctor = () => {
             console.log(doctorId);
             // TODO: patient id fix
             // const user = localStorage.getItem("user");
-            const patientId = 1;
+            const patientId = localStorage.getItem("userId");
             console.log(patientId);
             const res = await fetch(`http://localhost:3001/healthcare/appointment`, {
                 method: 'POST',

@@ -14,8 +14,10 @@ const HospitalProfile = () => {
     const [doctors, setDoctors] = useState([]);
     const userId = useParams().userId;
     const [address, setAddress] = useState('');
+    const [doctor_specializationArr, setDoctor_specializationArr] = useState([]);
 
     const makeAddress = (user) => {
+        console.log('user', user);
         const addressFields = [
             user.division_name,
             user.district_name,
@@ -32,6 +34,15 @@ const HospitalProfile = () => {
         return fullAddress;
     }
 
+    const getSpecializations = (doctorId) => {
+        const doctor = doctor_specializationArr.find(doc => doc.doctor_user_id === doctorId);
+        const all = doctor ? doctor.specializations.join(', ') : '';
+        // console.log("all: ")
+        // console.log(all)
+        return all;
+    };
+
+
     // console.log(userId);
     const getHospitalInfo = async () => {
         try {
@@ -40,10 +51,15 @@ const HospitalProfile = () => {
             const data = await res.json();
             setInfo(data.data.hospital);
             setDoctors(data.data.doctors);
-
+            setDoctor_specializationArr(data.data.specializationArray);
+            // makeAddress(data.data.hospital);
+            setAddress(makeAddress(data.data.hospital));
             // console.log(info);
+            // console.log('LLLLL');
             // console.log(doctors);
-            // console.log(data);
+            // console.log(doctor_specializationArr);
+
+            console.log(data.data.hospital);
         }
         catch (err) {
             console.log(err);
@@ -65,7 +81,7 @@ const HospitalProfile = () => {
                         </div>
                         <div className='hospital-info'>
                             <div className='hospital-address'>
-                                <img src={img3} alt='address' />{makeAddress(info)}
+                                <img src={img3} alt='address' />{address}
                             </div>
                             <div className='hospital-email'>
                                 <img src={img1} alt='address' /> {info.email}
@@ -95,8 +111,8 @@ const HospitalProfile = () => {
                                 <div className='doctor-name'>
                                     {doctor.name}
                                 </div>
-                                <div className='doctor-specialisation'>
-                                    {doctor.specialisation}
+                                <div className='doctor-specialization'>
+                                    {getSpecializations(doctor.user_id)}
                                 </div>
                                 <div className='doctor-contact'>
                                     {doctor.contact_no}
