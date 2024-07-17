@@ -365,6 +365,11 @@ app.delete('/blog/posts/:id', async (req, res) => {
     await pool.query(query, [req.params.id]);
     res.json({ message: 'Post deleted' });
 });
+//get all hospitals
+app.get('/hospitals', async (req, res) => {
+    const result = await pool.query(`SELECT * FROM users where user_type='hospital'`);
+    res.json(result.rows);
+  });
 
 
 server.listen(port, () => {

@@ -36,6 +36,7 @@ const DoctorRegistration = () => {
     qualifications: [],
     specializations: [],
     newSpecialization: "",
+    hospital:"",
   });
 
   useEffect(() => {
