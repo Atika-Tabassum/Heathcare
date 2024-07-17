@@ -76,6 +76,8 @@ app.use("/patient", patientRouter);
 const myprofileRouter = require("./src/routers/myprofileRouter");
 app.use("/users", myprofileRouter);
 
+
+
 app.get("/healthcare/hospitals", async (req, res) => {
     try {
         const allHospitals = await pool.query(
