@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Header from "../general/Header";
 import "../homeComponent/homepage.css";
 import "./chats.css";
@@ -12,6 +12,8 @@ const Chats = () => {
   const [chats, setChats] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const socket = useRef(null);
+  const chatEndRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getChats = async () => {
@@ -55,18 +57,21 @@ const Chats = () => {
     };
     socket.current.emit("sendMessage", message);
     setNewMessage("");
-    window.location.reload();
+    navigate(`/${userId}/${receiver}/chats`);
   };
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chats]);
 
   return (
     <div>
       <Header />
       <div className="page-container">
-        <h1 align="center">
-          <i>Chats</i>
-        </h1>
         <div className="main-box">
-          {chats.length > 0 && <h3>{chats[0].chat_name}</h3>}
+          <div className="username_section">
+            {chats.length > 0 && <h3>{chats[0].chat_name}</h3>}
+          </div>
           <ul>
             {chats.map((chat) => (
               <li
@@ -94,20 +99,22 @@ const Chats = () => {
               </li>
             ))}
           </ul>
-          <div className="chat_form">
-            <form onSubmit={sendMessage}>
-              <input
-                type="text"
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                placeholder="Type a message..."
-              />
-              <div className="submit-button">
-                <button type="submit">
-                  <img src={img} alt="send" />
-                </button>
-              </div>
-            </form>
+          <div className="send_messages">
+            <div className="chat_form">
+              <form onSubmit={sendMessage}>
+                <input
+                  type="text"
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  placeholder="Type a message..."
+                />
+                <div className="submit-button">
+                  <button type="submit">
+                    <img src={img} alt="send" />
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
