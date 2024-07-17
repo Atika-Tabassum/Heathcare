@@ -27,6 +27,9 @@ import MediCampDetails from './components/patientComponent/MediCampDetails';
 
 import Appointment from './components/doctorComponent/appointment';
 import ChatPreview from './components/chatComponent/chatPreview';
+import BlogList from './components/blogComponent/blogList';
+import BlogPost from './components/blogComponent/blogPost';
+import NewPost from './components/blogComponent/newPost';
 
 import FindNearbyHosopital from './components/patientComponent/FindNearbyHosopital';
 import AboutUs from './components/patientComponent/AboutUs';
@@ -69,6 +72,9 @@ function App() {
           <Route path="/:userId/chat_preview" element={<ChatPreview />} />
           <Route path="/:userId/:receiver/chats" element={<Chats />} />
           <Route path="/medicalcampdetails" element={<MediCampDetails />} />
+          <Route path="/blog" element={<BlogList />} />
+          <Route path="/blog/:id" element={<BlogPost />} />
+          <Route path="/:userId/new-post" element={<NewPost />} />
           <Route path="/findnearbyhospital" element={<FindNearbyHosopital />} />
           <Route path="/aboutus" element={<AboutUs />} />
         </Routes>

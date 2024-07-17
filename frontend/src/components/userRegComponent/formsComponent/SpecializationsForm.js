@@ -1,4 +1,5 @@
-import React from "react";
+
+import React, { useState, useEffect } from "react";
 
 const SpecializationsForm = ({
   formData,
@@ -9,7 +10,26 @@ const SpecializationsForm = ({
   handleAddSpecialization,
   handleSpecializationChange,
 }) => {
-  const { specializations, newSpecialization } = formData;
+  const [hospitals, setHospitals] = useState([]);
+
+  useEffect(() => {
+    const fetchHospitals = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/hospitals");
+        if (!response.ok) {
+          throw new Error("Failed to fetch hospitals");
+        }
+        const data = await response.json();
+        setHospitals(data);
+      } catch (error) {
+        console.error("Error fetching hospitals:", error);
+      }
+    };
+
+    fetchHospitals();
+  }, []);
+
+  const { specializations, newSpecialization, hospital} = formData;
 
   return (
     <div className="signInContainer">
@@ -42,6 +62,20 @@ const SpecializationsForm = ({
         <button className="btn" type="button" onClick={handleAddSpecialization}>
           Add Specialization
         </button>
+        <label className="signin-label">Working Hospital</label>
+        <select
+          className="signin-input"
+          name="hospital"
+          value={hospital}
+          onChange={handleChange}
+        >
+          <option value="">Select Hospital</option>
+          {hospitals.map((hosp) => (
+            <option key={hosp.user_id} value={hosp.name}>
+              {hosp.name}
+            </option>
+          ))}
+        </select>
         <button className="btn" onClick={prevStep}>
           Back
         </button>

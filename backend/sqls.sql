@@ -655,5 +655,116 @@ FROM CHATS C JOIN USERS U
 ON C.RECEIVER_ID=U.USER_ID
 WHERE C.RECEIVER_ID=117 AND C.SENDER_ID=1;
 
+CREATE TABLE categories (
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) UNIQUE NOT NULL
+);
+
+CREATE TABLE blog_posts (
+    post_id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    author_id INTEGER,
+    category_id INTEGER,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (author_id) REFERENCES users(user_id),
+    FOREIGN KEY (category_id) REFERENCES categories(category_id)
+);
+INSERT INTO blog_posts (post_id, title, content, category_id, author_id, created_at)
+VALUES
+    (1, 'Understanding Diabetes', 'Diabetes is a chronic condition...', 1, 1, NOW()),
+    (2, 'Managing Hypertension', 'Hypertension, or high blood pressure...', 2, 1, NOW());
+
+INSERT INTO blog_posts (post_id, title, content, category_id, author_id, created_at)
+VALUES
+    (1, 'Understanding Diabetes', 'Diabetes mellitus, often known simply as diabetes, is a group of common endocrine diseases characterized by sustained high blood sugar levels.[10][11] Diabetes is due to either the pancreas not producing enough insulin, or the cells of the body becoming unresponsive to the hormones effects.[12] Classic symptoms include thirst, polyuria, weight loss, and blurred vision. If left untreated, the disease can lead to various health complications, including disorders of the cardiovascular system, eye, kidney, and nerves.[3] Diabetes accounts for approximately 4.2 million deaths every year,[9] with an estimated 1.5 million caused by either untreated or poorly treated diabetes.[10]
+
+The major types of diabetes are type 1 and type 2.[13] The most common treatment for type 1 is insulin replacement therapy (insulin injections), while anti-diabetic medications (such as metformin and semaglutide) and lifestyle modifications can be used to manage type 2. Gestational diabetes, a form that arises during pregnancy in some women, normally resolves shortly after delivery.
+
+As of 2021, an estimated 537 million people had diabetes worldwide accounting for 10.5% of the adult population, with type 2 making up about 90% of all cases. It is estimated that by 2045, approximately 783 million adults, or 1 in 8, will be living with diabetes, representing a 46% increase from the current figures.[14] The prevalence of the disease continues to increase, most dramatically in low- and middle-income nations.[15] Rates are similar in women and men, with diabetes being the seventh leading cause of death globally.[16][17] The global expenditure on diabetes-related healthcare is an estimated US$760 billion a year.[18]
+
+', 1, 1, NOW()),
+    (2, 'Managing Hypertension', 'f you have high blood pressure, you may wonder if medication is necessary to bring the numbers down. But lifestyle plays a vital role in treating high blood pressure. Controlling blood pressure with a healthy lifestyle might prevent, delay or reduce the need for medication.
+
+Here are 10 lifestyle changes that can lower blood pressure and keep it down.
+
+1. Lose extra pounds and watch your waistline
+Blood pressure often increases as weight increases. Being overweight also can cause disrupted breathing while you sleep (sleep apnea), which further raises blood pressure.
+
+Weight loss is one of the most effective lifestyle changes for controlling blood pressure. If youre overweight or have obesity, losing even a small amount of weight can help reduce blood pressure. In general, blood pressure might go down by about 1 millimeter of mercury (mm Hg) with each kilogram (about 2.2 pounds) of weight lost.
+
+Also, the size of the waistline is important. Carrying too much weight around the waist can increase the risk of high blood pressure.
+
+In general:
+
+Men are at risk if their waist measurement is greater than 40 inches (102 centimeters).
+Women are at risk if their waist measurement is greater than 35 inches (89 centimeters).
+These numbers vary among ethnic groups. Ask your health care provider about a healthy waist measurement for you.
+
+2. Exercise regularly
+Regular physical activity can lower high blood pressure by about 5 to 8 mm Hg. Its important to keep exercising to keep blood pressure from rising again. As a general goal, aim for at least 30 minutes of moderate physical activity every day.
+
+Exercise can also help keep elevated blood pressure from turning into high blood pressure (hypertension). For those who have hypertension, regular physical activity can bring blood pressure down to safer levels.
+
+Some examples of aerobic exercise that can help lower blood pressure include walking, jogging, cycling, swimming or dancing. Another possibility is high-intensity interval training. This type of training involves alternating short bursts of intense activity with periods of lighter activity.
+
+Strength training also can help reduce blood pressure. Aim to include strength training exercises at least two days a week. Talk to a health care provider about developing an exercise program.
+
+3. Eat a healthy diet
+Eating a diet rich in whole grains, fruits, vegetables and low-fat dairy products and low in saturated fat and cholesterol can lower high blood pressure by up to 11 mm Hg. Examples of eating plans that can help control blood pressure are the Dietary Approaches to Stop Hypertension (DASH) diet and the Mediterranean diet.
+
+Potassium in the diet can lessen the effects of salt (sodium) on blood pressure. The best sources of potassium are foods, such as fruits and vegetables, rather than supplements. Aim for 3,500 to 5,000 mg a day, which might lower blood pressure 4 to 5 mm Hg. Ask your care provider how much potassium you should have.
+
+4. Reduce salt (sodium) in your diet
+Even a small reduction of sodium in the diet can improve heart health and reduce high blood pressure by about 5 to 6 mm Hg.
+
+The effect of sodium intake on blood pressure varies among groups of people. In general, limit sodium to 2,300 milligrams (mg) a day or less. However, a lower sodium intake — 1,500 mg a day or less — is ideal for most adults.
+
+To reduce sodium in the diet:
+
+Read food labels. Look for low-sodium versions of foods and beverages.
+Eat fewer processed foods. Only a small amount of sodium occurs naturally in foods. Most sodium is added during processing.
+Dont add salt. Use herbs or spices to add flavor to food.
+Cook. Cooking lets you control the amount of sodium in the food.
+5. Limit alcohol
+Limiting alcohol to less than one drink a day for women or two drinks a day for men can help lower blood pressure by about 4 mm Hg. One drink equals 12 ounces of beer, 5 ounces of wine or 1.5 ounces of 80-proof liquor.
+
+But drinking too much alcohol can raise blood pressure by several points. It can also reduce the effectiveness of blood pressure medications.
+
+6. Quit smoking
+Smoking increases blood pressure. Stopping smoking helps lower blood pressure. It can also reduce the risk of heart disease and improve overall health, possibly leading to a longer life.
+
+7. Get a good nights sleep
+Poor sleep quality — getting fewer than six hours of sleep every night for several weeks — can contribute to hypertension. A number of issues can disrupt sleep, including sleep apnea, restless leg syndrome and general sleeplessness (insomnia).
+
+Let your health care provider know if you often have trouble sleeping. Finding and treating the cause can help improve sleep. However, if you dont have sleep apnea or restless leg syndrome, follow these simple tips for getting more restful sleep.
+
+Stick to a sleep schedule. Go to bed and wake up the same time each day. Try to keep the same schedule on weeknights and on weekends.
+Create a restful space. That means keeping the sleeping space cool, quiet and dark. Do something relaxing in the hour before bedtime. That might include taking a warm bath or doing relaxation exercises. Avoid bright light, such as from a TV or computer screen.
+Watch what you eat and drink. Dont go to bed hungry or stuffed. Avoid large meals close to bedtime. Limit or avoid nicotine, caffeine and alcohol close to bedtime, as well.
+Limit naps. For those who find napping during the day helpful, limiting naps to 30 minutes earlier in the day might help nighttime sleep.
+8. Reduce stress
+Long-term (chronic) emotional stress may contribute to high blood pressure. More research is needed on the effects of stress reduction techniques to find out whether they can reduce blood pressure.
+
+However, it cant hurt to determine what causes stress, such as work, family, finances or illness, and find ways to reduce stress. Try the following:
+
+Avoid trying to do too much. Plan your day and focus on your priorities. Learn to say no. Allow enough time to get done what needs to be done.
+Focus on issues you can control and make plans to solve them. For an issue at work, talk to a supervisor. For conflict with kids or spouse, find ways to resolve it.
+Avoid stress triggers. For example, if rush-hour traffic causes stress, travel at a different time or take public transportation. Avoid people who cause stress if possible.
+Make time to relax. Take time each day to sit quietly and breathe deeply. Make time for enjoyable activities or hobbies, such as taking a walk, cooking or volunteering.
+Practice gratitude. Expressing gratitude to others can help reduce stress.
+9. Monitor your blood pressure at home and get regular checkups
+Home monitoring can help you keep tabs on your blood pressure. It can make certain your medications and lifestyle changes are working.
+
+Home blood pressure monitors are available widely and without a prescription. Talk to a health care provider about home monitoring before you get started.
+
+Regular visits with a provider are also key to controlling blood pressure. If your blood pressure is well controlled, ask your provider how often you need to check it. You might be able to check it only once a day or less often.
+
+10. Get support
+Supportive family and friends are important to good health. They may encourage you to take care of yourself, drive you to the care providers office or start an exercise program with you to keep your blood pressure low.
+
+If you find you need support beyond your family and friends, consider joining a support group. This may put you in touch with people who can give you an emotional or morale boost and who can offer practical tips to cope with your condition.
+
+ ', 2, 1, NOW());
 
 
