@@ -8,8 +8,7 @@ import './patient.css';
 import userimg from '../general/user.svg'
 import edit from '../general/edit.svg'
 import cancel from '../general/cancel.svg'
-// import image5 from "../homeComponent/contact-us.svg";
-// import image6 from "../homeComponent/about-us.svg";
+import image5 from "../general/blooddonate.svg";
 
 const Profile = () => {
   const { userId } = useParams();
@@ -94,6 +93,30 @@ const Profile = () => {
     setIsEditClicked(!isEditClicked);
   }
 
+  const goToBloodDonation = () => {
+    // TODO: blood donation link fix
+    window.location.href = "http://localhost:3000/showDonors";
+  };
+
+  const updateDonationStatus = async (status) => {
+    try {
+      console.log("frontend profile.js");
+      const response = await fetch(`http://localhost:3001/bloodDonation/${userId}/updateDonationStatus`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ will_donate_blood: status }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to update donation status");
+      }
+      const data = await response.json();
+      setUser((prevUser) => ({ ...prevUser, will_donate_blood: status }));
+    } catch (error) {
+      console.error("Error updating donation status:", error);
+    }
+  };
 
   useEffect(() => {
     fetchUserProfile();
@@ -140,6 +163,26 @@ const Profile = () => {
                     style={{ margin: '20px 30px' }}>
                     <b>Medical History: </b>{user.medical_history || 'Not available'}
                   </div>
+                  <div style={{ margin: '20px 30px' }}>
+                    <p><b>Ready to Donate Blood? </b> {user.will_donate_blood ? "Yes" : "No"}</p>
+                  </div>
+                  <div className="blood--btn" style={{ display: "flex", justifyContent: "center", position: 'absolute', bottom: '20px' }}>
+                    <label style={{ fontSize: "16px", fontFamily:'Montserrat',fontWeight:'600' }}>Are you willing to donate blood?</label>
+                    <button onClick={() => updateDonationStatus(true)} style={{ marginRight: "10px", padding: "10px 20px", fontSize: "16px", cursor: "pointer", backgroundColor: "#ff69b4", color: "#fff", border: "none", borderRadius: "5px",fontFamily:'Montserrat' }}>Yes, I will donate</button>
+                    <button onClick={() => updateDonationStatus(false)} style={{ padding: "10px 20px", fontSize: "16px", cursor: "pointer", backgroundColor: "#ff69b4", color: "#fff", border: "none", borderRadius: "5px" , fontFamily:'Montserrat'}}>No, I won't donate</button>
+                    <div className="blood-don" style={{ position: 'relative', paddingLeft: '350px' }}>
+                      <img src={image5} onClick={goToBloodDonation} alt="blood-donation-img" className="blood-donation-img" style={{
+                        height: '70px',
+                        position: 'absolute', bottom: '30px', right: '10px', cursor: 'pointer',
+                        borderStyle: 'inset',
+                        borderWidth: '0.5px',
+                        borderColor: 'black',
+                        borderRadius: '5px',
+                        boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)'
+                      }} />
+                      <div className="blood-don-tool-tip">Need Blood?</div>
+                    </div>
+                  </div>
                 </div> :
                 <div className="clicked">
                   <h1>Edit Profile</h1>
@@ -173,6 +216,7 @@ const Profile = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)} />
                   </div>
+
                   <div>
                     <label>Contact No : </label>
                     <input style={{
@@ -216,11 +260,8 @@ const Profile = () => {
                 </div>
             }
           </div>
-
-
         </div>
       </main>
-
     </Fragment>
   );
 };

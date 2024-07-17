@@ -21,19 +21,22 @@ import CampDetails from "./components/doctorComponent/medicalcamp/campdetails";
 import FindAmbulance from "./components/patientComponent/FindAmbulance";
 import AmbulanceHomepage from "./components/ambulanceComponent/ambulanceHomepage";
 import BookAmbulance from "./components/ambulanceComponent/bookAmbulance";
+import ShowDonor from "./components/bloodDonationComponent/showDonors";
 import DoctorProfile from "./components/profilesComponent/doctor/DoctorProfile";
 import Chats from './components/chatComponent/chats';
 import MediCampDetails from './components/patientComponent/MediCampDetails';
 
 import Appointment from './components/doctorComponent/appointment';
 import ChatPreview from './components/chatComponent/chatPreview';
+import BlogList from './components/blogComponent/blogList';
+import BlogPost from './components/blogComponent/blogPost';
+import NewPost from './components/blogComponent/newPost';
 
 import FindNearbyHosopital from './components/patientComponent/FindNearbyHosopital';
 import AboutUs from './components/patientComponent/AboutUs';
 
 function App() {
   return (
-
     <Router>
       <Fragment>
         <Routes>
@@ -69,12 +72,15 @@ function App() {
           <Route path="/:userId/chat_preview" element={<ChatPreview />} />
           <Route path="/:userId/:receiver/chats" element={<Chats />} />
           <Route path="/medicalcampdetails" element={<MediCampDetails />} />
+          <Route path="/showDonors" element={<ShowDonor />} />
+          <Route path="/blog" element={<BlogList />} />
+          <Route path="/blog/:id" element={<BlogPost />} />
+          <Route path="/:userId/new-post" element={<NewPost />} />
           <Route path="/findnearbyhospital" element={<FindNearbyHosopital />} />
           <Route path="/aboutus" element={<AboutUs />} />
         </Routes>
       </Fragment>
     </Router>
-
   );
 }
 

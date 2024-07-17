@@ -6,18 +6,6 @@ import img2 from "../../homeComponent/contact-us.svg";
 import "./OrgMedicalCamp.css";
 
 const OrgMedicalCamp = () => {
-  const [formData, setFormData] = useState({
-    division: "",
-    district: "",
-    upazila: "",
-    unionName: "",
-    wardName: "",
-    villageName: "",
-    streetAddress: "",
-    postalCode: "",
-    date: "",
-    description: ""
-  });
   const [divisions, setDivisions] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [upazilas, setUpazilas] = useState([]);
@@ -25,16 +13,53 @@ const OrgMedicalCamp = () => {
   const [district, setDistrict] = useState(""); // New state for district
   const [upazila, setUpazila] = useState(""); // New state for upazila
   const [doctors, setDoctors] = useState([]);
+  const [unionName, setUnionName] = useState("");
+  const [wardName, setWardName] = useState("");
+  const [villageName, setVillageName] = useState("");
+  const [streetAddress, setStreetAddress] = useState("");
+  const [postalCode, setPostalCode] = useState("");
   const [selectedDoctors, setSelectedDoctors] = useState([]);
   const [showDoctorsList, setShowDoctorsList] = useState(false);
+  const [description, setDescription] = useState("");
+  const [date, setDate] = useState([]);
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
   const { userId } = useParams();
 
   useEffect(() => {
     fetchDivisions();
-    fetchDoctors ();
+    fetchDoctors();
   }, []);
+
+  const handleUnionNameChange = (event) => {
+    setUnionName(event.target.value);
+  };
+
+  const handleWardNameChange = (event) => {
+    setWardName(event.target.value);
+  };
+
+  const handleVillageNameChange = (event) => {
+    setVillageName(event.target.value);
+  };
+
+  const handleStreetAddressChange = (event) => {
+    setStreetAddress(event.target.value);
+  };
+
+  const handlePostalCodeChange = (event) => {
+    setPostalCode(event.target.value);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleDateChange = (event) => {
+    setDate(event.target.value);
+  };
+
+
   const fetchDoctors = async () => {
     try {
       const response = await fetch(
@@ -55,11 +80,12 @@ const OrgMedicalCamp = () => {
       console.error("Error fetching doctors:", error);
     }
   };
+
   const fetchDivisions = async () => {
     try {
       const response = await fetch("http://localhost:3001/location/divisions");
       if (!response.ok) {
-        throw new Error('Failed to fetch divisions');
+        throw new Error("Failed to fetch divisions");
       }
       const data = await response.json();
       setDivisions(data);
@@ -68,45 +94,36 @@ const OrgMedicalCamp = () => {
       // Handle error state or display a message
     }
   };
-  
+
   const fetchDistricts = async (divisionId) => {
     try {
       const intDivisionId = parseInt(divisionId, 10); // Convert to integer
-      const response = await fetch(`http://localhost:3001/location/districts/${intDivisionId}`);
-      
+      const response = await fetch(
+        `http://localhost:3001/location/districts/${intDivisionId}`
+      );
+
       if (!response.ok) {
         const text = await response.text();
-        throw new Error(`Failed to fetch districts: ${response.statusText}. Response: ${text}`);
+        throw new Error(
+          `Failed to fetch districts: ${response.statusText}. Response: ${text}`
+        );
       }
-  
+
       const data = await response.json();
       setDistricts(data);
     } catch (error) {
       console.error("Error fetching districts:", error.message);
     }
   };
-  
-  
-  
 
   const fetchUpazilas = async (districtId) => {
     // Fetch upazilas based on selected district
     const intdistrictId = parseInt(districtId, 10); // Convert to integer
-    const response = await fetch(`http://localhost:3001/location/upazilas/${intdistrictId }`);
+    const response = await fetch(
+      `http://localhost:3001/location/upazilas/${intdistrictId}`
+    );
     const data = await response.json();
     setUpazilas(data);
-  };
-
-  
-  
-
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value
-    }));
   };
 
   const handleSubmit = async (e) => {
@@ -116,23 +133,28 @@ const OrgMedicalCamp = () => {
       const formData = new FormData();
       formData.append("division", division);
       formData.append("district", district);
-      formData.append("upazila",upazila);
-      formData.append("unionName", formData.unionName);
-      formData.append("wardName", formData.wardName);
-      formData.append("villageName", formData.villageName);
-      formData.append("streetAddress", formData.streetAddress);
-      formData.append("postalCode", formData.postalCode);
-      formData.append("date", formData.date ? formData.date.toISOString().split('T')[0] : new Date().toISOString().split('T')[0]);
-
-      formData.append("description", formData.description);
+      formData.append("upazila", upazila);
+      formData.append("unionName", unionName);
+      formData.append("wardName", wardName);
+      formData.append("villageName", villageName);
+      formData.append("streetAddress", streetAddress);
+      formData.append("postalCode", postalCode);
+      formData.append(
+        "date",
+        date ? date : new Date().toISOString().split("T")[0]
+      );
+      formData.append("description", description);
       formData.append("selectedDoctors", JSON.stringify(selectedDoctorIds));
       if (image) {
         formData.append("image", image);
       }
-      const response = await fetch(`http://localhost:3001/org/${userId}/orgmedicalcamp`, {
-        method: "POST",
-        body: formData
-      });
+      const response = await fetch(
+        `http://localhost:3001/org/${userId}/orgmedicalcamp`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
       const data = await response.json();
       console.log(data);
       navigate(`/${userId}/doctorHome`, { replace: true });
@@ -140,6 +162,7 @@ const OrgMedicalCamp = () => {
       console.error(error.message);
     }
   };
+
   const handleDivisionChange = (event) => {
     const divisionId = event.target.value;
     setDivision(divisionId);
@@ -168,7 +191,9 @@ const OrgMedicalCamp = () => {
         : doctor
     );
     setDoctors(updatedDoctors);
-    const updatedSelectedDoctors = updatedDoctors.filter((doctor) => doctor.selected);
+    const updatedSelectedDoctors = updatedDoctors.filter(
+      (doctor) => doctor.selected
+    );
     setSelectedDoctors(updatedSelectedDoctors);
   };
 
@@ -205,7 +230,6 @@ const OrgMedicalCamp = () => {
                 </option>
               ))}
             </select>
-
           </div>
           <div className="form-group">
             <label htmlFor="district">District:</label>
@@ -245,8 +269,8 @@ const OrgMedicalCamp = () => {
               type="text"
               id="unionName"
               name="unionName"
-              value={formData.unionName}
-              onChange={handleChange}
+              value={unionName}
+              onChange={handleUnionNameChange}
               required
             />
           </div>
@@ -256,8 +280,8 @@ const OrgMedicalCamp = () => {
               type="text"
               id="wardName"
               name="wardName"
-              value={formData.wardName}
-              onChange={handleChange}
+              value={wardName}
+              onChange={handleWardNameChange}
               required
             />
           </div>
@@ -267,8 +291,8 @@ const OrgMedicalCamp = () => {
               type="text"
               id="villageName"
               name="villageName"
-              value={formData.villageName}
-              onChange={handleChange}
+              value={villageName}
+              onChange={handleVillageNameChange}
               required
             />
           </div>
@@ -278,8 +302,8 @@ const OrgMedicalCamp = () => {
               type="text"
               id="streetAddress"
               name="streetAddress"
-              value={formData.streetAddress}
-              onChange={handleChange}
+              value={streetAddress}
+              onChange={handleStreetAddressChange}
               required
             />
           </div>
@@ -289,8 +313,8 @@ const OrgMedicalCamp = () => {
               type="text"
               id="postalCode"
               name="postalCode"
-              value={formData.postalCode}
-              onChange={handleChange}
+              value={postalCode}
+              onChange={handlePostalCodeChange}
               required
             />
           </div>
@@ -300,8 +324,8 @@ const OrgMedicalCamp = () => {
               type="date"
               id="date"
               name="date"
-              value={formData.date}
-              onChange={handleChange}
+              value={date}
+              onChange={handleDateChange}
               required
             />
           </div>
@@ -310,8 +334,8 @@ const OrgMedicalCamp = () => {
             <textarea
               id="description"
               name="description"
-              value={formData.description}
-              onChange={handleChange}
+              value={description}
+              onChange={handleDescriptionChange}
               required
             />
           </div>

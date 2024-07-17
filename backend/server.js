@@ -76,6 +76,8 @@ app.use("/patient", patientRouter);
 const myprofileRouter = require("./src/routers/myprofileRouter");
 app.use("/users", myprofileRouter);
 
+
+
 app.get("/healthcare/hospitals", async (req, res) => {
     try {
         const allHospitals = await pool.query(
@@ -393,6 +395,50 @@ app.put('/healthcare/:userid/updateprofile', async (req, res) => {
         console.error(err.message);
     }
 });
+
+//blog
+// Get all blog posts
+app.get('/blog/posts', async (req, res) => {
+    const query = 'SELECT * FROM blog_posts';
+    const result = await pool.query(query);
+    res.json(result.rows);
+});
+
+// Get a single blog post
+app.get('/blog/posts/:id', async (req, res) => {
+    const query = 'SELECT * FROM blog_posts WHERE post_id = $1';
+    const result = await pool.query(query, [req.params.id]);
+    res.json(result.rows[0]);
+});
+
+// Create a new blog post
+app.post('/blog/posts/:id', async (req, res) => {
+    const { title, content, author_id, category_id } = req.body;
+    const query = 'INSERT INTO blog_posts (title, content, author_id, category_id) VALUES ($1, $2, $3, $4) RETURNING *';
+    const result = await pool.query(query, [title, content, author_id, category_id]);
+    res.json(result.rows[0]);
+});
+
+// Update a blog post
+app.put('/blog/posts/:id', async (req, res) => {
+    const { title, content, category_id } = req.body;
+    const query = 'UPDATE blog_posts SET title = $1, content = $2, category_id = $3 WHERE post_id = $4 RETURNING *';
+    const result = await pool.query(query, [title, content, category_id, req.params.id]);
+    res.json(result.rows[0]);
+});
+
+// Delete a blog post
+app.delete('/blog/posts/:id', async (req, res) => {
+    const query = 'DELETE FROM blog_posts WHERE post_id = $1';
+    await pool.query(query, [req.params.id]);
+    res.json({ message: 'Post deleted' });
+});
+//get all hospitals
+app.get('/hospitals', async (req, res) => {
+    const result = await pool.query(`SELECT * FROM users where user_type='hospital'`);
+    res.json(result.rows);
+  });
+
 
 server.listen(port, () => {
     console.log(`Server is running on port ${port}`);

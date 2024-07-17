@@ -48,7 +48,7 @@ const Home = () => {
 
   const goToBloodDonation = () => {
     // TODO: blood donation link fix
-    window.location.href = "http://localhost:3000/bloodDonation";
+    window.location.href = "http://localhost:3000/showDonors";
   };
 
 
@@ -113,7 +113,7 @@ const Home = () => {
         </div>
         <div class="navbar-icons">
           <img src={image5} onClick={goToBloodDonation} alt="contact us" className="contact-us-icon" />
-          <div class="tool-tip">Blood Donation</div>
+          <div class="tool-tip">Need Blood?</div>
         </div>
       </navbar>
       <navbar class="navbar2">

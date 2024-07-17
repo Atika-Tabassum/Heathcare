@@ -7,7 +7,7 @@ const getDoctors = async (req, res, next) => {
     ds.specialization_id,         
     d.hospital_user_id,           
     d.description,               
-    s.name AS specialization_name
+    s.name AS specialization
 FROM
     users u                       
 JOIN
@@ -23,7 +23,7 @@ LEFT JOIN
 ON
     ds.specialization_id = s.specialization_id  
 WHERE
-    u.user_type = 'doctor'       
+    Lower(u.user_type) = 'doctor'       
     AND u.user_id <>$1
 `, [req.params.userId]);
     console.log("doctors:", doctors.rows);
@@ -48,7 +48,7 @@ const registerDoctor = async (req, res, next) => {
       name, email, phoneNumber: contact_no, division, 
       district, upazila, unionName, wardName, 
       villageName, streetAddress, postalCode, 
-      password, description, image, reg_no, specializations 
+      password, description, image, reg_no, specializations,hospital 
     } = req.body;
 
     console.log('Request body:', req.body);
@@ -78,9 +78,9 @@ const registerDoctor = async (req, res, next) => {
 
     // Insert into doctors table
     await pool.query(
-      `INSERT INTO doctors (doctor_user_id, description, reg_no)
-       VALUES ($1, $2, $3)`,
-      [userId, description,reg_no]
+      `INSERT INTO doctors (doctor_user_id, description, reg_no,hospital_user_id)
+       VALUES ($1, $2, $3,$4)`,
+      [userId, description,reg_no,hospital]
     );
 
     // Insert specializations
