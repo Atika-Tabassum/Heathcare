@@ -5,15 +5,16 @@ import '../homeComponent/page.css';
 import '../general/general.css';
 import img1 from '../general/logo.svg';
 import img2 from '../general/user.svg';
-import image1 from '../homeComponent/clinic-building.svg';
+import image1 from '../general/view.svg';
 import image2 from '../homeComponent/clinic-building.svg';
 import image3 from '../general/notification.svg';
 import image5 from '../homeComponent/contact-us.svg';
-import image6 from '../homeComponent/about-us.svg';
+import image6 from '../general/appointment.svg';
 import c1 from '../homeComponent/facebook.svg';
 import c2 from '../homeComponent/instagram.svg';
 import c3 from '../homeComponent/twitter.svg';
 import c4 from '../homeComponent/whatsapp.svg';
+
 
 const DoctorHome = () => {
   const navigate = useNavigate();
@@ -63,7 +64,7 @@ const DoctorHome = () => {
         <div className="services">
           <button className="service-icons"
           onClick={() => navigate(`/${userId}/appointments`)}>
-            <img src={image1} alt="appointment" className="clinic-icon" />
+            <img src={image6} alt="appointment" className="clinic-icon" />
             <div className="tool-tip">appointments</div>
           </button>
           <button
@@ -77,30 +78,30 @@ const DoctorHome = () => {
             className="service-icons"
             onClick={() => navigate(`/${userId}/org_camps`)}
           >
-            <img src={image2} alt="medical camp" className="clinic-icon" />
+            <img src={image1} alt="medical camp" className="clinic-icon" />
             <div className="tool-tip">view your medical camps</div>
           </button>
           <button className="service-icons"
           onClick={() => navigate(`/${userId}/chat_preview`)}>
-            <img src={image1} alt="appointment" className="clinic-icon" />
+            <img src={image5} alt="appointment" className="clinic-icon" />
             <div className="tool-tip">chats</div>
           </button>
         </div>
       </div>
 
-      <navbar className="navbar">
+      {/* <navbar className="navbar">
         <div className="navbar-icons">
           <img src={image5} alt="contact us" className="contact-us-icon" />
           <div className="tool-tip">Contact Us</div>
         </div>
-      </navbar>
+      </navbar> */}
 
-      <navbar className="navbar2">
+      {/* <navbar className="navbar2">
         <div className="bottom-icon">
           <img src={image6} alt="about us" className="about-us-icon" />
           <div className="tool-tip">About Us</div>
         </div>
-      </navbar>
+      </navbar> */}
 
       <div className="bottom-bar">
         <div className="contact-icons">
