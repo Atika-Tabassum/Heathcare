@@ -81,7 +81,9 @@ app.use("/users", myprofileRouter);
 app.get("/healthcare/hospitals", async (req, res) => {
     try {
         const allHospitals = await pool.query(
-            "SELECT * FROM users WHERE user_type = 'hospital'"
+            `SELECT u.*,l.* FROM users u
+            JOIN location l ON u.location_id = l.location_id 
+            WHERE u.user_type = 'hospital' `
         );
         res.json(allHospitals.rows);
         console.log(allHospitals.rows);
@@ -437,7 +439,7 @@ app.delete('/blog/posts/:id', async (req, res) => {
 app.get('/hospitals', async (req, res) => {
     const result = await pool.query(`SELECT * FROM users where user_type='hospital'`);
     res.json(result.rows);
-  });
+});
 
 
 server.listen(port, () => {

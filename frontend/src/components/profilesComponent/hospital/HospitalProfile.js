@@ -13,8 +13,26 @@ const HospitalProfile = () => {
     const [info, setInfo] = useState({});
     const [doctors, setDoctors] = useState([]);
     const userId = useParams().userId;
+    const [address, setAddress] = useState('');
 
-    console.log(userId);
+    const makeAddress = (user) => {
+        const addressFields = [
+            user.division_name,
+            user.district_name,
+            user.upazila_name,
+            user.union_name,
+            user.ward_name,
+            user.village_name,
+            user.street_address,
+            user.postal_code
+        ];
+
+        const fullAddress = addressFields.filter(field => field).join(", ");
+        console.log('address', fullAddress);
+        return fullAddress;
+    }
+
+    // console.log(userId);
     const getHospitalInfo = async () => {
         try {
             // console.log('?????' + userId);
@@ -22,9 +40,10 @@ const HospitalProfile = () => {
             const data = await res.json();
             setInfo(data.data.hospital);
             setDoctors(data.data.doctors);
+
             // console.log(info);
             // console.log(doctors);
-            console.log(data);
+            // console.log(data);
         }
         catch (err) {
             console.log(err);
@@ -39,14 +58,14 @@ const HospitalProfile = () => {
         <Fragment>
             <Header />
             <body>
-                <div className='hospital-profile-container' style={{paddingTop:'100px'}}>
+                <div className='hospital-profile-container' style={{ paddingTop: '100px' }}>
                     <div className='hospital-profile'>
                         <div className='hospitalname' >
                             {info.name}
                         </div>
                         <div className='hospital-info'>
                             <div className='hospital-address'>
-                                <img src={img3} alt='address' />{info.address}
+                                <img src={img3} alt='address' />{makeAddress(info)}
                             </div>
                             <div className='hospital-email'>
                                 <img src={img1} alt='address' /> {info.email}

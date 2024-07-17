@@ -8,6 +8,24 @@ const FindHospital = () => {
     const [hospitals, setHospitals] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [isCheckedRound, setIsCheckedRound] = useState(false);
+    const [address, setAddress] = useState('');
+
+    const makeAddress = (user) => {
+        const addressFields = [
+            user.division_name,
+            user.district_name,
+            user.upazila_name,
+            user.union_name,
+            user.ward_name,
+            user.village_name,
+            user.street_address,
+            user.postal_code
+        ];
+
+        const fullAddress = addressFields.filter(field => field).join(", ");
+        console.log('address', fullAddress);
+        return fullAddress;
+    }
 
     const handleToggleRound = () => {
         console.log('clicked');
@@ -129,7 +147,7 @@ const FindHospital = () => {
                                 {hospital.email}
                             </div>
                         </div>
-                        <div className='hospital-address'>{hospital.address}</div>
+                        <div className='hospital-address'>{makeAddress(hospital)}</div>
                     </div>
                 ))}
             </div>
