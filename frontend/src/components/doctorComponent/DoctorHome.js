@@ -108,7 +108,7 @@ const DoctorHome = () => {
         </div>
       </navbar> */}
 
-      <div className="bottom-bar">
+      {/* <div className="bottom-bar">
         <div className="contact-icons">
           <img src={c1} alt="contact us" />
         </div>
@@ -121,7 +121,7 @@ const DoctorHome = () => {
         <div className="contact-icons">
           <img src={c4} alt="contact us" />
         </div>
-      </div>
+      </div> */}
     </Fragment>
   );
 };

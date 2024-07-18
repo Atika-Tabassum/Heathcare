@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import Header from '../general/Header';
+import Header1 from '../general/header1';
 import './loginpage.css';
 
 const Login = () => {
@@ -48,7 +48,7 @@ const Login = () => {
 
     return (
         <React.Fragment>
-            <Header />
+            <Header1/>
             <div style={{ height: '500px' }}>
                 <div className="login-title" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontSize: '30px' }}>
                     Login
@@ -111,8 +111,15 @@ const Login = () => {
                             <button className="login-btn">Login</button>
                         </div>
                         <div className="login-link">
+                        Don't have an account? Sign up as a &nbsp;
                             <Link to="/patient/register">
-                                <div className="link">Don't have an account? Sign up</div>
+                               patient/
+                            </Link>
+                            <Link to="/doctor/register">
+                               doctor/ 
+                            </Link>
+                            <Link to="/hospital/register">
+                               hospital .
                             </Link>
                         </div>
                     </form>

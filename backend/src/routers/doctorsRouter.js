@@ -14,12 +14,13 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-const { getDoctors, registerDoctor, getSpecializations, addSpecialization , getAppointments } = require("../controllers/doctorsController");
+const { getDoctors, registerDoctor, getSpecializations, addSpecialization , getAppointments, updatestatus } = require("../controllers/doctorsController");
 
 doctorsRouter.get("/:userId/viewdoctors", getDoctors);
 doctorsRouter.get("/specializations", getSpecializations);
 doctorsRouter.post("/register", registerDoctor);
 doctorsRouter.post("/specializations", addSpecialization);
 doctorsRouter.get("/:userId/viewappointments", getAppointments);
+doctorsRouter.post("/updatestatus", updatestatus);
 
 module.exports = doctorsRouter;

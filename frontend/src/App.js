@@ -43,8 +43,8 @@ function App() {
           <Route path="/:userId/myprofile" element={<Profile />} />
           <Route path="/:userId/hospitalprofile" element={<HospitalProfile />} />
           <Route path="/:userId/doctorprofile" element={<DoctorProfile />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/contents" element={<Content />} />
+          <Route path="/" element={<Content />} />
+          {/* <Route path="/contents" element={<Content />} /> */}
           <Route path="/patient/register" element={<UserReg />} />
           <Route path="/:userId/doctorHome" element={<DoctorHome />} />
           <Route path="/:userId/orgmedicalcamp" element={<OrgMedicalCamp />} />

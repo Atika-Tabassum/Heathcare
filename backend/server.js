@@ -479,13 +479,13 @@ app.get('/hospitals/nearby/:userId', async (req, res) => {
             `SELECT h.*, u.name AS hospital_name, l.division_id, l.district_id, l.upazila_id
          FROM hospitals h
          JOIN users u ON h.hospital_user_id = u.user_id
-         JOIN locations l ON u.location_id = l.location_id
-         WHERE l.division_id = (SELECT division_id FROM locations WHERE location_id = $1)
-           AND l.district_id = (SELECT district_id FROM locations WHERE location_id = $1)
-           AND l.upazila_id = (SELECT upazila_id FROM locations WHERE location_id = $1)`,
-            [locationId]
-        );
-        res.json(nearbyHospitals.rows);
+         JOIN location l ON u.location_id = l.location_id
+         WHERE l.division_id = (SELECT division_id FROM location WHERE location_id = $1)
+           AND l.district_id = (SELECT district_id FROM location WHERE location_id = $1)
+           AND l.upazila_id = (SELECT upazila_id FROM location WHERE location_id = $1)`,
+        [locationId]
+      );
+      res.json(nearbyHospitals.rows);
     } catch (error) {
         console.error('Error fetching nearby hospitals:', error);
         res.status(500).json({ message: 'Internal server error' });

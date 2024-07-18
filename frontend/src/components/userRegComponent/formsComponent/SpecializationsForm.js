@@ -66,7 +66,7 @@ const SpecializationsForm = ({
         <select
           className="signin-input"
           name="hospital"
-          value={hospital}
+          value={hospital.user_id}
           onChange={handleChange}
         >
           <option value="">Select Hospital</option>

@@ -4,7 +4,7 @@
     margin: 0 auto;
   }
   
-  ul {
+  .main-box ul {
     list-style-type: none;
     padding: 0;
   }
@@ -81,6 +81,7 @@
   .chat.other-user .chat-message {
     margin-right: auto;
   }
+
   .username_section{
     width: 100%;
     padding: 10px;
@@ -97,6 +98,4 @@
     width: 100%;
     background-color: #fff;
     padding: 10px;
-  } */
-
-  
+  }*/
