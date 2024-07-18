@@ -220,6 +220,8 @@ const DoctorRegistration = () => {
       const data = await response.json();
       if (response.ok) {
         alert("Doctor registered successfully!");
+        window.location.href = "/login";
+
       } else {
         alert(`Registration failed: ${data.message}`);
       }

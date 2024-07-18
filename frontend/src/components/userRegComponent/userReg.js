@@ -88,7 +88,7 @@ const [willDonateBlood, setWillDonateBlood] = useState(false);
   };
 
   const handleShowSuccess = () => {
-    window.location.href = "/signin";
+    window.location.href = "/login";
   };
 
   const handleShowWarning = () => {
@@ -256,6 +256,7 @@ const [willDonateBlood, setWillDonateBlood] = useState(false);
       console.log(result);
       if (response.ok) {
         setShowSuccess(true);
+        
       } else {
         setWarning(result.message || "Registration failed, please try again");
         setShowWarning(true);

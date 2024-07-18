@@ -73,6 +73,9 @@ const registerDoctor = async (req, res, next) => {
        VALUES ($1, $2, $3, $4, 'doctor', $5) RETURNING user_id`,
       [name, email, contact_no, locationId, password]
     );
+    const hospital1=await pool.query(`SELECT user_id from users where name=$1`,[hospital]);
+    const hospital_id=hospital1.rows[0].user_id;
+
 
     const userId = newUser.rows[0].user_id;
 
@@ -80,7 +83,7 @@ const registerDoctor = async (req, res, next) => {
     await pool.query(
       `INSERT INTO doctors (doctor_user_id, description, reg_no,hospital_user_id)
        VALUES ($1, $2, $3,$4)`,
-      [userId, description,reg_no,hospital]
+      [userId, description,reg_no,hospital_id]
     );
 
     // Insert specializations
