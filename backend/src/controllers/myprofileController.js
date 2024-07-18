@@ -5,17 +5,33 @@ const getUser = async (req, res, next) => {
   try {
     console.log("get user");
     const id = req.params.userId;
-// query change korsi
-    console.log(id);
+    console.log("id: ", id);
     const user = await pool.query(
-      `select u.name, u.email, u.password,u.contact_no, u.user_type, p.medical_history, l.*
-      from  users u join patients p on u.user_id = p.patient_user_id
+      `select u.name, u.email, u.password,u.contact_no, u.user_type, l.*
+      from  users u 
       join location l on u.location_id = l.location_id
       where user_id = $1`,
       [id]
     );
+
+    if (user.rows.length > 0 && user.rows[0].user_type === 'patient') {
+      const patientQuery = `
+        SELECT p.medical_history
+        FROM patient p
+        WHERE p.patient_user_id = $1
+      `;
+
+      const patient = await pool.query(patientQuery, [id]);
+
+      if (patient.rows.length > 0) {
+        user.rows[0].medical_history = patient.rows[0].medical_history;
+      }
+    }
     console.log(user.rows[0]);
-    res.status(200).json({ message: "user is returned", data: user.rows });
+    res.status(200).json({
+      message: "user is returned",
+      data: user.rows
+    });
   } catch (error) {
     console.log(error.message);
     next(error);

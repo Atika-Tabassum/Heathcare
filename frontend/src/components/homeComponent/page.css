@@ -26,6 +26,7 @@
 }
 
 .services {
+    /* background-color: yellow; */
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 20px;
@@ -38,6 +39,7 @@
 }
 
 .service-icons {
+    padding-left: 50px;
     margin-top: 30px;
     background-color: white;
     border: none;

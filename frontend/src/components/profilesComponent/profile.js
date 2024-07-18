@@ -159,17 +159,26 @@ const Profile = () => {
                     style={{ margin: '20px 30px' }}>
                     <b>Contact No: </b>{user.contact_no || 'Not available'}
                   </div>
-                  <div className="patient-medical-history"
-                    style={{ margin: '20px 30px' }}>
-                    <b>Medical History: </b>{user.medical_history || 'Not available'}
-                  </div>
+                  {
+                    user.user_type === 'patient' ?
+                      (
+                        <div className="patient-medical-history"
+                          style={{ margin: '20px 30px' }}>
+                          <b>Medical History: </b>{user.medical_history || 'Not available'}
+                        </div>
+                      ) :
+                      (
+                        <></>
+                      )
+                  }
+
                   <div style={{ margin: '20px 30px' }}>
                     <p><b>Ready to Donate Blood? </b> {user.will_donate_blood ? "Yes" : "No"}</p>
                   </div>
                   <div className="blood--btn" style={{ display: "flex", justifyContent: "center", position: 'absolute', bottom: '20px' }}>
-                    <label style={{ fontSize: "16px", fontFamily:'Montserrat',fontWeight:'600' }}>Are you willing to donate blood?</label>
-                    <button onClick={() => updateDonationStatus(true)} style={{ marginRight: "10px", padding: "10px 20px", fontSize: "16px", cursor: "pointer", backgroundColor: "#ff69b4", color: "#fff", border: "none", borderRadius: "5px",fontFamily:'Montserrat' }}>Yes, I will donate</button>
-                    <button onClick={() => updateDonationStatus(false)} style={{ padding: "10px 20px", fontSize: "16px", cursor: "pointer", backgroundColor: "#ff69b4", color: "#fff", border: "none", borderRadius: "5px" , fontFamily:'Montserrat'}}>No, I won't donate</button>
+                    <label style={{ fontSize: "16px", fontFamily: 'Montserrat', fontWeight: '600' }}>Are you willing to donate blood?</label>
+                    <button onClick={() => updateDonationStatus(true)} style={{ marginRight: "10px", padding: "10px 20px", fontSize: "16px", cursor: "pointer", backgroundColor: "#ff69b4", color: "#fff", border: "none", borderRadius: "5px", fontFamily: 'Montserrat' }}>Yes, I will donate</button>
+                    <button onClick={() => updateDonationStatus(false)} style={{ padding: "10px 20px", fontSize: "16px", cursor: "pointer", backgroundColor: "#ff69b4", color: "#fff", border: "none", borderRadius: "5px", fontFamily: 'Montserrat' }}>No, I won't donate</button>
                     <div className="blood-don" style={{ position: 'relative', paddingLeft: '350px' }}>
                       <img src={image5} onClick={goToBloodDonation} alt="blood-donation-img" className="blood-donation-img" style={{
                         height: '70px',
