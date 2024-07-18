@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 // import c1 from "./facebook.svg";
 // import c2 from "./instagram.svg";
 // import c3 from "./twitter.svg";
-// import c4 from "./whatsapp.svg";
+import c4 from "./chat.svg";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -57,6 +57,15 @@ const Home = () => {
     window.location.href = "http://localhost:3000/aboutus";
   };
 
+  const goToBlog = () => {
+    window.location.href = "http://localhost:3000/blog";
+  };
+
+  const goToChat = () => {
+    const userid= localStorage.getItem("userId");
+    window.location.href = `http://localhost:3000/${userid}/chat_preview`;
+  };
+
   return (
     <Fragment>
       <header>
@@ -81,9 +90,9 @@ const Home = () => {
       <div class="page-container">
         <div class="page-content">
           <div class="page-title">Welcome to <name style={{ color: '#991767' }}>CareConnect</name></div>
-          <div class="motto" style={{ color: '#991767', fontWeight: '600', fontSize:'18px' }}>"Your Health Our Priority"</div>
+          <div class="motto" style={{ color: '#991767', fontWeight: '600', fontSize: '18px' }}>"Your Health Our Priority"</div>
           <div class="page--description">
-            Welcome to <name style={{ color: '#991767' }}>CareConnect</name>, your trusted partner in health and wellness.<br />                                                             
+            Welcome to <name style={{ color: '#991767' }}>CareConnect</name>, your trusted partner in health and wellness.<br />
             We offer comprehensive services including primary care, specialty consultations, telemedicine, mental health support, diagnostic services, and personalized wellness programs. Our
             experienced team prioritizes compassionate, patient-centered care using the latest medical technologies. Accessible and
             committed to excellence, we strive to improve your health and well-being with every interaction.
@@ -107,11 +116,10 @@ const Home = () => {
             <img src={image7} alt="awareness" className="awareness-icon" />
             <div class="tool-tip">Medical Camp</div>
           </button>
-
-          <button className="service-icons" onClick={() => navigate(`/blog`)}>
-            <img src={image9} alt="blogs" className="clinic-icon" />
-            <div className="tool-tip">chats</div>
-          </button>
+          {/* <button className="service-icons" onClick={() => navigate(`/blog`)}>
+            <img src={image9} alt="blogs" className="blog-icon" />
+            <div className="tool-tip">blogs</div>
+          </button> */}
         </div>
       </div>
 
@@ -133,6 +141,26 @@ const Home = () => {
             className="contact-us-icon"
           />
           <div class="tool-tip">Need Blood?</div>
+        </div>
+        <div class="navbar-icons">
+          <img
+            src={image9}
+            onClick={goToBlog}
+            alt="blog"
+            className="blog-icon"
+            style={{ height: "27px" }}
+          />
+          <div class="tool-tip" style={{right:'-1px'}}>Blog</div>
+        </div>
+        <div class="navbar-icons">
+          <img
+            src={c4}
+            onClick={goToChat}
+            alt="chat"
+            className="chat-icon"
+            style={{ height: "27px" }}
+          />
+          <div class="tool-tip" style={{right:'-1px'}}>Chat</div>
         </div>
       </navbar>
       <navbar class="navbar2">

@@ -308,8 +308,9 @@ const [willDonateBlood, setWillDonateBlood] = useState(false);
               className="signin-input"
               value={division}
               onChange={handleDivisionChange}
+              
             >
-              <option value="">Select Division</option>
+              <option value="" style={{fontFamily:'Montserrat'}}>Select Division</option>
               {divisions.map((division) => (
                 <option key={division.division_id} value={division.division_id}>
                   {division.division_name}

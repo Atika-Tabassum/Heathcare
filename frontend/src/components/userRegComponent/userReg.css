@@ -33,6 +33,10 @@
   border-radius: 5px;
 }
 
+.option{
+  font-family: 'Montserrat';
+}
+
 .label-wrap {
   margin-bottom: 20px;
 }
@@ -54,6 +58,7 @@
 }
 
 .reg-text {
+  font-family: 'Montserrat';
   cursor: pointer;
   color: #e50914;
 }
