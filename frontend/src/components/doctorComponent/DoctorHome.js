@@ -14,6 +14,7 @@ import c1 from '../homeComponent/facebook.svg';
 import c2 from '../homeComponent/instagram.svg';
 import c3 from '../homeComponent/twitter.svg';
 import c4 from '../homeComponent/whatsapp.svg';
+import image7 from '../general/blog.svg'
 
 
 const DoctorHome = () => {
@@ -86,6 +87,13 @@ const DoctorHome = () => {
             <img src={image5} alt="appointment" className="clinic-icon" />
             <div className="tool-tip">chats</div>
           </button>
+
+          {/* <button className="service-icons"
+          onClick={() => navigate(`/${userId}/new-post`)}>
+            <img src={image7} alt="blogs" className="clinic-icon" />
+            <div className="tool-tip">chats</div>
+          </button> */}
+
         </div>
       </div>
 

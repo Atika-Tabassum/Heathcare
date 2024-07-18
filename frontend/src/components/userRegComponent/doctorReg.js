@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./userReg.css";
 import image1 from "./regimg.svg";
 
-import Backdrop from '../Backdrop/Backdrop';
-import Warning from '../Warning/Warning';
-import Successful from '../Successful/Successful';
+import Backdrop from "../Backdrop/Backdrop";
+import Warning from "../Warning/Warning";
+import Successful from "../Successful/Successful";
 
 function DoctorRegistration() {
   const [name, setName] = useState("");
@@ -36,13 +36,14 @@ function DoctorRegistration() {
   const [upazilas, setUpazilas] = useState([]);
 
   useEffect(() => {
-    
     fetchDivisions();
     const fetchSpecializations = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/doctors/specializations`);
+        const response = await fetch(
+          `http://localhost:3001/doctors/specializations`
+        );
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         const data = await response.json();
         setAvailableSpecializations(data);
@@ -50,14 +51,14 @@ function DoctorRegistration() {
         console.error("Error fetching specializations:", error);
       }
     };
-  
+
     fetchSpecializations();
   }, []);
   const fetchDivisions = async () => {
     try {
       const response = await fetch("http://localhost:3001/location/divisions");
       if (!response.ok) {
-        throw new Error('Failed to fetch divisions');
+        throw new Error("Failed to fetch divisions");
       }
       const data = await response.json();
       setDivisions(data);
@@ -68,14 +69,18 @@ function DoctorRegistration() {
   };
   const fetchDistricts = async (divisionId) => {
     // Fetch districts based on selected division
-    const response = await fetch(`http://localhost:3001/location/districts?division_id=${divisionId}`);
+    const response = await fetch(
+      `http://localhost:3001/location/districts?division_id=${divisionId}`
+    );
     const data = await response.json();
     setDistricts(data);
   };
 
   const fetchUpazilas = async (districtId) => {
     // Fetch upazilas based on selected district
-    const response = await fetch(`http://localhost:3001/location/upazilas?district_id=${districtId}`);
+    const response = await fetch(
+      `http://localhost:3001/location/upazilas?district_id=${districtId}`
+    );
     const data = await response.json();
     setUpazilas(data);
   };
@@ -140,14 +145,23 @@ function DoctorRegistration() {
   };
 
   const isFormValid = () => {
-    if (!name || !email || !password || !confirm || !phoneNumber || !division ||
+    if (
+      !name ||
+      !email ||
+      !password ||
+      !confirm ||
+      !phoneNumber ||
+      !division ||
       !district ||
       !upazila ||
       !unionName ||
       !wardName ||
       !villageName ||
       !streetAddress ||
-      !postalCode || !description || specializations.length === 0) {
+      !postalCode ||
+      !description ||
+      specializations.length === 0
+    ) {
       setWarning("Please complete all required fields.");
       setShowWarning(true);
       return false;
@@ -173,13 +187,17 @@ function DoctorRegistration() {
   };
 
   const handleRegister = async (e) => {
+    console.log("Registering doctor");
     e.preventDefault();
     try {
+      console.log("Registering doctor try block");
       if (!isFormValid()) {
+        console.log("Registering doctor validation");
         return;
       }
 
       if (password !== confirm) {
+        console.log("Passwords must match");
         setWarning("Passwords must match!");
         setShowWarning(true);
         setConfirm("");
@@ -230,20 +248,26 @@ function DoctorRegistration() {
     if (newSpecialization.trim() === "") return;
 
     try {
-      const response = await fetch("http://localhost:3001/doctors/specializations", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ name: newSpecialization })
-      });
+      const response = await fetch(
+        "http://localhost:3001/doctors/specializations",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name: newSpecialization }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to add specialization");
       }
 
       const addedSpecialization = await response.json();
-      setAvailableSpecializations([...availableSpecializations, addedSpecialization]);
+      setAvailableSpecializations([
+        ...availableSpecializations,
+        addedSpecialization,
+      ]);
       setSpecializations([...specializations, addedSpecialization.name]);
       setNewSpecialization("");
     } catch (error) {
@@ -255,9 +279,9 @@ function DoctorRegistration() {
 
   const handleSpecializationChange = (e) => {
     const value = e.target.value;
-    setSpecializations(prevSpecializations =>
+    setSpecializations((prevSpecializations) =>
       prevSpecializations.includes(value)
-        ? prevSpecializations.filter(spec => spec !== value)
+        ? prevSpecializations.filter((spec) => spec !== value)
         : [...prevSpecializations, value]
     );
   };
@@ -296,7 +320,7 @@ function DoctorRegistration() {
               onChange={(e) => setPhoneNumber(e.target.value)}
               type="text"
             />
-             <label className="signin-label">Division*</label>
+            <label className="signin-label">Division*</label>
             <select
               className="signin-input"
               value={division}
@@ -387,7 +411,10 @@ function DoctorRegistration() {
             <label className="signin-label">Specializations*</label>
             <div className="specializations-container">
               {availableSpecializations.map((spec) => (
-                <div key={spec.specialization_id} className="specialization-item">
+                <div
+                  key={spec.specialization_id}
+                  className="specialization-item"
+                >
                   <input
                     type="checkbox"
                     value={spec.name}
@@ -406,7 +433,11 @@ function DoctorRegistration() {
               onChange={(e) => setNewSpecialization(e.target.value)}
               type="text"
             />
-            <button type="button" className="btn" onClick={handleAddSpecialization}>
+            <button
+              type="button"
+              className="btn"
+              onClick={handleAddSpecialization}
+            >
               Add Specialization
             </button>
             <label className="signin-label">Profile Image</label>
@@ -467,7 +498,10 @@ function DoctorRegistration() {
         {showSuccess && (
           <>
             <Backdrop />
-            <Successful message={`Registered successfully!\nWelcome to pagolkhana`} onClose={handleShowSuccess} />
+            <Successful
+              message={`Registered successfully!\nWelcome to pagolkhana`}
+              onClose={handleShowSuccess}
+            />
           </>
         )}
       </div>

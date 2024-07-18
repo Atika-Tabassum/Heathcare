@@ -11,16 +11,18 @@ import image5 from "./infusion.svg";
 import image6 from "./about-us.svg";
 import image7 from "./awareness.svg";
 import image8 from "../general/notification.svg";
+import image9 from "../general/blog.svg";
+import { useNavigate } from "react-router-dom";
 // import c1 from "./facebook.svg";
 // import c2 from "./instagram.svg";
 // import c3 from "./twitter.svg";
 // import c4 from "./whatsapp.svg";
 
-
 const Home = () => {
+  const navigate = useNavigate();
   const myProfile = () => {
     // TODO - userID
-    const user_id=localStorage.getItem("userId");
+    const user_id = localStorage.getItem("userId");
     console.log(user_id);
 
     window.location.href = `http://localhost:3000/${user_id}/myprofile`;
@@ -51,7 +53,6 @@ const Home = () => {
     window.location.href = "http://localhost:3000/showDonors";
   };
 
-
   const aboutUs = () => {
     window.location.href = "http://localhost:3000/aboutus";
   };
@@ -68,7 +69,6 @@ const Home = () => {
               <img src={image8} alt="notifications" className="user-icon" />
             </div>
           </button>
-
 
           <button class="user-dashboard" onClick={myProfile}>
             <div class="user-section">
@@ -102,23 +102,42 @@ const Home = () => {
             <img src={image7} alt="awareness" className="awareness-icon" />
             <div class="tool-tip">Medical Camp</div>
           </button>
+
+          <button className="service-icons" onClick={() => navigate(`/blog`)}>
+            <img src={image9} alt="blogs" className="clinic-icon" />
+            <div className="tool-tip">chats</div>
+          </button>
         </div>
       </div>
 
-
       <navbar class="navbar">
         <div class="navbar-icons">
-          <img src={image4} onClick={goToNearbyHospital} alt="location" className="location-icon" />
+          <img
+            src={image4}
+            onClick={goToNearbyHospital}
+            alt="location"
+            className="location-icon"
+          />
           <div class="tool-tip">Find nearby Hospitals</div>
         </div>
         <div class="navbar-icons">
-          <img src={image5} onClick={goToBloodDonation} alt="contact us" className="contact-us-icon" />
+          <img
+            src={image5}
+            onClick={goToBloodDonation}
+            alt="contact us"
+            className="contact-us-icon"
+          />
           <div class="tool-tip">Need Blood?</div>
         </div>
       </navbar>
       <navbar class="navbar2">
         <div class="bottom-icon">
-          <img src={image6} onClick={aboutUs} alt="about us" className="about-us-icon" />
+          <img
+            src={image6}
+            onClick={aboutUs}
+            alt="about us"
+            className="about-us-icon"
+          />
           <div class="tool-tip">About Us</div>
         </div>
       </navbar>
@@ -136,7 +155,6 @@ const Home = () => {
           <img src={c4} alt="contact us" />
         </div>
       </div> */}
-
     </Fragment>
   );
 };

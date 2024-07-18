@@ -2,7 +2,10 @@ const pool = require("../../db");
 
 const registerHospital = async (req, res, next) => {
   try {
-    const { name, email, contact_no, description, division_id, 
+    console.log("registering hospital");
+    const { name, email, contact_no, description,
+      image,
+      division_id, 
       district_id, 
       upazila_id, 
       union_name, 
@@ -10,12 +13,12 @@ const registerHospital = async (req, res, next) => {
       village_name, 
       street_address, 
       postal_code, password,user_type } = req.body;
-      const image = req.file ? req.file.filename : null;
+      const image2 = req.file ? req.file.filename : null;
       // Extract filename of the uploaded image
 
     // Insert into users table
     const newLocation = await pool.query(
-      `INSERT INTO locations (division_id, district_id, upazila_id, union_name, ward_name, village_name, street_address, postal_code)
+      `INSERT INTO location (division_id, district_id, upazila_id, union_name, ward_name, village_name, street_address, postal_code)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING location_id`,
       [division_id, district_id, upazila_id, union_name, ward_name, village_name, street_address, postal_code]
     );

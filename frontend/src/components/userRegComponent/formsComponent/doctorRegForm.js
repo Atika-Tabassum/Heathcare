@@ -194,11 +194,14 @@ const DoctorRegistration = () => {
   };
 
   const handleSubmit = async () => {
+    console.log("registering doctor");
     if (!isFormValid()) {
+      console.log("Form is not valid");
       return;
     }
 
     if (formData.password !== formData.confirm) {
+      console.log("Passwords do not match");
       setWarning("Passwords must match!");
       setShowWarning(true);
       setFormData({
@@ -210,6 +213,7 @@ const DoctorRegistration = () => {
     }
 
     try {
+      console.log("try block");
       const response = await fetch("http://localhost:3001/doctors/register", {
         method: "POST",
         headers: {

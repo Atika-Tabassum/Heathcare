@@ -20,11 +20,17 @@ const OrgMedicalCamp = () => {
   const [postalCode, setPostalCode] = useState("");
   const [selectedDoctors, setSelectedDoctors] = useState([]);
   const [showDoctorsList, setShowDoctorsList] = useState(false);
+  const [doctor_specializationArr, setDoctor_specializationArr] = useState([]);
   const [description, setDescription] = useState("");
   const [date, setDate] = useState([]);
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
   const { userId } = useParams();
+
+  const formatDate = (date) => {
+    const d = new Date(date);
+    return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+  };
 
   useEffect(() => {
     fetchDivisions();
@@ -59,7 +65,6 @@ const OrgMedicalCamp = () => {
     setDate(event.target.value);
   };
 
-
   const fetchDoctors = async () => {
     try {
       const response = await fetch(
@@ -73,6 +78,7 @@ const OrgMedicalCamp = () => {
           selected: false,
         }));
         setDoctors(doctorsWithSelection);
+        setDoctor_specializationArr(data.specializationArray);
       } else {
         console.error("Expected an array but received:", data);
       }
@@ -162,6 +168,12 @@ const OrgMedicalCamp = () => {
       console.error(error.message);
     }
   };
+
+  const getSpecializations = (doctorId) => {
+    const doctor = doctor_specializationArr.find(doc => doc.doctor_user_id === doctorId);
+    const all = doctor ? doctor.specializations.join(', ') : '';
+    return all;
+};
 
   const handleDivisionChange = (event) => {
     const divisionId = event.target.value;
@@ -374,7 +386,9 @@ const OrgMedicalCamp = () => {
                       className={doctor.selected ? "selected" : ""}
                     >
                       <td>{doctor.name}</td>
-                      <td>{doctor.specialisation}</td>
+                      <td>
+                        {getSpecializations(doctor.user_id)}
+                    </td>
                       <td>
                         <input
                           type="checkbox"
@@ -388,7 +402,9 @@ const OrgMedicalCamp = () => {
               </table>
             </div>
           )}
-          <button className= "submitBtn" type="submit">Submit</button>
+          <button className="submitBtn" type="submit">
+            Submit
+          </button>
         </form>
       </div>
     </Fragment>

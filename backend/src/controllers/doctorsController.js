@@ -4,32 +4,46 @@ const getDoctors = async (req, res, next) => {
   try {
     const doctors = await pool.query(
       `SELECT
-    u.*,                        
-    ds.specialization_id,         
-    d.hospital_user_id,           
-    d.description,               
-    s.name AS specialization
-FROM
-    users u                       
-JOIN
-    doctors d                    
-ON
-    u.user_id = d.doctor_user_id  
-LEFT JOIN
-    doctor_specializations ds    
-ON
-    d.doctor_user_id = ds.doctor_user_id  
-LEFT JOIN
-    specializations s             
-ON
-    ds.specialization_id = s.specialization_id  
-WHERE
-    Lower(u.user_type) = 'doctor'       
-    AND u.user_id <>$1
-`,
+        u.*,                                       
+        s.name AS specialization
+      FROM
+        users u                       
+      JOIN
+        doctors d                    
+      ON
+        u.user_id = d.doctor_user_id  
+      JOIN
+        doctor_specializations ds    
+      ON
+        d.doctor_user_id = ds.doctor_user_id  
+      JOIN
+        specializations s             
+      ON
+        ds.specialization_id = s.specialization_id  
+      WHERE
+        Lower(u.user_type) = 'doctor'       
+        AND u.user_id <> $1`,
       [req.params.userId]
     );
     console.log("doctors:", doctors.rows);
+
+    const specializationMap = {};
+
+    doctors.rows.forEach((row) => {
+      const userId = row.user_id;
+      const specialization = row.specialization; // Correct field name
+
+      if (!specializationMap[userId]) {
+        specializationMap[userId] = {
+          doctor_user_id: userId,
+          specializations: [],
+        };
+      }
+
+      specializationMap[userId].specializations.push(specialization);
+    });
+
+    const specializationArray = Object.values(specializationMap);
 
     if (doctors.rows.length === 0) {
       res.status(404).json({ message: "No doctor found" });
@@ -37,6 +51,7 @@ WHERE
       res.status(200).json({
         message: "Doctors loaded successfully",
         data: doctors.rows,
+        specializationArray: specializationArray,
       });
     }
   } catch (error) {
@@ -47,6 +62,7 @@ WHERE
 
 const registerDoctor = async (req, res, next) => {
   try {
+    console.log("registering doctor");
     const {
       name,
       email,
@@ -111,9 +127,11 @@ const registerDoctor = async (req, res, next) => {
        VALUES ($1, $2, $3, $4, 'doctor', $5) RETURNING user_id`,
       [name, email, contact_no, locationId, password]
     );
-    const hospital1=await pool.query(`SELECT user_id from users where name=$1`,[hospital]);
-    const hospital_id=hospital1.rows[0].user_id;
-
+    const hospital1 = await pool.query(
+      `SELECT user_id from users where name=$1`,
+      [hospital]
+    );
+    const hospital_id = hospital1.rows[0].user_id;
 
     const userId = newUser.rows[0].user_id;
 
@@ -121,7 +139,7 @@ const registerDoctor = async (req, res, next) => {
     await pool.query(
       `INSERT INTO doctors (doctor_user_id, description, reg_no,hospital_user_id)
        VALUES ($1, $2, $3,$4)`,
-      [userId, description,reg_no,hospital_id]
+      [userId, description, reg_no, hospital_id]
     );
 
     // Insert specializations

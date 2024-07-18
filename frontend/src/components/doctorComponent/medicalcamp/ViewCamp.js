@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import "./viewcamp.css";
 import Header from "../../general/Header";
 import img1 from "../../homeComponent/about-us.svg";
 import img2 from "../../homeComponent/contact-us.svg";
@@ -11,6 +12,10 @@ const ViewCamp = () => {
   const userId = useParams().userId;
   const [isLoading, setIsLoading] = useState(true);
   const [camps, setCamps] = useState([]);
+  const formatDate = (date) => {
+    const d = new Date(date);
+    return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -51,34 +56,46 @@ const ViewCamp = () => {
         </div>
       </navbar>
 
-      <div className="page-container">
-        <div className="page-content"></div>
-        <h1>Camps</h1>
-        <ul>
-          {Array.isArray(camps) ? (
-            camps.map((item) => (
-              <li key={item.camp_id}>
-                <h2>{item.description}</h2>
-                <p>{item.camp_date}</p>
-                <div className="location-info">
-                  <img src={img3} alt="location" className="location-icon" />
-                  <span>
-                    {item.village_name}, {item.ward_name}, {item.union_name}, 
-                    {item.upazila_name}, 
-                    {item.district_name}, {item.division_name}
-                  </span>
+      <div className="camp-details">
+        <div style={{ margin: "90px" }}>
+          <h1
+            style={{
+              fontSize: "35px",
+              display: "flex",
+              justifyContent: "center",
+              fontStyle: "italic",
+              textShadow: "7px 7px 7px rgba(0, 0, 0, 0.15)",
+              paddingBottom: "40px",
+            }}
+          >
+            Medical Camps
+          </h1>
+          <div className="camps-grid">
+            {camps.map((camp) => (
+              <div className="camp-card" key={camp.camp_id}>
+                <div className="camp-title">{camp.description}</div>
+                <strong>Details:</strong>
+                <div className="camp-date" style={{ marginTop: "10px" }}>
+                  <strong>Date: </strong>
+                  {formatDate(camp.camp_date)}
                 </div>
-                <Link to={`/${item.camp_id}/camp_details`}>
-                  <p>View details of the campaign</p>
-                </Link>
-              </li>
-            ))
-          ) : (
-            <div>
-              <p>No camp available</p>
-            </div>
-          )}
-        </ul>
+                <div className="camp-location">
+                  <strong>Location: </strong>
+                  {camp.ward_name}, {camp.union_name}, {camp.upazila_name},{" "}
+                  {camp.district_name}, {camp.division_name}
+                  {<br />}
+                  {<br />}
+                  <Link
+                    to={`/${camp.camp_id}/camp_details`}
+                    style={{ textDecoration: "none", color: "blue" }}
+                  >
+                    Learn more about the campaign
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </Fragment>
   );

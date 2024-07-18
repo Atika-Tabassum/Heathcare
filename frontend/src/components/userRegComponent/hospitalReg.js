@@ -188,13 +188,15 @@ function Registration() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    console.log("Registering...");
     try {
     if (!isFormValid()) {
-    
+      console.log("Form is not valid");
       return;
     }
 
     if (password !== confirm) {
+      console.log("Passwords do not match");
       setWarning("Passwords must match!");
       setShowWarning(true);
       setConfirm("");
@@ -203,13 +205,13 @@ function Registration() {
     }
 
     try {
+      console.log("Registering try block...");
+      console.log(division);
       const formData = new FormData();
       formData.append("name", name);
       formData.append("email", email);
       formData.append("contact_no", phoneNumber);
-     
       formData.append("password", password);
-     
       formData.append("description", description);
       formData.append("image", imageFile); // Append the image file to FormData
       formData.append("division_id", division);
@@ -221,28 +223,12 @@ function Registration() {
       formData.append("street_address", streetAddress);
       formData.append("postal_code", postalCode);
 
-      const response = await fetch("http://localhost:3001/hospital/register", {
-        method: "POST",
-        body:JSON.stringify({
-          name,
-          email,
-          contact_no: phoneNumber,
-          description,
-          division_id: division,
-          district_id: district,
-          upazila_id: upazila,
-          union_name: unionName,
-          ward_name: wardName,
-          village_name: villageName,
-          street_address: streetAddress,
-          postal_code: postalCode,
-          password,
-          user_type: "hospital",
-          image: imageFile,
-
-          
-        }),
-      });
+      const response = await fetch("http://localhost:3001/hospital/register", 
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       const result = await response.json();
       console.log(result);
@@ -420,7 +406,7 @@ function Registration() {
               />
               <span>Show Password</span>
               <br/>
-              <button classNameonClick={handleRegister} className="btn">
+              <button onClick={handleRegister} className="btn">
                 REGISTER
               </button>
              

@@ -57,7 +57,7 @@ const Chats = () => {
     };
     socket.current.emit("sendMessage", message);
     setNewMessage("");
-    navigate(`/${userId}/${receiver}/chats`);
+    window.location.reload();
   };
 
   useEffect(() => {
