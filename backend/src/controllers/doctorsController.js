@@ -60,7 +60,7 @@ const registerDoctor = async (req, res, next) => {
 
     // Insert into locations table
     const newLocation = await pool.query(
-      `INSERT INTO locations (division_id, district_id, upazila_id, union_name, ward_name, village_name, street_address, postal_code)
+      `INSERT INTO location (division_id, district_id, upazila_id, union_name, ward_name, village_name, street_address, postal_code)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING location_id`,
       [division, district, upazila, unionName, wardName, villageName, streetAddress, postalCode]
     );

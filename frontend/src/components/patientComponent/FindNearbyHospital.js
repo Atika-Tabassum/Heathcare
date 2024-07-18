@@ -31,7 +31,7 @@ const FindNearbyHospital = () => {
   return (
     <Fragment>
       <Header />
-      <div className="page-container">
+      <div className="page-container1">
         <h1 align="center">Find Nearby Hospital</h1>
         <div className="hospital-container">
           {nearbyHospitals.length > 0 ? (

@@ -10,10 +10,10 @@ import image2 from '../homeComponent/clinic-building.svg';
 import image3 from '../general/notification.svg';
 import image5 from '../homeComponent/contact-us.svg';
 import image6 from '../homeComponent/about-us.svg';
-import c1 from '../homeComponent/facebook.svg';
-import c2 from '../homeComponent/instagram.svg';
-import c3 from '../homeComponent/twitter.svg';
-import c4 from '../homeComponent/whatsapp.svg';
+// import c1 from '../homeComponent/facebook.svg';
+// import c2 from '../homeComponent/instagram.svg';
+// import c3 from '../homeComponent/twitter.svg';
+// import c4 from '../homeComponent/whatsapp.svg';
 
 const DoctorHome = () => {
   const navigate = useNavigate();
@@ -102,7 +102,7 @@ const DoctorHome = () => {
         </div>
       </navbar>
 
-      <div className="bottom-bar">
+      {/* <div className="bottom-bar">
         <div className="contact-icons">
           <img src={c1} alt="contact us" />
         </div>
@@ -115,7 +115,7 @@ const DoctorHome = () => {
         <div className="contact-icons">
           <img src={c4} alt="contact us" />
         </div>
-      </div>
+      </div> */}
     </Fragment>
   );
 };
