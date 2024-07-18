@@ -11,10 +11,10 @@ import image5 from "./infusion.svg";
 import image6 from "./about-us.svg";
 import image7 from "./awareness.svg";
 import image8 from "../general/notification.svg";
-import c1 from "./facebook.svg";
-import c2 from "./instagram.svg";
-import c3 from "./twitter.svg";
-import c4 from "./whatsapp.svg";
+// import c1 from "./facebook.svg";
+// import c2 from "./instagram.svg";
+// import c3 from "./twitter.svg";
+// import c4 from "./whatsapp.svg";
 
 
 const Home = () => {
@@ -122,7 +122,7 @@ const Home = () => {
           <div class="tool-tip">About Us</div>
         </div>
       </navbar>
-      <div class="bottom-bar">
+      {/* <div class="bottom-bar">
         <div class="contact-icons">
           <img src={c1} alt="contact us" />
         </div>
@@ -135,7 +135,7 @@ const Home = () => {
         <div class="contact-icons">
           <img src={c4} alt="contact us" />
         </div>
-      </div>
+      </div> */}
 
     </Fragment>
   );
