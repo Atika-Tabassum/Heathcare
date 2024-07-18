@@ -51,7 +51,7 @@ const AboutUs = () => {
                             </p>
                         </li>
                         <li>
-                            <b>Nabiha Tahseen Promi</b>
+                            <b>Nabiha Tahseen</b>
                             <p>
                                 CSE, BUET
                             </p>
