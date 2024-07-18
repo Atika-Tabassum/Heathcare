@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./userReg.css";
 import image from "./regimg.svg";
 import Backdrop from "../Backdrop/Backdrop";
-import Warning from "../Warning/Warning";
-import Successful from "../Successful/Successful";
+import Header from "../general/Header";
 
 function Registration() {
   const [name, setName] = useState("");
@@ -79,7 +78,7 @@ function Registration() {
 
 
   const handleShowSuccess = () => {
-    window.location.href = "/signin";
+    window.location.href = "/login";
   };
 
   const handleShowWarning = () => {
@@ -165,28 +164,7 @@ function Registration() {
   };
 
   const isFormValid = () => {
-    if (
-      !name ||
-      !email ||
-      !password ||
-      !confirm ||
-      !phoneNumber ||
-      
-      !description ||
-      !division ||
-      !district ||
-      !upazila ||
-      !unionName ||
-      !wardName ||
-      !villageName ||
-      !streetAddress ||
-      !postalCode 
-      
-    ) {
-      setWarning("Please complete all required fields.");
-      setShowWarning(true);
-      return false;
-    }
+    
     if (!isValidEmail(email)) {
       setWarning("Please enter a valid email address.");
       setShowWarning(true);
@@ -210,8 +188,9 @@ function Registration() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-
+    try {
     if (!isFormValid()) {
+    
       return;
     }
 
@@ -269,6 +248,7 @@ function Registration() {
       console.log(result);
       if (response.ok) {
         setShowSuccess(true);
+        window.location.href = "/login";
       } else {
         setWarning(result.message || "Registration failed, please try again");
         setShowWarning(true);
@@ -278,12 +258,16 @@ function Registration() {
       setWarning("An error occurred. Please try again later.");
       setShowWarning(true);
     }
+  } catch (error) {
+    console.log(error.message);
+    setWarning("An error occurred. Please try again later.");
+    setShowWarning(true);
+  }
   };
 
   return (
     <>
-      <br />
-      <br />
+      <Header/>
       <div className="signInContainer">
         <img src={image} className="woman" alt="" />
         <div className="reg-form">
@@ -435,16 +419,17 @@ function Registration() {
                 }}
               />
               <span>Show Password</span>
-              <button onClick={handleRegister} className="btn1">
+              <br/>
+              <button classNameonClick={handleRegister} className="btn">
                 REGISTER
               </button>
+             
+              
             </div>
           </div>
         </div>
-        {showWarning && <Warning message={warning} close={handleShowWarning} />}
-        {showSuccess && (
-          <Successful message="Registration successful!" close={handleShowSuccess} />
-        )}
+        {showWarning}
+        {showSuccess}
       </div>
     </>
   );
