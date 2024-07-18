@@ -19,10 +19,10 @@ import image7 from '../general/blog.svg'
 
 const DoctorHome = () => {
   const navigate = useNavigate();
-  const { userId } = useParams(); 
+  const { userId } = useParams();
 
   const myProfile = () => {
-    navigate(`/${userId}/myprofile`); 
+    navigate(`/${userId}/myprofile`);
   };
 
   const handleNotifications = () => {
@@ -51,20 +51,25 @@ const DoctorHome = () => {
               <img src={img2} alt="user" className="user-icon" />
             </div>
           </button>
-          
+
         </div>
       </header>
 
       <div className="page-container">
         <div className="page-content">
-          <div className="page-title">Welcome to *name*</div>
-          <div className="motto">*motto likhbo*</div>
-          <div className="page-description">*description*</div>
+          <div className="page-title">Welcome to <name style={{ color: '#991767' }}>CareConnect</name> </div>
+          <div class="motto" style={{ color: '#991767', fontWeight: '600', fontSize: '18px' }}>"Your Health Our Priority"</div>
+          <div class="page--description">
+            Welcome to <name style={{ color: '#991767' }}>CareConnect</name>, your trusted partner in health and wellness.<br />                                                             
+            We offer comprehensive services including primary care, specialty consultations, telemedicine, mental health support, diagnostic services, and personalized wellness programs. Our
+            experienced team prioritizes compassionate, patient-centered care using the latest medical technologies. Accessible and
+            committed to excellence, we strive to improve your health and well-being with every interaction.
+          </div>
         </div>
-        <div>*services*</div>
+        {/* <div style={{display:'flex', justifyContent:'center', fontSize:'18px', fontWeight:'600'}}>Updates</div> */}
         <div className="services">
           <button className="service-icons"
-          onClick={() => navigate(`/${userId}/appointments`)}>
+            onClick={() => navigate(`/${userId}/appointments`)}>
             <img src={image6} alt="appointment" className="clinic-icon" />
             <div className="tool-tip">appointments</div>
           </button>
@@ -83,7 +88,7 @@ const DoctorHome = () => {
             <div className="tool-tip">view your medical camps</div>
           </button>
           <button className="service-icons"
-          onClick={() => navigate(`/${userId}/chat_preview`)}>
+            onClick={() => navigate(`/${userId}/chat_preview`)}>
             <img src={image5} alt="appointment" className="clinic-icon" />
             <div className="tool-tip">chats</div>
           </button>

@@ -80,11 +80,16 @@ const Home = () => {
       </header>
       <div class="page-container">
         <div class="page-content">
-          <div class="page-title">Welcome to *name *</div>
-          <div class="motto">*motto likhbo*</div>
-          <div class="page-description">*description*</div>
+          <div class="page-title">Welcome to <name style={{ color: '#991767' }}>CareConnect</name></div>
+          <div class="motto" style={{ color: '#991767', fontWeight: '600', fontSize:'18px' }}>"Your Health Our Priority"</div>
+          <div class="page--description">
+            Welcome to <name style={{ color: '#991767' }}>CareConnect</name>, your trusted partner in health and wellness.<br />                                                             
+            We offer comprehensive services including primary care, specialty consultations, telemedicine, mental health support, diagnostic services, and personalized wellness programs. Our
+            experienced team prioritizes compassionate, patient-centered care using the latest medical technologies. Accessible and
+            committed to excellence, we strive to improve your health and well-being with every interaction.
+          </div>
         </div>
-        <div>*services*</div>
+        <div style={{ display: 'flex', justifyContent: 'center', fontSize: '18px', fontWeight: '600' }}>Our Services</div>
         <div class="services">
           <button class="service-icons" onClick={findDoctor}>
             <img src={image1} alt="find doctor" className="find-doctor-icon" />
