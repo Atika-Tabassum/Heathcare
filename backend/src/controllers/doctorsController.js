@@ -2,7 +2,8 @@ const pool = require("../../db");
 
 const getDoctors = async (req, res, next) => {
   try {
-    const doctors = await pool.query(`SELECT
+    const doctors = await pool.query(
+      `SELECT
     u.*,                        
     ds.specialization_id,         
     d.hospital_user_id,           
@@ -25,7 +26,9 @@ ON
 WHERE
     Lower(u.user_type) = 'doctor'       
     AND u.user_id <>$1
-`, [req.params.userId]);
+`,
+      [req.params.userId]
+    );
     console.log("doctors:", doctors.rows);
 
     if (doctors.rows.length === 0) {
@@ -44,25 +47,60 @@ WHERE
 
 const registerDoctor = async (req, res, next) => {
   try {
-    const { 
-      name, email, phoneNumber: contact_no, division, 
-      district, upazila, unionName, wardName, 
-      villageName, streetAddress, postalCode, 
-      password, description, image, reg_no, specializations,hospital 
+    const {
+      name,
+      email,
+      phoneNumber: contact_no,
+      division,
+      district,
+      upazila,
+      unionName,
+      wardName,
+      villageName,
+      streetAddress,
+      postalCode,
+      password,
+      description,
+      image,
+      reg_no,
+      specializations,
+      hospital,
     } = req.body;
 
-    console.log('Request body:', req.body);
+    console.log("Request body:", req.body);
 
     // Check for missing required fields
-    if (!name || !email || !contact_no || !division || !district || !upazila || !unionName || !wardName || !villageName || !streetAddress || !postalCode || !password) {
-      return res.status(400).json({ message: 'Missing required fields' });
+    if (
+      !name ||
+      !email ||
+      !contact_no ||
+      !division ||
+      !district ||
+      !upazila ||
+      !unionName ||
+      !wardName ||
+      !villageName ||
+      !streetAddress ||
+      !postalCode ||
+      !password
+    ) {
+      return res.status(400).json({ message: "Missing required fields" });
     }
 
     // Insert into locations table
     const newLocation = await pool.query(
       `INSERT INTO location (division_id, district_id, upazila_id, union_name, ward_name, village_name, street_address, postal_code)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING location_id`,
-      [division, district, upazila, unionName, wardName, villageName, streetAddress, postalCode]
+      [
+        division,
+        district,
+        upazila,
+        unionName,
+        wardName,
+        villageName,
+        streetAddress,
+        postalCode,
+      ]
     );
 
     const locationId = newLocation.rows[0].location_id;
@@ -80,7 +118,7 @@ const registerDoctor = async (req, res, next) => {
     await pool.query(
       `INSERT INTO doctors (doctor_user_id, description, reg_no,hospital_user_id)
        VALUES ($1, $2, $3,$4)`,
-      [userId, description,reg_no,hospital]
+      [userId, description, reg_no, hospital]
     );
 
     // Insert specializations
@@ -104,7 +142,9 @@ const registerDoctor = async (req, res, next) => {
     res.status(201).json({ message: "Doctor registered successfully" });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ message: "An error occurred. Please try again later." });
+    res
+      .status(500)
+      .json({ message: "An error occurred. Please try again later." });
   }
 };
 
@@ -114,7 +154,9 @@ const getSpecializations = async (req, res) => {
     res.json(result.rows);
   } catch (error) {
     console.error("Error fetching specializations:", error);
-    res.status(500).json({ message: "An error occurred. Please try again later." });
+    res
+      .status(500)
+      .json({ message: "An error occurred. Please try again later." });
   }
 };
 
@@ -128,7 +170,9 @@ const addSpecialization = async (req, res) => {
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error("Error adding specialization:", error);
-    res.status(500).json({ message: "An error occurred. Please try again later." });
+    res
+      .status(500)
+      .json({ message: "An error occurred. Please try again later." });
   }
 };
 
@@ -152,8 +196,35 @@ const getAppointments = async (req, res) => {
     }
   } catch (error) {
     console.error("Error fetching appointments:", error);
-    res.status(500).json({ message: "An error occurred. Please try again later." });
+    res
+      .status(500)
+      .json({ message: "An error occurred. Please try again later." });
   }
 };
 
-module.exports = { getDoctors, registerDoctor, getSpecializations, addSpecialization, getAppointments };
+const updatestatus = async (req, res) => {
+  try {
+    const appointment_id = req.body.appointment_id;
+    const appointments = await pool.query(
+      `update appointments set status='Accepted' where appointment_id=$1`,
+      [appointment_id]
+    );
+    res.status(200).json({
+      message: "Appointment status updated successfully",
+    });
+  } catch (error) {
+    console.error("Error fetching appointments:", error);
+    res
+      .status(500)
+      .json({ message: "An error occurred. Please try again later." });
+  }
+};
+
+module.exports = {
+  getDoctors,
+  registerDoctor,
+  getSpecializations,
+  addSpecialization,
+  getAppointments,
+  updatestatus,
+};

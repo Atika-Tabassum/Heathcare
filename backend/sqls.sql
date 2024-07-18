@@ -680,14 +680,14 @@ VALUES
 
 INSERT INTO blog_posts (post_id, title, content, category_id, author_id, created_at)
 VALUES
-    (1, 'Understanding Diabetes', 'Diabetes mellitus, often known simply as diabetes, is a group of common endocrine diseases characterized by sustained high blood sugar levels.[10][11] Diabetes is due to either the pancreas not producing enough insulin, or the cells of the body becoming unresponsive to the hormones effects.[12] Classic symptoms include thirst, polyuria, weight loss, and blurred vision. If left untreated, the disease can lead to various health complications, including disorders of the cardiovascular system, eye, kidney, and nerves.[3] Diabetes accounts for approximately 4.2 million deaths every year,[9] with an estimated 1.5 million caused by either untreated or poorly treated diabetes.[10]
+    (3, 'Understanding Diabetes', 'Diabetes mellitus, often known simply as diabetes, is a group of common endocrine diseases characterized by sustained high blood sugar levels.[10][11] Diabetes is due to either the pancreas not producing enough insulin, or the cells of the body becoming unresponsive to the hormones effects.[12] Classic symptoms include thirst, polyuria, weight loss, and blurred vision. If left untreated, the disease can lead to various health complications, including disorders of the cardiovascular system, eye, kidney, and nerves.[3] Diabetes accounts for approximately 4.2 million deaths every year,[9] with an estimated 1.5 million caused by either untreated or poorly treated diabetes.[10]
 
 The major types of diabetes are type 1 and type 2.[13] The most common treatment for type 1 is insulin replacement therapy (insulin injections), while anti-diabetic medications (such as metformin and semaglutide) and lifestyle modifications can be used to manage type 2. Gestational diabetes, a form that arises during pregnancy in some women, normally resolves shortly after delivery.
 
 As of 2021, an estimated 537 million people had diabetes worldwide accounting for 10.5% of the adult population, with type 2 making up about 90% of all cases. It is estimated that by 2045, approximately 783 million adults, or 1 in 8, will be living with diabetes, representing a 46% increase from the current figures.[14] The prevalence of the disease continues to increase, most dramatically in low- and middle-income nations.[15] Rates are similar in women and men, with diabetes being the seventh leading cause of death globally.[16][17] The global expenditure on diabetes-related healthcare is an estimated US$760 billion a year.[18]
 
 ', 1, 1, NOW()),
-    (2, 'Managing Hypertension', 'f you have high blood pressure, you may wonder if medication is necessary to bring the numbers down. But lifestyle plays a vital role in treating high blood pressure. Controlling blood pressure with a healthy lifestyle might prevent, delay or reduce the need for medication.
+    (4, 'Managing Hypertension', 'f you have high blood pressure, you may wonder if medication is necessary to bring the numbers down. But lifestyle plays a vital role in treating high blood pressure. Controlling blood pressure with a healthy lifestyle might prevent, delay or reduce the need for medication.
 
 Here are 10 lifestyle changes that can lower blood pressure and keep it down.
 

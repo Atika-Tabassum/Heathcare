@@ -18,6 +18,30 @@ const Appointment = () => {
     navigate(`/${userId}/notifications`);
   };
 
+  const updateStatus = async (appointment_id) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/doctors/updatestatus`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ appointment_id }),
+        }
+      );
+      const data = await response.json();
+      if (data.message === "Appointment status updated successfully") {
+        window.location.reload();
+      } else {
+        console.error("Error updating status:", data);
+      }
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
+
+
   const fetchDoctors = async () => {
     try {
       const response = await fetch(
@@ -77,18 +101,26 @@ const Appointment = () => {
                     <td>{appointment.patient_name}</td>
                     <td>{appointment.appointment_date}</td>
                     <td className="button--class">
-                      {appointment.status === 'pending' ? (
-                        <button className="app-btn" style={{backgroundColor:'lightgreen'}}>
+                      {appointment.status === "pending" ? (
+                        <button
+                          className="app-btn"
+                          style={{ backgroundColor: "lightgreen" }}
+                          onClick={() => {
+                            updateStatus(appointment.appointment_id);
+                          }}
+                        >
                           Accept
                         </button>
-                      ) :
-                        (
-                          <button className="app-btn" style={{backgroundColor:'gray'}} disabled>
-                            Accepted
-                          </button>
-                        )}
+                      ) : (
+                        <button
+                          className="app-btn"
+                          style={{ backgroundColor: "gray" }}
+                          disabled
+                        >
+                          Accepted
+                        </button>
+                      )}
                     </td>
-
                   </tr>
                 ))}
               </tbody>
