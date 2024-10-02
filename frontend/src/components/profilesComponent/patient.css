@@ -46,7 +46,7 @@ main {
 .patient-profile-card {
     height: 500px;
     width: 60%;
-    background-color: white;
+    /* background-color: white; */
     border-color: gray;
     border-style: solid;
     border-width: 0.5px;

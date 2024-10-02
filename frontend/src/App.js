@@ -35,6 +35,8 @@ import NewPost from './components/blogComponent/newPost';
 import FindNearbyHospital from './components/patientComponent/FindNearbyHospital';
 import AboutUs from './components/patientComponent/AboutUs';
 
+import Practice from './components/practiceComp/Practice';
+
 function App() {
   return (
     <Router>
@@ -78,6 +80,7 @@ function App() {
           <Route path="/:userId/new-post" element={<NewPost />} />
           <Route path="/findnearbyhospital" element={<FindNearbyHospital />} />
           <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/practice" element={<Practice/>}/>
         </Routes>
       </Fragment>
     </Router>
